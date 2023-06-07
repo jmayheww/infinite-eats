@@ -7,51 +7,43 @@ function LoginSignupForm() {
   const { pathname } = useLocation();
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4 text-center">
-        Authentication Form
-      </h2>
-      <form>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-1"
-            htmlFor="email"
-          >
-            Email
+    <form className="mt-8 space-y-6">
+      <div className="rounded-md shadow-sm -space-y-px">
+        <div>
+          <label htmlFor="email-address" className="sr-only">
+            Email address
           </label>
           <input
-            type="text"
+            id="email-address"
             name="email"
-            id="email"
-            value={userAuthInput.email}
-            onChange={handleUserAuthInput}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            placeholder="Enter your email"
+            type="email"
+            autoComplete="email"
+            required
+            className={`appearance-none ${
+              pathname === "/signup" ? "rounded-t-md" : "rounded-t-md"
+            } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm`}
+            placeholder="Email address"
           />
         </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-1"
-            htmlFor="password"
-          >
+        <div>
+          <label htmlFor="password" className="sr-only">
             Password
           </label>
           <input
-            type="password"
-            name="password"
             id="password"
-            value={userAuthInput.password}
-            onChange={handleUserAuthInput}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            placeholder="Enter your password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+            className={`appearance-none ${
+              pathname === "/signup" ? "rounded-none" : "rounded-b-md"
+            } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm`}
+            placeholder="Password"
           />
         </div>
         {pathname === "/login" ? null : (
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-1"
-              htmlFor="password_confirmation"
-            >
+          <div>
+            <label htmlFor="password_confirmation" className="sr-only">
               Confirm Password
             </label>
             <input
@@ -60,13 +52,15 @@ function LoginSignupForm() {
               id="password_confirmation"
               value={userAuthInput.password_confirmation}
               onChange={handleUserAuthInput}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-              placeholder="Confirm your password"
+              className={`appearance-none ${
+                pathname === "/signup" ? "rounded-b-md" : "rounded-none"
+              } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm`}
+              placeholder="Confirm Password"
             />
           </div>
         )}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
 

@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import UserContext from "../context/userAuth";
 
 import AuthenticationPage from "../pages/AuthenticationPage";
 
 function App() {
   const [count, setCount] = useState(0);
-  const { user, setUser, fetchCurrentUser } = useContext(UserContext);
 
   useEffect(() => {
     fetch("/hello")
