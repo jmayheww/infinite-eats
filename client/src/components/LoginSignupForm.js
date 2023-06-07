@@ -18,10 +18,11 @@ function LoginSignupForm() {
             name="email"
             type="email"
             autoComplete="email"
+            onChange={handleUserAuthInput}
             required
             className={`appearance-none ${
               pathname === "/signup" ? "rounded-t-md" : "rounded-t-md"
-            } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm`}
+            } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary focus:z-10 sm:text-sm font-semibold`}
             placeholder="Email address"
           />
         </div>
@@ -34,10 +35,11 @@ function LoginSignupForm() {
             name="password"
             type="password"
             autoComplete="current-password"
+            onChange={handleUserAuthInput}
             required
             className={`appearance-none ${
               pathname === "/signup" ? "rounded-none" : "rounded-b-md"
-            } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm`}
+            } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary focus:z-10 sm:text-sm font-semibold`}
             placeholder="Password"
           />
         </div>
@@ -54,7 +56,7 @@ function LoginSignupForm() {
               onChange={handleUserAuthInput}
               className={`appearance-none ${
                 pathname === "/signup" ? "rounded-b-md" : "rounded-none"
-              } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm`}
+              } relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary focus:z-10 sm:text-sm font-semibold`}
               placeholder="Confirm Password"
             />
           </div>

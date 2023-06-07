@@ -8,16 +8,14 @@ function AuthenticationPage() {
   const { pathname } = useLocation();
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white shadow-lg rounded-lg p-10">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-primary">
-            Sign in to your account
-          </h2>
-        </div>
+    <div className="bg-tertiary min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-10">
+        <h2 className="text-3xl font-extrabold text-primary text-center mb-6">
+          Sign in to your account
+        </h2>
         <LoginSignupForm />
-        <div className="text-sm">
-          <p className="font-medium text-center">
+        <div className="mt-4 flex justify-center">
+          <p className="text-sm">
             {pathname === "/login"
               ? "Don't have an account?"
               : "Already have an account?"}
@@ -27,7 +25,7 @@ function AuthenticationPage() {
                   pathname === "/login" ? "signup" : "login"
                 )
               }
-              className="text-yellow underline ml-2 hover:text-primary"
+              className="text-white bg-primary hover:bg-secondary rounded-full py-2 px-4 ml-2"
             >
               {pathname === "/login" ? "Sign Up" : "Log In"}
             </button>
