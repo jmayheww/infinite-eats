@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import UserContext from "../context/userAuth";
 import LoginSignupForm from "../components/LoginSignupForm";
@@ -8,26 +8,30 @@ function AuthenticationPage() {
   const { pathname } = useLocation();
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
-      <h1 className="text-3xl font-bold mb-8">Authentication Page</h1>
+    <div className="bg-teal-100 min-h-screen flex flex-col justify-center items-center">
+      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-4xl font-bold text-teal-700 mb-8 text-center">
+          Authentication Page
+        </h1>
 
-      <LoginSignupForm />
+        <LoginSignupForm />
 
-      <p className="text-red-600">
-        {pathname === "/login"
-          ? "Don't have an account? "
-          : "Already have an account? "}
-        <button
-          className="text-blue-500 underline ml-1"
-          onClick={() =>
-            buttonClickResponseHandler(
-              pathname === "/login" ? "signup" : "login"
-            )
-          }
-        >
-          {pathname === "/login" ? "Sign Up" : "Log In"}
-        </button>
-      </p>
+        <p className="text-gray-600 text-center">
+          {pathname === "/login"
+            ? "Don't have an account? "
+            : "Already have an account? "}
+          <button
+            className="text-pink-500 underline ml-1 transition-colors duration-200 hover:text-pink-700"
+            onClick={() =>
+              buttonClickResponseHandler(
+                pathname === "/login" ? "signup" : "login"
+              )
+            }
+          >
+            {pathname === "/login" ? "Sign Up" : "Log In"}
+          </button>
+        </p>
+      </div>
     </div>
   );
 }

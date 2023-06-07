@@ -96,6 +96,8 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  console.log(userAuthInput);
+
   return (
     <UserContext.Provider
       value={{
