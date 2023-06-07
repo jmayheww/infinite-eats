@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import NavBar from "./NavBar";
 import AuthenticationPage from "../pages/AuthenticationPage";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <div className="App">
+      <NavBar />
       <Routes>
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/signup" element={<AuthenticationPage />} />
