@@ -1,14 +1,7 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserContext = createContext({
-  user: null,
-  signupUser: null,
-  loginUser: null,
-  logoutUser: null,
-  errors: null,
-  showLogin: null,
-});
+const UserContext = createContext(null);
 
 export default UserContext;
 
@@ -18,9 +11,13 @@ const headers = {
 };
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [errors, setErrors] = useState([]);
-  const [showLogin, setShowLogin] = useState(true);
+  const [userAuthInput, setUserAuthInput] = useState({
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -48,7 +45,6 @@ export const UserProvider = ({ children }) => {
     setErrors([]);
     fetch("/api/logout", { method: "DELETE" }).then(() => {
       setUser(null);
-      setShowLogin(true);
       navigate("/login");
     });
   };
@@ -85,14 +81,19 @@ export const UserProvider = ({ children }) => {
 
   const buttonClickResponseHandler = (buttonType) => {
     if (buttonType === "login") {
-      setShowLogin(true);
       setErrors([]);
       navigate("/login");
     } else {
-      setShowLogin(false);
       setErrors([]);
       navigate("/signup");
     }
+  };
+
+  const handleUserAuthInput = (e) => {
+    setUserAuthInput({
+      ...userAuthInput,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -108,11 +109,11 @@ export const UserProvider = ({ children }) => {
         headers,
         errors,
         setErrors,
-        showLogin,
-        setShowLogin,
         navigate,
         isLoading,
         setIsLoading,
+        userAuthInput,
+        handleUserAuthInput,
       }}
     >
       {children}

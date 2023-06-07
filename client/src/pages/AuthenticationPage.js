@@ -1,17 +1,17 @@
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import UserContext from "../context/userAuth";
-import LoginForm from "../components/LoginForm";
+import LoginSignupForm from "../components/LoginSignupForm";
 
 function AuthenticationPage() {
-  const { showLogin, buttonClickResponseHandler } = useContext(UserContext);
+  const { buttonClickResponseHandler } = useContext(UserContext);
   const { pathname } = useLocation();
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
       <h1 className="text-3xl font-bold mb-8">Authentication Page</h1>
 
-      <LoginForm />
+      <LoginSignupForm />
 
       <p className="text-red-600">
         {pathname === "/login"
