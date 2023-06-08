@@ -10,6 +10,11 @@ class Api::SessionsController < ApplicationController
     render json: user, status: :created
   end
 
+  def destroy
+    session.delete :user_id
+    head :no_content
+  end
+
   private
 
   def render_unauthorized_response
