@@ -12,6 +12,10 @@ module.exports = {
         tertiary: "#E8F6EF",
         accent: "#FFE194",
       },
+      fontFamily: {
+        opensans: ["Open Sans", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+      },
     },
   },
   variants: {

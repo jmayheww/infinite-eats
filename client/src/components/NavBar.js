@@ -1,52 +1,58 @@
-import React, { useContext, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/userAuth";
-import MobileMenu from "./MobileMenu";
 
 function NavBar() {
   const { logoutUser } = useContext(UserContext);
-  const location = useLocation();
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   function handleLogout() {
     logoutUser();
+    navigate("/");
   }
 
-  const activeStyle = "border-b-2 border-accent text-accent";
-
   return (
-    <div>
-      <nav className="fixed top-0 w-full bg-tertiary border-b-2 border-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Link
-                  to="/"
-                  className={`text-primary font-bold text-lg hover:text-secondary transition-colors duration-300 ${
-                    location.pathname === "/" ? activeStyle : ""
-                  }`}
-                >
-                  Infinite Eats
-                </Link>
-              </div>
-            </div>
-            <div className="hidden md:flex items-center justify-end space-x-4">
-              {/* Other links and buttons */}
-            </div>
-            <div className="md:hidden flex items-center">
-              <div
-                className="px-3 py-2 border rounded text-white border-white cursor-pointer"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                🍔
-              </div>
-            </div>
+    <div className="bg-tertiary fixed w-full border-b-2 border-primary py-2">
+      <div className="px-4 md:px-8 lg:px-16 xl:px-20 mx-auto">
+        <div className="flex flex-wrap justify-between items-center">
+          <div>
+            <Link
+              to="/"
+              className="font-montserrat text-3xl text-primary hover:text-secondary transition-colors duration-300"
+            >
+              Infinite Eats
+            </Link>
+          </div>
+
+          <div className="flex items-center space-x-3 mt-4 md:mt-0 font-opensans">
+            <Link
+              to="/about"
+              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
+            >
+              About
+            </Link>
+            <Link
+              to="/inventory"
+              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
+            >
+              View Inventory
+            </Link>
+            <span className="border-r-2 border-primary h-5 mx-4"></span>
+            <Link
+              to="/login"
+              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
+            >
+              Log In
+            </Link>
+            <Link
+              to="/signup"
+              className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-colors duration-300"
+            >
+              Sign Up
+            </Link>
           </div>
         </div>
-        {mobileMenuOpen && <MobileMenu />}
-      </nav>
+      </div>
     </div>
   );
 }

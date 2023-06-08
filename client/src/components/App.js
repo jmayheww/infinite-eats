@@ -13,6 +13,8 @@ function App() {
       .then((data) => setCount(data.count));
   }, []);
 
+  console.log(count);
+
   return (
     <div className="App">
       <NavBar />
@@ -20,7 +22,7 @@ function App() {
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/signup" element={<AuthenticationPage />} />
         <Route path="/testing" element={<h1>Test Route</h1>} />
-        <Route path="/" element={<h1>Page Count: {count}</h1>} />
+        <Route path="/home" element={<h1>Page Count: {count}</h1>} />
       </Routes>
     </div>
   );
