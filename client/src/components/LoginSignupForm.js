@@ -7,11 +7,8 @@ function LoginSignupForm() {
     useContext(UserContext);
   const { pathname } = useLocation();
 
-  console.log(userAuthInput);
-
   function handleFormSubmission(e) {
     e.preventDefault();
-    console.log("form submitted");
 
     pathname === "/login"
       ? loginUser(userAuthInput)

@@ -13,11 +13,14 @@ const headers = {
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState([]);
-  const [userAuthInput, setUserAuthInput] = useState({
+
+  const initialUserAuthInput = {
     email: "",
     password: "",
     password_confirmation: "",
-  });
+  };
+
+  const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -62,15 +65,15 @@ export const UserProvider = ({ children }) => {
   };
 
   const authResponseHandler = (r) => {
+    setIsLoading(false);
     if (r.ok) {
-      setIsLoading(false);
       r.json().then((user) => {
         console.log("user: ", user);
         setUser(user);
+        setUserAuthInput(initialUserAuthInput);
         navigate("/home");
       });
     } else {
-      setIsLoading(false);
       r.json().then((data) => {
         console.log("data: ", data);
         if (data.errors) {
