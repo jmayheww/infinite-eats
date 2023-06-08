@@ -14,11 +14,11 @@ function NavBar() {
   return (
     <div className="bg-tertiary fixed w-full border-b-2 border-primary py-2">
       <div className="px-4 md:px-8 lg:px-16 xl:px-20 mx-auto">
-        <div className="flex flex-wrap justify-between items-center">
+        <div className="flex flex-wrap justify-center md:justify-between items-center">
           <div>
             <Link
               to="/"
-              className="font-montserrat text-3xl text-primary hover:text-secondary transition-colors duration-300"
+              className="font-lato text-3xl text-primary hover:text-secondary transition-colors duration-300"
             >
               Infinite Eats
             </Link>

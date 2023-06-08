@@ -13,8 +13,6 @@ function App() {
       .then((data) => setCount(data.count));
   }, []);
 
-  console.log(count);
-
   return (
     <div className="App">
       <NavBar />
