@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/userAuth";
 
 function NavBar() {
-  const { logoutUser } = useContext(UserContext);
+  const { user, logoutUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -38,18 +38,24 @@ function NavBar() {
               View Inventory
             </Link>
             <span className="border-r-2 border-primary h-5 mx-4"></span>
-            <Link
-              to="/login"
-              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
-            >
-              Log In
-            </Link>
-            <Link
-              to="/signup"
-              className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-colors duration-300"
-            >
-              Sign Up
-            </Link>
+            {!user ? (
+              <>
+                <Link
+                  to="/login"
+                  className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
+                >
+                  Log In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-colors duration-300"
+                >
+                  Sign Up
+                </Link>
+              </>
+            ) : (
+              <button onClick={handleLogout}>Logout</button>
+            )}
           </div>
         </div>
       </div>
