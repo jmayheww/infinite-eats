@@ -22,7 +22,7 @@ class Api::UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:username, :email, :password, :password_confirmation)
+    params.permit(:email, :password, :password_confirmation)
   end
 
   def render_record_not_found_response(exception)

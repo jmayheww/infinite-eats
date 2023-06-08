@@ -52,6 +52,7 @@ export const UserProvider = ({ children }) => {
   const currentUserResp = (r) => {
     if (r.ok) {
       r.json().then((user) => {
+        console.log("user: ", user);
         setUser(user);
       });
     } else {
@@ -64,12 +65,14 @@ export const UserProvider = ({ children }) => {
     if (r.ok) {
       setIsLoading(false);
       r.json().then((user) => {
+        console.log("user: ", user);
         setUser(user);
         navigate("/home");
       });
     } else {
       setIsLoading(false);
       r.json().then((data) => {
+        console.log("data: ", data);
         if (data.errors) {
           setErrors(data.errors);
         } else {

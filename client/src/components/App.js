@@ -8,7 +8,6 @@ import AuthenticationPage from "../pages/AuthenticationPage";
 function App() {
   const [count, setCount] = useState(0);
   const { user, logoutUser, fetchCurrentUser } = useContext(UserContext);
-  console.log("user: ", user);
 
   useEffect(() => {
     fetch("/hello")
