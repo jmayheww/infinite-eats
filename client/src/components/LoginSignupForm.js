@@ -3,12 +3,19 @@ import { useLocation } from "react-router-dom";
 import UserContext from "../context/userAuth";
 
 function LoginSignupForm() {
-  const { userAuthInput, handleUserAuthInput, loginUser, signupUser } =
-    useContext(UserContext);
+  const {
+    userAuthInput,
+    handleUserAuthInput,
+    loginUser,
+    signupUser,
+    resetErrors,
+    isLoading,
+  } = useContext(UserContext);
   const { pathname } = useLocation();
 
   function handleFormSubmission(e) {
     e.preventDefault();
+    resetErrors();
 
     pathname === "/login"
       ? loginUser(userAuthInput)
@@ -73,9 +80,14 @@ function LoginSignupForm() {
         <div>
           <button
             type="submit"
+            disabled={isLoading}
             className="group relative w-full flex justify-center py-2 px-4 border border-primary rounded-b-md text-sm font-opensans text-white bg-primary hover:bg-secondary focus:outline-none"
           >
-            {pathname === "/login" ? "Log In" : "Sign Up"}
+            {isLoading
+              ? "Loading..."
+              : pathname === "/login"
+              ? "Log In"
+              : "Sign Up"}
           </button>
         </div>
       </div>

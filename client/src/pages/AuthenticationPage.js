@@ -1,13 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import UserContext from "../context/userAuth";
 import LoginSignupForm from "../components/LoginSignupForm";
 import ErrorMessage from "../components/ErrorMessage";
 
 function AuthenticationPage() {
-  const { buttonClickResponseHandler, errors, isLoading } =
-    useContext(UserContext);
+  const {
+    buttonClickResponseHandler,
+    errors,
+    resetErrors,
+    isLoading,
+    setIsLoading,
+  } = useContext(UserContext);
+
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    // update loading state to signal page loaded and reset errors
+    setIsLoading(false);
+    resetErrors();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <div className="bg-tertiary min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -22,6 +36,7 @@ function AuthenticationPage() {
               ? "Don't have an account?"
               : "Already have an account?"}
             <button
+              disabled={isLoading}
               onClick={() =>
                 buttonClickResponseHandler(
                   pathname === "/login" ? "signup" : "login"
@@ -29,7 +44,11 @@ function AuthenticationPage() {
               }
               className="text-white bg-primary hover:bg-secondary rounded-full py-2 px-4 ml-2"
             >
-              {pathname === "/login" ? "Sign Up" : "Log In"}
+              {isLoading
+                ? "Loading..."
+                : pathname === "/login"
+                ? "Sign Up"
+                : "Log In"}
             </button>
           </p>
         </div>

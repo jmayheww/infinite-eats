@@ -21,14 +21,17 @@ export const UserProvider = ({ children }) => {
   };
 
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+
+  const resetErrors = () => setErrors([]);
 
   const fetchCurrentUser = () => {
     fetch("/api/me").then(currentUserResp);
   };
 
   const loginUser = (formData) => {
+    setIsLoading(true);
     fetch("/api/login", {
       method: "POST",
       headers: headers,
@@ -37,6 +40,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const signupUser = (formData) => {
+    setIsLoading(true);
     fetch("/api/signup", {
       method: "POST",
       headers: headers,
@@ -45,7 +49,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const logoutUser = () => {
-    setErrors([]);
+    resetErrors();
     fetch("/api/logout", { method: "DELETE" }).then(() => {
       setUser(null);
       navigate("/login");
@@ -55,7 +59,6 @@ export const UserProvider = ({ children }) => {
   const currentUserResp = (r) => {
     if (r.ok) {
       r.json().then((user) => {
-        console.log("user: ", user);
         setUser(user);
       });
     } else {
@@ -65,17 +68,14 @@ export const UserProvider = ({ children }) => {
   };
 
   const authResponseHandler = (r) => {
-    setIsLoading(false);
     if (r.ok) {
       r.json().then((user) => {
-        console.log("user: ", user);
         setUser(user);
         setUserAuthInput(initialUserAuthInput);
         navigate("/home");
       });
     } else {
       r.json().then((data) => {
-        console.log("data: ", data);
         if (data.errors) {
           setErrors(data.errors);
         } else {
@@ -83,14 +83,17 @@ export const UserProvider = ({ children }) => {
         }
       });
     }
+    setIsLoading(false);
   };
 
   const buttonClickResponseHandler = (buttonType) => {
     if (buttonType === "login") {
-      setErrors([]);
+      resetErrors();
+      setUserAuthInput(initialUserAuthInput);
       navigate("/login");
     } else {
-      setErrors([]);
+      resetErrors();
+      setUserAuthInput(initialUserAuthInput);
       navigate("/signup");
     }
   };
@@ -117,6 +120,7 @@ export const UserProvider = ({ children }) => {
         headers,
         errors,
         setErrors,
+        resetErrors,
         navigate,
         isLoading,
         setIsLoading,
