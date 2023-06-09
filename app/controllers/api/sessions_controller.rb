@@ -5,9 +5,12 @@ class Api::SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
 
-    user&.authenticate(params[:password])
-    session[:user_id] = user.id
-    render json: user, status: :created
+    if user&.authenticate(params[:password])
+      session[:user_id] = user.id
+      render json: user, status: :created
+    else
+      render_unauthorized_response
+    end
   end
 
   def destroy
