@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import UserContext from "../context/userAuth";
 import LoginSignupForm from "../components/LoginSignupForm";
+import ErrorMessage from "../components/ErrorMessage";
 
 function AuthenticationPage() {
-  const { buttonClickResponseHandler } = useContext(UserContext);
+  const { buttonClickResponseHandler, errors, isLoading } =
+    useContext(UserContext);
   const { pathname } = useLocation();
 
   return (
@@ -31,6 +33,7 @@ function AuthenticationPage() {
             </button>
           </p>
         </div>
+        {errors && errors.length > 0 && <ErrorMessage />}
       </div>
     </div>
   );
