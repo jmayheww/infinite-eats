@@ -12,13 +12,13 @@ function NavBar() {
   }
 
   return (
-    <nav className="bg-tertiary fixed w-full border-b-2 border-primary pb-2 z-50">
+    <nav className="bg-tertiary fixed w-full border-b-2 border-primary pb-2 z-50 shadow-md">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between py-2">
           <div>
             <Link
               to="/"
-              className="font-lato text-3xl text-primary hover:text-secondary transition-colors duration-300"
+              className="font-lato text-3xl text-primary hover:text-secondary transition-all duration-300 ease-in-out"
               aria-label="Home"
             >
               Infinite Eats
@@ -28,14 +28,14 @@ function NavBar() {
           <div className="flex items-center space-x-2 md:space-x-4 lg:space-x-6 mt-4 md:mt-0 font-opensans">
             <Link
               to="/about"
-              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
+              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
               aria-label="About"
             >
               About
             </Link>
             <Link
               to="/inventory"
-              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
+              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
               aria-label="View Inventory"
             >
               View Inventory
@@ -45,14 +45,14 @@ function NavBar() {
               <>
                 <Link
                   to="/login"
-                  className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-colors duration-300"
+                  className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
                   aria-label="Log In"
                 >
                   Log In
                 </Link>
                 <Link
                   to="/signup"
-                  className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-colors duration-300"
+                  className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out text-sm md:text-base font-medium"
                   aria-label="Sign Up"
                 >
                   Sign Up
@@ -61,7 +61,7 @@ function NavBar() {
             ) : (
               <button
                 onClick={handleLogout}
-                className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-colors duration-300"
+                className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out text-sm md:text-base font-medium"
               >
                 Logout
               </button>
