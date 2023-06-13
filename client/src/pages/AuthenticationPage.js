@@ -27,30 +27,35 @@ function AuthenticationPage() {
     <div className="bg-tertiary min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-10">
         <h2 className="text-3xl font-extrabold text-primary text-center mb-6">
-          Sign in to your account
+          {pathname === "/login" ? "Welcome Back!" : "Join Infinite Eats!"}
         </h2>
+        <p className="text-center text-secondary mb-6">
+          {pathname === "/login"
+            ? "Access your saved inventories and continue tracking your fridge."
+            : "Sign up and enjoy personalized fridge tracking, automatic inventory restocking and much more!"}
+        </p>
         <LoginSignupForm />
-        <div className="mt-4 flex justify-center">
-          <p className="text-sm">
+        <div className="mt-4 flex flex-col items-center justify-center">
+          <p className="text-sm text-center mb-2">
             {pathname === "/login"
-              ? "Don't have an account?"
-              : "Already have an account?"}
-            <button
-              disabled={isLoading}
-              onClick={() =>
-                buttonClickResponseHandler(
-                  pathname === "/login" ? "signup" : "login"
-                )
-              }
-              className="text-white bg-primary hover:bg-secondary rounded-full py-2 px-4 ml-2"
-            >
-              {isLoading
-                ? "Loading..."
-                : pathname === "/login"
-                ? "Sign Up"
-                : "Log In"}
-            </button>
+              ? "New to Infinite Eats? Sign up for amazing benefits!"
+              : "Already with us? Welcome back!"}
           </p>
+          <button
+            disabled={isLoading}
+            onClick={() =>
+              buttonClickResponseHandler(
+                pathname === "/login" ? "signup" : "login"
+              )
+            }
+            className="text-white bg-primary hover:bg-secondary rounded-full py-2 px-4"
+          >
+            {isLoading
+              ? "Loading..."
+              : pathname === "/login"
+              ? "Sign Up"
+              : "Log In"}
+          </button>
         </div>
         {errors && errors.length > 0 && <ErrorMessage />}
       </div>
