@@ -12,10 +12,6 @@ function App() {
   console.log("user: ", user);
 
   useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
-
     // check for existing user
     fetchCurrentUser();
 
