@@ -63,8 +63,8 @@ export const UserProvider = ({ children }) => {
       });
     } else {
       setUser(null);
-      navigate("/login");
     }
+    setIsLoading(false);
   };
 
   const authResponseHandler = (r) => {

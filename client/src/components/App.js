@@ -1,13 +1,15 @@
-import { useState, useEffect, useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { Suspense, useState, useEffect, useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import UserContext from "../context/userAuth";
 
 import NavBar from "./NavBar";
-import AuthenticationPage from "../pages/AuthenticationPage";
+
+const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
 
 function App() {
   const [count, setCount] = useState(0);
-  const { user, fetchCurrentUser } = useContext(UserContext);
+  const { user, fetchCurrentUser, isLoading } = useContext(UserContext);
+  console.log("user: ", user);
 
   useEffect(() => {
     fetch("/hello")
@@ -20,15 +22,29 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (isLoading) return <h1>Loading...</h1>;
+
   return (
     <div className="App">
       <NavBar />
-      <Routes>
-        <Route path="/login" element={<AuthenticationPage />} />
-        <Route path="/signup" element={<AuthenticationPage />} />
-        <Route path="/testing" element={<h1>Test Route</h1>} />
-        <Route path="/home" element={<h1>Page Count: {count}</h1>} />
-      </Routes>
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Routes>
+          <Route exact path="/testing" element={<h1>Test Route</h1>} />
+          <Route exact path="/about" element={<h1>About Page</h1>} />
+          <Route exact path="/myaccount" element={<h1>My Account Page</h1>} />
+          <Route exact path="/home" element={<h1>Page Count: {count}</h1>} />
+          <Route exact path="/" element={<Navigate to="/home" replace />} />
+
+          {!user && (
+            <>
+              <Route exact path="/login" element={<AsyncAuthPage />} />
+              <Route exact path="/signup" element={<AsyncAuthPage />} />
+            </>
+          )}
+
+          <Route path="*" element={<Navigate to="/home" />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
