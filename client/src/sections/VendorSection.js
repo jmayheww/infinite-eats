@@ -1,6 +1,6 @@
 import React from "react";
 
-function VendorsSection() {
+function VendorSection() {
   return (
     <div>
       <h1>Vendors Section</h1>
@@ -8,4 +8,4 @@ function VendorsSection() {
   );
 }
 
-export default VendorsSection;
+export default VendorSection;

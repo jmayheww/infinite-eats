@@ -1,9 +1,9 @@
 import React from "react";
 import { Element } from "react-scroll";
 
-import HomeSection from "./sections/HomeSection";
-import AboutSection from "./sections/AboutSection";
-import VendorSection from "./sections/VendorSection";
+import HomeSection from "../sections/HomeSection";
+import AboutSection from "../sections/AboutSection";
+import VendorSection from "../sections/VendorSection";
 
 function LandingPage() {
   return (

@@ -10,7 +10,6 @@ const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
 function App() {
   const [count, setCount] = useState(0);
   const { user, fetchCurrentUser, isLoading } = useContext(UserContext);
-  console.log("user: ", user);
 
   useEffect(() => {
     fetch("/hello")
@@ -30,11 +29,7 @@ function App() {
       <NavBar />
       <Suspense fallback={<h1>Loading...</h1>}>
         <Routes>
-          <Route exact path="/testing" element={<h1>Test Route</h1>} />
-          <Route exact path="/about" element={<h1>About Page</h1>} />
-          <Route exact path="/myaccount" element={<h1>My Account Page</h1>} />
-          <Route exact path="/home" element={<AsyncHomePage />} />
-          <Route exact path="/" element={<Navigate to="/home" replace />} />
+          <Route exact path="/" element={<AsyncLandingPage />} />
 
           {!user && (
             <>
@@ -43,7 +38,7 @@ function App() {
             </>
           )}
 
-          <Route path="*" element={<Navigate to="/home" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>
     </div>
