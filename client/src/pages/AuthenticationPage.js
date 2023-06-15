@@ -16,12 +16,14 @@ function AuthenticationPage() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // update loading state to signal page loaded and reset errors
+    // update loading state to page loaded and reset errors
     setIsLoading(false);
     resetErrors();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className="bg-tertiary min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
