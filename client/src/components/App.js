@@ -4,6 +4,7 @@ import UserContext from "../context/userAuth";
 
 import NavBar from "./NavBar";
 
+const AsyncHomePage = React.lazy(() => import("../pages/Home"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
           <Route exact path="/testing" element={<h1>Test Route</h1>} />
           <Route exact path="/about" element={<h1>About Page</h1>} />
           <Route exact path="/myaccount" element={<h1>My Account Page</h1>} />
-          <Route exact path="/home" element={<h1>Page Count: {count}</h1>} />
+          <Route exact path="/home" element={<AsyncHomePage />} />
           <Route exact path="/" element={<Navigate to="/home" replace />} />
 
           {!user && (
