@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../context/userAuth";
 
-function HomeSection() {
+function WelcomeSection() {
   const { user } = useContext(UserContext);
 
   return (
@@ -78,4 +78,4 @@ function HomeSection() {
   );
 }
 
-export default HomeSection;
+export default WelcomeSection;

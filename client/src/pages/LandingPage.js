@@ -1,15 +1,15 @@
 import React from "react";
 import { Element } from "react-scroll";
 
-import HomeSection from "../sections/HomeSection";
+import WelcomeSection from "../sections/WelcomeSection";
 import AboutSection from "../sections/AboutSection";
 import VendorSection from "../sections/VendorSection";
 
 function LandingPage() {
   return (
-    <div>
-      <Element name="home">
-        <HomeSection />
+    <div className="pt-16">
+      <Element name="welcome">
+        <WelcomeSection />
       </Element>
       <Element name="about">
         <AboutSection />
