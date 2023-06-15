@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect, useContext } from "react";
+import React, { Suspense, useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import UserContext from "../context/userAuth";
 
@@ -8,8 +8,8 @@ const AsyncLandingPage = React.lazy(() => import("../pages/LandingPage"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
 
 function App() {
-  const [count, setCount] = useState(0);
   const { user, fetchCurrentUser, isLoading } = useContext(UserContext);
+  console.log("user: ", user);
 
   useEffect(() => {
     fetch("/hello")
@@ -29,7 +29,10 @@ function App() {
       <NavBar />
       <Suspense fallback={<h1>Loading...</h1>}>
         <Routes>
-          <Route exact path="/" element={<AsyncLandingPage />} />
+          <Route exact path="/testing" element={<h1>Test Route</h1>} />
+          <Route exact path="/myaccount" element={<h1>My Account Page</h1>} />
+          <Route path="/landing" element={<AsyncLandingPage />} />
+          <Route exact path="/" element={<Navigate to="/landing" replace />} />
 
           {!user && (
             <>
@@ -38,7 +41,7 @@ function App() {
             </>
           )}
 
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Navigate to="/landing" />} />
         </Routes>
       </Suspense>
     </div>
