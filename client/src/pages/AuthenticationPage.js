@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import UserContext from "../context/userAuth";
+import UserContext from "../context/auth";
 import LoginSignupForm from "../components/LoginSignupForm";
 import ErrorMessage from "../components/ErrorMessage";
 

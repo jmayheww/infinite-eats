@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import UserContext from "../context/userAuth";
+import UserContext from "../context/auth";
 
 import NavBar from "./NavBar";
 
@@ -10,7 +10,6 @@ const AsyncFeaturesPage = React.lazy(() => import("../pages/FeaturesPage"));
 
 function App() {
   const { user, fetchCurrentUser } = useContext(UserContext);
-  console.log("user: ", user);
 
   useEffect(() => {
     // check for existing user

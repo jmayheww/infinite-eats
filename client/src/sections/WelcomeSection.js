@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import UserContext from "../context/userAuth";
+import UserContext from "../context/auth";
 
 function WelcomeSection() {
   const { user } = useContext(UserContext);
