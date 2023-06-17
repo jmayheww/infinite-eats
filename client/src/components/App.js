@@ -9,7 +9,7 @@ const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
 const AsyncFeaturesPage = React.lazy(() => import("../pages/FeaturesPage"));
 
 function App() {
-  const { user, fetchCurrentUser, isLoading } = useContext(UserContext);
+  const { user, fetchCurrentUser } = useContext(UserContext);
   console.log("user: ", user);
 
   useEffect(() => {
@@ -18,8 +18,6 @@ function App() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className="App">

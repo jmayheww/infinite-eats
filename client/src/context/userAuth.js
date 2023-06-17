@@ -21,12 +21,13 @@ export const UserProvider = ({ children }) => {
   };
 
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const resetErrors = () => setErrors([]);
 
   const fetchCurrentUser = () => {
+    setIsLoading(true);
     fetch("/api/me").then(currentUserResp);
   };
 
@@ -72,7 +73,7 @@ export const UserProvider = ({ children }) => {
       r.json().then((user) => {
         setUser(user);
         setUserAuthInput(initialUserAuthInput);
-        navigate("/home");
+        navigate("/landing");
       });
     } else {
       r.json().then((data) => {
@@ -90,11 +91,7 @@ export const UserProvider = ({ children }) => {
     if (buttonType === "login") {
       resetErrors();
       setUserAuthInput(initialUserAuthInput);
-      navigate("/login");
-    } else {
-      resetErrors();
-      setUserAuthInput(initialUserAuthInput);
-      navigate("/signup");
+      navigate(buttonType === "login" ? "/login" : "/signup");
     }
   };
 
@@ -104,8 +101,6 @@ export const UserProvider = ({ children }) => {
       [e.target.name]: e.target.value,
     });
   };
-
-  console.log(userAuthInput);
 
   return (
     <UserContext.Provider

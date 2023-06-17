@@ -23,8 +23,6 @@ function AuthenticationPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  if (isLoading) return <h1>Loading...</h1>;
-
   return (
     <div className="bg-tertiary min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-10">
