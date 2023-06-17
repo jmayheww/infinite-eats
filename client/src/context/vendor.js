@@ -10,13 +10,14 @@ const headers = {
 };
 
 export const VendorProvider = ({ children }) => {
-  const [vendor, setVendor] = useState(null);
+  const [vendors, setVendors] = useState(null);
+  console.log("vendor: ", vendors);
   const [errors, setErrors] = useState([]);
 
   const fetchVendor = () => {
     fetch("/api/vendors", { headers: headers }).then((r) => {
       if (r.ok) {
-        r.json().then((vendor) => setVendor(vendor));
+        r.json().then((vendors) => setVendors(vendors));
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
@@ -26,8 +27,8 @@ export const VendorProvider = ({ children }) => {
   return (
     <VendorContext.Provider
       value={{
-        vendor,
-        setVendor,
+        vendors,
+        setVendors,
         fetchVendor,
         errors,
         setErrors,

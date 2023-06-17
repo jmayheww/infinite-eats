@@ -7,6 +7,8 @@ import NavBar from "./NavBar";
 const AsyncLandingPage = React.lazy(() => import("../pages/LandingPage"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
 const AsyncFeaturesPage = React.lazy(() => import("../pages/FeaturesPage"));
+const AsyncVendorsList = React.lazy(() => import("../pages/VendorsList"));
+const AsyncViewVendorPage = React.lazy(() => import("../pages/ViewVendorPage"));
 
 function App() {
   const { user, fetchCurrentUser } = useContext(UserContext);
@@ -26,6 +28,15 @@ function App() {
           <Route exact path="/testing" element={<h1>Test Route</h1>} />
           <Route exact path="/myaccount" element={<h1>My Account Page</h1>} />
           <Route exact path="/features" element={<AsyncFeaturesPage />} />
+
+          <Route exact path="/vendors" element={<AsyncVendorsList />} />
+
+          <Route
+            exact
+            path="/vendors/:vendorId"
+            element={<AsyncViewVendorPage />}
+          />
+
           <Route path="/landing" element={<AsyncLandingPage />} />
           <Route exact path="/" element={<Navigate to="/landing" replace />} />
           {!user && (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function FeaturedItemsSection() {
+function FeaturedItemSection() {
   return (
     <section className="bg-secondary py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl text-center mx-auto">
@@ -13,15 +13,17 @@ function FeaturedItemsSection() {
         </p>
         {/* Include a list or a carousel of featured items */}
         {/* Include images and short descriptions if available */}
-        <Link
-          to="/items"
-          className="py-3 px-6 mt-8 text-white bg-primary rounded-md hover:bg-tertiary transition-colors duration-300"
-        >
-          Browse All Items
-        </Link>
+        <div className="flex justify-center mt-8">
+          <Link
+            to="/vendors"
+            className="py-3 px-6 bg-white text-primary font-bold rounded-md hover:bg-primary hover:text-white transition-colors duration-300"
+          >
+            Browse All Items
+          </Link>
+        </div>
       </div>
     </section>
   );
 }
 
-export default FeaturedItemsSection;
+export default FeaturedItemSection;

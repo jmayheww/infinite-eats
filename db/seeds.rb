@@ -20,7 +20,7 @@ Vendor.create(
   description: 'An American multinational retail corporation that operates a chain of hypermarkets, discount department stores, and grocery stores.',
   delivery_schedule: 'Monday to Friday',
   average_rating: 4.5,
-  logo_image_url: 'https://link_to_walmart_logo.com'
+  logo_image_url: 'https://cdn.corporate.walmart.com/dims4/WMT/71169a3/2147483647/strip/true/crop/2389x930+0+0/resize/980x381!/quality/90/?url=https%3A%2F%2Fcdn.corporate.walmart.com%2Fd6%2Fe7%2F48e91bac4a8ca8f22985b3682370%2Fwalmart-logos-lockupwtag-horiz-blu-rgb.png'
 )
 
 puts 'done seeding'
