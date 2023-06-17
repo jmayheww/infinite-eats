@@ -88,11 +88,9 @@ export const UserProvider = ({ children }) => {
   };
 
   const buttonClickResponseHandler = (buttonType) => {
-    if (buttonType === "login") {
-      resetErrors();
-      setUserAuthInput(initialUserAuthInput);
-      navigate(buttonType === "login" ? "/login" : "/signup");
-    }
+    resetErrors();
+    setUserAuthInput(initialUserAuthInput);
+    navigate(buttonType === "login" ? "/login" : "/signup");
   };
 
   const handleUserAuthInput = (e) => {

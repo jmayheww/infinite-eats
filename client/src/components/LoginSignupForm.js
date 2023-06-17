@@ -10,11 +10,13 @@ function LoginSignupForm() {
     signupUser,
     resetErrors,
     isLoading,
+    setIsLoading,
   } = useContext(UserContext);
   const { pathname } = useLocation();
 
   function handleFormSubmission(e) {
     e.preventDefault();
+    setIsLoading(true);
     resetErrors();
 
     pathname === "/login"
