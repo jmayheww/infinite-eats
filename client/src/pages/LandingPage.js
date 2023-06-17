@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Element } from "react-scroll";
 
 import WelcomeSection from "../sections/WelcomeSection";
-import VendorSection from "../sections/VendorSection";
+import FridgeManagementSection from "../sections/FridgeManagementSection";
+import FeaturedItemSection from "../sections/FeaturedItemSection";
+import FeaturedVendorSection from "../sections/FeaturedVendorSection";
 
 function LandingPage() {
   return (
@@ -11,22 +12,15 @@ function LandingPage() {
       <Element name="welcome">
         <WelcomeSection />
       </Element>
-      <div className="text-center mt-8">
-        <Link
-          to="/vendors"
-          className="text-lg text-primary hover:text-secondary"
-        >
-          Browse Vendors
-        </Link>
-      </div>
-      <Element name="vendors">
-        <VendorSection />
+      <Element name="fridge-management">
+        <FridgeManagementSection />
       </Element>
-      <div className="text-center mt-8">
-        <Link to="/items" className="text-lg text-primary hover:text-secondary">
-          Browse Items
-        </Link>
-      </div>
+      <Element name="featured-items">
+        <FeaturedItemSection />
+      </Element>
+      <Element name="featured-vendors">
+        <FeaturedVendorSection />
+      </Element>
     </div>
   );
 }
