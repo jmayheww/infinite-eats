@@ -1,13 +1,9 @@
 import React, { useContext } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
+import { Link as RouterLink } from "react-router-dom";
 import UserContext from "../context/userAuth";
 
 function NavBar() {
   const { user, logoutUser } = useContext(UserContext);
-  const { pathname } = useLocation();
-
-  const isLandingPage = pathname === "/landing";
 
   function handleLogout() {
     logoutUser();
@@ -28,44 +24,23 @@ function NavBar() {
           </div>
 
           <div className="flex items-center space-x-2 md:space-x-4 lg:space-x-6 mt-4 md:mt-0 font-opensans">
-            {isLandingPage && (
-              <>
-                <ScrollLink
-                  to="welcome"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium cursor-pointer"
-                  aria-label="Welcome"
-                >
-                  Welcome
-                </ScrollLink>
-                <ScrollLink
-                  to="about"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium cursor-pointer"
-                  aria-label="About"
-                >
-                  About
-                </ScrollLink>
-                <ScrollLink
-                  to="vendors"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium cursor-pointer"
-                  aria-label="View Vendors"
-                >
-                  View Vendors
-                </ScrollLink>
-              </>
-            )}
+            <RouterLink
+              to="/"
+              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
+              aria-label="Home"
+            >
+              Home
+            </RouterLink>
+            <RouterLink
+              to="/features"
+              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
+              aria-label="Features"
+            >
+              Features
+            </RouterLink>
+
             <span className="border-r-2 border-primary h-5 mx-2 md:mx-4"></span>
+
             {!user ? (
               <>
                 <RouterLink
