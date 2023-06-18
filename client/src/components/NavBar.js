@@ -16,7 +16,7 @@ function NavBar() {
           <div className="text-center sm:text-left">
             <RouterLink
               to="/"
-              className="font-lato text-2xl sm:text-3xl text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
+              className="font-lato text-2xl sm:text-3xl text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
               aria-label="Landing"
             >
               Infinite Eats
@@ -26,33 +26,33 @@ function NavBar() {
           <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 lg:space-x-6 text-sm sm:text-base">
             <RouterLink
               to="/"
-              className="py-1 px-2 sm:py-2 sm:px-3 text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
+              className="py-1 px-2 sm:py-2 sm:px-3 text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
               aria-label="Home"
             >
               Home
             </RouterLink>
             <RouterLink
               to="/features"
-              className="py-1 px-2 sm:py-2 sm:px-3 text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
+              className="py-1 px-2 sm:py-2 sm:px-3 text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
               aria-label="Features"
             >
               Features
             </RouterLink>
 
-            <span className="border-l-2 border-primary h-5 mx-1 sm:mx-2 md:mx-4"></span>
+            <span className="border-l-2 border-white h-5 mx-1 sm:mx-2 md:mx-4"></span>
 
             {!user ? (
               <>
                 <RouterLink
                   to="/login"
-                  className="py-1 px-2 sm:py-2 sm:px-3 text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
+                  className="py-1 px-2 sm:py-2 sm:px-3 text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
                   aria-label="Log In"
                 >
                   Log In
                 </RouterLink>
                 <RouterLink
                   to="/signup"
-                  className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-secondary rounded-md hover:scale-105 transition-all duration-300 ease-in-out"
+                  className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-secondary hover:text-accent hover:scale-105 transition-all duration-300 ease-in-out rounded-md"
                   aria-label="Sign Up"
                 >
                   Sign Up
