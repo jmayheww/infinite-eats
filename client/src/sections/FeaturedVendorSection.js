@@ -8,15 +8,14 @@ function FeaturedVendorSection() {
 
   useEffect(() => {
     fetchVendor();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <section className="bg-tertiary py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-5xl font-extrabold text-secondary mb-6 text-center">
+        <h2 className="text-4xl font-extrabold text-secondary mb-6 text-center">
           Featured Vendors
-        </h1>
+        </h2>
         <p className="text-xl text-secondary mb-8 text-center">
           We've partnered with top-notch vendors to provide you with the best
           products.

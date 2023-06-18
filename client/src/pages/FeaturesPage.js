@@ -5,11 +5,11 @@ import FeaturedVendorSection from "../sections/FeaturedVendorSection";
 
 function FeaturesPage() {
   return (
-    <div className="pt-16 bg-primary">
+    <main className="pt-16 bg-primary">
       <FridgeManagementSection />
       <FeaturedItemSection />
       <FeaturedVendorSection />
-    </div>
+    </main>
   );
 }
 
