@@ -16,7 +16,7 @@ function FeaturedItemSection() {
         <div className="flex justify-center mt-8">
           <Link
             to="/vendors"
-            className="py-3 px-6 bg-white text-primary font-bold rounded-md hover:bg-primary hover:text-white transition-colors duration-300"
+            className="py-3 px-6 bg-accent text-white rounded-md hover:bg-primary hover:text-accent hover:shadow-md transition-colors duration-300"
           >
             Browse All Items
           </Link>

@@ -52,7 +52,7 @@ function NavBar() {
                 </RouterLink>
                 <RouterLink
                   to="/signup"
-                  className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-secondary hover:text-accent hover:scale-105 transition-all duration-300 ease-in-out rounded-md"
+                  className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-secondary hover:scale-105 transition-all duration-300 ease-in-out rounded-md"
                   aria-label="Sign Up"
                 >
                   Sign Up
