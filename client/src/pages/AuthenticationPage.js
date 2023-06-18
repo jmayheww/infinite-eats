@@ -24,12 +24,12 @@ function AuthenticationPage() {
   }, [pathname]);
 
   return (
-    <div className="bg-tertiary min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-primary min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-10">
-        <h2 className="text-3xl font-extrabold text-primary text-center mb-6">
+        <h2 className="text-3xl font-extrabold text-secondary text-center mb-6">
           {pathname === "/login" ? "Welcome Back!" : "Join Infinite Eats!"}
         </h2>
-        <p className="text-center text-secondary mb-6">
+        <p className="text-center font-bold text-secondary mb-6">
           {pathname === "/login"
             ? "Access your saved inventories and continue tracking your fridge."
             : "Sign up and enjoy personalized fridge tracking, automatic inventory restocking and much more!"}
@@ -48,7 +48,7 @@ function AuthenticationPage() {
                 pathname === "/login" ? "signup" : "login"
               )
             }
-            className="text-white bg-primary hover:bg-secondary rounded-full py-2 px-4"
+            className="text-white bg-secondary hover:bg-accent rounded-md py-2 px-4"
           >
             {isLoading
               ? "Loading..."

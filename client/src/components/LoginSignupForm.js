@@ -40,7 +40,7 @@ function LoginSignupForm() {
             onChange={handleUserAuthInput}
             className={`appearance-none ${
               pathname === "/signup" ? "rounded-t-md" : "rounded-t-md"
-            } relative block w-full px-3 py-2 border border-primary placeholder-primary text-primary focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent focus:z-10 sm:text-sm font-opensans`}
+            } relative block w-full px-3 py-2 border border-secondary placeholder-secondary text-gray-800 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent focus:z-10 sm:text-sm font-opensans bg-white`}
             placeholder="Email address"
           />
         </div>
@@ -56,7 +56,7 @@ function LoginSignupForm() {
             value={userAuthInput.password}
             onChange={handleUserAuthInput}
             className={
-              "relative block w-full px-3 py-2 border border-primary placeholder-primary text-primary focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent focus:z-10 sm:text-sm font-opensans"
+              "relative block w-full px-3 py-2 border border-secondary placeholder-secondary text-gray-800 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent focus:z-10 sm:text-sm font-opensans bg-white"
             }
             placeholder="Password"
           />
@@ -73,7 +73,7 @@ function LoginSignupForm() {
               value={userAuthInput.password_confirmation}
               onChange={handleUserAuthInput}
               className={
-                "relative block w-full px-3 py-2 border border-primary placeholder-primary text-primary focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent focus:z-10 sm:text-sm font-opensans"
+                "relative block w-full px-3 py-2 border border-secondary placeholder-secondary text-gray-800 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent focus:z-10 sm:text-sm font-opensans bg-white"
               }
               placeholder="Confirm Password"
             />
@@ -83,7 +83,7 @@ function LoginSignupForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="group relative w-full flex justify-center py-2 px-4 border border-primary rounded-b-md text-sm font-opensans text-white bg-primary hover:bg-secondary focus:outline-none"
+            className="group relative w-full flex justify-center py-2 px-4 border border-secondary rounded-b-md text-sm font-opensans text-white bg-secondary hover:bg-accent focus:outline-none"
           >
             {isLoading
               ? "Loading..."

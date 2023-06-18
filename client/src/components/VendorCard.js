@@ -19,7 +19,7 @@ function VendorCard({ vendor }) {
         href={vendor.website}
         target="_blank"
         rel="noopener noreferrer"
-        className="py-2 px-6 bg-secondary text-white rounded-md hover:bg-accent hover:text-white border border-primary transition-all duration-300"
+        className="py-2 px-6 bg-secondary text-white rounded-md hover:bg-primary hover:text-accent border border-primary transition-all duration-300"
       >
         Visit Website
       </a>
