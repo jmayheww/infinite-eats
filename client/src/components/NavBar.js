@@ -10,49 +10,49 @@ function NavBar() {
   }
 
   return (
-    <nav className="bg-tertiary fixed w-full border-b-2 border-primary pb-2 z-50 shadow-md">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between py-2">
-          <div>
+    <nav className="bg-accent fixed w-full z-50 shadow-md transition-all duration-300 ease-in-out">
+      <div className="container mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="flex items-center justify-between py-2">
+          <div className="text-center sm:text-left">
             <RouterLink
               to="/"
-              className="font-lato text-3xl text-primary hover:text-secondary transition-all duration-300 ease-in-out"
+              className="font-lato text-2xl sm:text-3xl text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
               aria-label="Landing"
             >
               Infinite Eats
             </RouterLink>
           </div>
 
-          <div className="flex items-center space-x-2 md:space-x-4 lg:space-x-6 mt-4 md:mt-0 font-opensans">
+          <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 lg:space-x-6 text-sm sm:text-base">
             <RouterLink
               to="/"
-              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
+              className="py-1 px-2 sm:py-2 sm:px-3 text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
               aria-label="Home"
             >
               Home
             </RouterLink>
             <RouterLink
               to="/features"
-              className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
+              className="py-1 px-2 sm:py-2 sm:px-3 text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
               aria-label="Features"
             >
               Features
             </RouterLink>
 
-            <span className="border-r-2 border-primary h-5 mx-2 md:mx-4"></span>
+            <span className="border-l-2 border-primary h-5 mx-1 sm:mx-2 md:mx-4"></span>
 
             {!user ? (
               <>
                 <RouterLink
                   to="/login"
-                  className="py-2 px-3 text-primary hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out rounded text-sm md:text-base font-medium"
+                  className="py-1 px-2 sm:py-2 sm:px-3 text-primary hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
                   aria-label="Log In"
                 >
                   Log In
                 </RouterLink>
                 <RouterLink
                   to="/signup"
-                  className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out text-sm md:text-base font-medium"
+                  className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-secondary rounded-md hover:scale-105 transition-all duration-300 ease-in-out"
                   aria-label="Sign Up"
                 >
                   Sign Up
@@ -61,7 +61,7 @@ function NavBar() {
             ) : (
               <button
                 onClick={handleLogout}
-                className="py-2 px-3 bg-accent text-white rounded-md hover:bg-secondary hover:text-white transition-all duration-300 ease-in-out text-sm md:text-base font-medium"
+                className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-accent hover:opacity-60 transition-all duration-300 ease-in-out rounded font-medium"
               >
                 Logout
               </button>

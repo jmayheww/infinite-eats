@@ -7,11 +7,10 @@ module.exports = {
         current: "currentColor",
         black: "#000",
         white: "#fff",
-        primary: "#47A36A", // A bolder, vibrant green
-        secondary: "#FFA43D", // A bolder, warmer orange
-        tertiary: "#E5F5E8", // A slightly more saturated light greenish white
-        accent: "#00796B", // A deeper, bolder teal
-        darkaccent: "#2E3E48", // A darker, more saturated gray-blue
+        primary: "#E5F5E8", // Soft greenish-white color
+        secondary: "#007678", // Deep teal color
+        tertiary: "#C0FCF9", // Light aqua color
+        accent: "#619B98", // Cool grayish-green color
       },
       fontFamily: {
         opensans: ["Open Sans", "sans-serif"],
