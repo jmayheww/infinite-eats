@@ -8,6 +8,8 @@ function FeaturedVendorSection() {
 
   useEffect(() => {
     fetchVendor();
+
+    // eslint-disable-next-line
   }, []);
 
   return (
