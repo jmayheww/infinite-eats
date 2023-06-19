@@ -37,28 +37,28 @@ target = {
   description: 'An American retail corporation, the 8th-largest retailer in the United States, and is a component of the S&P 500 Index.',
   delivery_schedule: 'Monday to Sunday',
   average_rating: 4.3,
-  logo_image_url: 'https://target.scene7.com/is/image/Target/GUEST_b4088cb0-3556-4e4e-9e50-65a7f2c20b36?wid=1380&hei=720&qlt=80&fmt=webp'
+  logo_image_url: 'https://www.denverchildrensfoundation.org/wp-content/uploads/2021/09/target-logo-300x90.png'
 }
 
-safeway = {
-  name: 'Safeway',
-  email: 'MS.safeway.customer.care.03251@safeway.com',
-  phone_number: '8777233929',
-  address: '5918 Stoneridge Mall Rd',
-  city: 'Pleasanton',
-  state: 'CA',
-  zip_code: '94588',
-  website: 'https://www.safeway.com',
-  description: 'An American supermarket chain founded in April 1915 in American Falls, Idaho by Marion Barton Skaggs.',
+costco = {
+  name: 'Costco',
+  email: 'costcocare@costco.com',
+  phone_number: '8007742678',
+  address: '999 Lake Dr',
+  city: 'Issaquah',
+  state: 'WA',
+  zip_code: '98027',
+  website: 'https://www.costco.com',
+  description: 'An American multinational corporation which operates a chain of membership-only big-box retail stores.',
   delivery_schedule: 'Monday to Sunday',
-  average_rating: 4.1,
-  logo_image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Safeway_logo.svg/1200px-Safeway_logo.svg.png'
+  average_rating: 4.2,
+  logo_image_url: 'https://upload.wikimedia.org/wikipedia/commons/5/59/Costco_Wholesale_logo_2010-10-26.svg'
 }
 
 # create vendors in db
 
 Vendor.create!(walmart)
 Vendor.create!(target)
-Vendor.create!(safeway)
+Vendor.create!(costco)
 
 puts 'done seeding'

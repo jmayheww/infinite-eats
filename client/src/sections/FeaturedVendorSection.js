@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import VendorContext from "../context/vendor";
-import VendorCard from "../components/VendorCard";
+import FeaturedVendorCard from "../components/FeaturedVendorCard";
 
 function FeaturedVendorSection() {
   const { vendors, fetchVendor } = useContext(VendorContext);
@@ -25,7 +25,7 @@ function FeaturedVendorSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {vendors &&
             vendors.map((vendor) => (
-              <VendorCard key={vendor.id} vendor={vendor} />
+              <FeaturedVendorCard key={vendor.id} vendor={vendor} />
             ))}
         </div>
         <div className="flex justify-center mt-8">
@@ -33,7 +33,7 @@ function FeaturedVendorSection() {
             to="/vendors"
             className="py-3 px-6 bg-secondary text-white rounded-md hover:bg-accent hover:text-white border border-primary transition-all duration-300"
           >
-            See All Vendors
+            Browse All Vendors
           </Link>
         </div>
       </div>

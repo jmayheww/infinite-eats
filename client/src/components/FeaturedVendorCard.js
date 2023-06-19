@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function VendorCard({ vendor }) {
+function FeaturedVendorCard({ vendor }) {
   return (
     <div className="flex flex-col items-center p-8 border rounded-lg shadow-lg h-full bg-secondary text-white">
       <Link to={`/vendors/${vendor.id}`}>
@@ -13,7 +13,6 @@ function VendorCard({ vendor }) {
           />
         </div>
       </Link>
-      <h3 className="text-xl font-semibold mb-2">{vendor.name}</h3>
       <p className="text-primary mb-4">{vendor.description}</p>
       <a
         href={vendor.website}
@@ -27,4 +26,4 @@ function VendorCard({ vendor }) {
   );
 }
 
-export default VendorCard;
+export default FeaturedVendorCard;
