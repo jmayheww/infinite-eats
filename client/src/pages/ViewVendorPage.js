@@ -1,10 +1,11 @@
 import React from "react";
+import ViewVendorDetailCard from "../components/ViewVendorDetailCard";
 
 function ViewVendorPage() {
   return (
-    <div>
-      <h1>Vendor Page</h1>
-    </div>
+    <main className="bg-primary min-h-screen">
+      <ViewVendorDetailCard />
+    </main>
   );
 }
 

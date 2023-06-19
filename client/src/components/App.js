@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import UserContext from "../context/auth";
+import VendorContext from "../context/vendor";
 
 import NavBar from "./NavBar";
 
@@ -12,11 +13,14 @@ const AsyncViewVendorPage = React.lazy(() => import("../pages/ViewVendorPage"));
 
 function App() {
   const { user, fetchCurrentUser } = useContext(UserContext);
+  const { fetchVendors } = useContext(VendorContext);
 
   useEffect(() => {
     // check for existing user
     fetchCurrentUser();
 
+    // fetch vendors
+    fetchVendors();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

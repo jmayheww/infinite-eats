@@ -11,10 +11,9 @@ const headers = {
 
 export const VendorProvider = ({ children }) => {
   const [vendors, setVendors] = useState(null);
-  console.log("vendor: ", vendors);
   const [errors, setErrors] = useState([]);
 
-  const fetchVendor = () => {
+  const fetchVendors = () => {
     fetch("/api/vendors", { headers: headers }).then((r) => {
       if (r.ok) {
         r.json().then((vendors) => setVendors(vendors));
@@ -29,7 +28,7 @@ export const VendorProvider = ({ children }) => {
       value={{
         vendors,
         setVendors,
-        fetchVendor,
+        fetchVendors,
         errors,
         setErrors,
       }}

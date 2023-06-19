@@ -1,16 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import VendorContext from "../context/vendor";
 import VendorCard from "../components/VendorCard";
 
 function FeaturedVendorSection() {
-  const { vendors, fetchVendor } = useContext(VendorContext);
-
-  useEffect(() => {
-    fetchVendor();
-
-    // eslint-disable-next-line
-  }, []);
+  const { vendors } = useContext(VendorContext);
 
   return (
     <section className="bg-tertiary py-12 px-4 sm:px-6 lg:px-8">
