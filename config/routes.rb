@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :vendors
   namespace :api do
     resources :users, only: %i[show create update destroy]
     resources :vendors
