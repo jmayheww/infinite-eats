@@ -8,9 +8,9 @@ const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
 };
-
 export const VendorProvider = ({ children }) => {
   const [vendors, setVendors] = useState(null);
+  const [selectVendor, setSelectVendor] = useState(null);
   const [errors, setErrors] = useState([]);
 
   const fetchVendors = () => {
@@ -23,11 +23,23 @@ export const VendorProvider = ({ children }) => {
     });
   };
 
+  const findVendor = (vendorId) => {
+    fetch(`/api/vendors/${vendorId}`, { headers: headers }).then((r) => {
+      if (r.ok) {
+        r.json().then((vendor) => setSelectVendor(vendor));
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    });
+  };
+
   return (
     <VendorContext.Provider
       value={{
         vendors,
         setVendors,
+        findVendor,
+        selectVendor,
         fetchVendors,
         errors,
         setErrors,

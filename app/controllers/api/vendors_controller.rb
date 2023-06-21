@@ -3,4 +3,9 @@ class Api::VendorsController < ApplicationController
     vendors = Vendor.all
     render json: vendors
   end
+
+  def show
+    vendor = Vendor.find(params[:id])
+    render json: vendor
+  end
 end
