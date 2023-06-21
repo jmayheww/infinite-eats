@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { FiMail, FiPhone, FiMapPin, FiClock, FiStar } from "react-icons/fi";
 import VendorContext from "../context/vendor";
@@ -6,12 +6,10 @@ import VendorContext from "../context/vendor";
 function ViewVendorDetailCard() {
   const { vendorId } = useParams();
   const { vendors } = useContext(VendorContext);
-  console.log("vendors: ", vendors);
 
   const selectedVendor = vendors?.find(
     (vendor) => vendor.id === parseInt(vendorId)
   );
-  console.log("selectedVendor: ", selectedVendor);
 
   if (!selectedVendor) {
     return <h1>Vendor not found!</h1>;

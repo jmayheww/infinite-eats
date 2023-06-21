@@ -1,9 +1,16 @@
 import React, { Suspense, useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import UserContext from "../context/auth";
 import VendorContext from "../context/vendor";
 
 import NavBar from "./NavBar";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(
+  String(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+);
 
 const AsyncLandingPage = React.lazy(() => import("../pages/LandingPage"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
@@ -39,6 +46,16 @@ function App() {
             exact
             path="/vendors/:vendorId"
             element={<AsyncViewVendorPage />}
+          />
+
+          {/* test out stripe sdk */}
+          <Route
+            path="/checkout"
+            element={
+              <Elements stripe={stripePromise}>
+                <CheckoutForm />
+              </Elements>
+            }
           />
 
           <Route path="/landing" element={<AsyncLandingPage />} />
