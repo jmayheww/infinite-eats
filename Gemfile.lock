@@ -83,6 +83,10 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.12.0)
     ffi (1.15.5)
     globalid (1.1.0)
@@ -162,6 +166,7 @@ GEM
     reline (0.3.4)
       io-console (~> 0.5)
     spring (4.1.1)
+    stripe (8.5.0)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -179,11 +184,13 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   debug
+  dotenv-rails
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.5)
   spring
+  stripe
   tzinfo-data
 
 RUBY VERSION
