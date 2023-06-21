@@ -5,14 +5,15 @@ import VendorContext from "../context/vendor";
 
 function ViewVendorDetailCard() {
   const { vendorId } = useParams();
-  const { findVendor, selectVendor } = useContext(VendorContext);
+  const { vendors } = useContext(VendorContext);
+  console.log("vendors: ", vendors);
 
-  useEffect(() => {
-    // resolves edge case where user navigates away from page and attempts to return to page via browser back button
-    findVendor(vendorId);
-  }, [vendorId, findVendor]);
+  const selectedVendor = vendors?.find(
+    (vendor) => vendor.id === parseInt(vendorId)
+  );
+  console.log("selectedVendor: ", selectedVendor);
 
-  if (!selectVendor) {
+  if (!selectedVendor) {
     return <h1>Vendor not found!</h1>;
   }
 
@@ -21,43 +22,43 @@ function ViewVendorDetailCard() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8">
         <div className="flex justify-center md:justify-start">
           <div className="bg-white rounded-full p-1 mb-4 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 flex items-center justify-center">
-            <a href={selectVendor?.website}>
+            <a href={selectedVendor?.website}>
               <img
-                src={selectVendor?.logo_image_url}
-                alt={selectVendor?.name}
+                src={selectedVendor?.logo_image_url}
+                alt={selectedVendor?.name}
                 className="w-full h-full object-contain rounded-full bg-white"
               />
             </a>
           </div>
         </div>
         <div>
-          <h1 className="text-5xl font-extrabold">{selectVendor?.name}</h1>
-          <p className="text-xl mt-2">{selectVendor?.description}</p>
+          <h1 className="text-5xl font-extrabold">{selectedVendor?.name}</h1>
+          <p className="text-xl mt-2">{selectedVendor?.description}</p>
           <div className="mt-8 space-y-4">
             <div className="flex items-center">
               <FiMail className="mr-2" />
               <span className="font-bold">Email:</span>{" "}
-              <span className="ml-1">{selectVendor?.email}</span>
+              <span className="ml-1">{selectedVendor?.email}</span>
             </div>
             <div className="flex items-center">
               <FiPhone className="mr-2" />
               <span className="font-bold">Phone:</span>{" "}
-              <span className="ml-1">{selectVendor?.phone_number}</span>
+              <span className="ml-1">{selectedVendor?.phone_number}</span>
             </div>
             <div className="flex items-center">
               <FiMapPin className="mr-2" />
               <span className="font-bold">Address:</span>{" "}
-              <span className="ml-1">{`${selectVendor?.address}, ${selectVendor?.city}, ${selectVendor?.state} ${selectVendor?.zip_code}`}</span>
+              <span className="ml-1">{`${selectedVendor?.address}, ${selectedVendor?.city}, ${selectedVendor?.state} ${selectedVendor?.zip_code}`}</span>
             </div>
             <div className="flex items-center">
               <FiClock className="mr-2" />
               <span className="font-bold">Delivery Schedule:</span>{" "}
-              <span className="ml-1">{selectVendor?.delivery_schedule}</span>
+              <span className="ml-1">{selectedVendor?.delivery_schedule}</span>
             </div>
             <div className="flex items-center">
               <FiStar className="mr-2" />
               <span className="font-bold">Average Rating:</span>{" "}
-              <span className="ml-1">{selectVendor?.average_rating}</span>
+              <span className="ml-1">{selectedVendor?.average_rating}</span>
             </div>
           </div>
         </div>
