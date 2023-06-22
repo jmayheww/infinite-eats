@@ -1,5 +1,6 @@
 class VendorsProductSerializer < ActiveModel::Serializer
-  attributes :id
-  has_one :vendor
-  has_one :product
+  attributes :id, :price, :quantity, :category, :brand, :size, :description, :image_url, :name
+
+  belongs_to :vendor
+  belongs_to :product
 end
