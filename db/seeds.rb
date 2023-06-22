@@ -1,13 +1,20 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
-# Clear db before seeding
-User.destroy_all
-Vendor.destroy_all
+require 'json'
+require 'faker'
 
 puts 'seeding database...'
 
+# Clear db before seeding
+User.destroy_all
+Vendor.destroy_all
+Product.destroy_all
+VendorsProduct.destroy_all
+
 # sample vendors
+
+puts 'creating vendors...'
 
 walmart = {
   name: 'Walmart',
@@ -56,8 +63,43 @@ costco = {
 
 # create vendors in db
 
-Vendor.create!(walmart)
-Vendor.create!(target)
-Vendor.create!(costco)
+Vendor.create!([walmart, target, costco])
+
+# create products in db
+puts 'creating products...'
+
+products_file = File.read('db/products.json')
+products_data = JSON.parse(products_file)
+
+products_data.each do |product|
+  Product.create!(
+    category: product['category'],
+    brand: product['brand'],
+    description: product['description'],
+    image_url: product['image_url'],
+    name: product['product_name'],
+    quantity: Faker::Number.between(from: 1, to: 100),
+    price: Faker::Commerce.price,
+    size: Faker::Number.between(from: 1, to: 100)
+  )
+end
+
+# create vendors_products in db
+puts 'creating vendors_products...'
+
+# Fetch all products and vendors
+products = Product.all
+vendors = Vendor.all
+
+# Create vendors_products
+products.each do |product|
+  vendors_product = VendorsProduct.create!(
+    product: product,
+    vendor: vendors.sample,
+    price: Faker::Commerce.price,
+    quantity: Faker::Number.between(from: 1, to: 100)
+  )
+  product.vendors_products << vendors_product
+end
 
 puts 'done seeding'

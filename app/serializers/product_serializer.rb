@@ -1,7 +1,7 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :image_url, :price, :quantity, :category, :brand, :size, :vendors_products
+  attributes :id, :name, :description, :image_url, :price, :quantity, :category, :brand, :size, :vendors
 
-  def vendors_products
-    object.vendors_products.map { |vp| VendorsProductSerializer.new(vp).as_json }
+  def vendors
+    object.vendors.map { |v| VendorSerializer.new(v).as_json }
   end
 end
