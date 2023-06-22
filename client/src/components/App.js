@@ -14,12 +14,13 @@ const stripePromise = loadStripe(
 
 const AsyncLandingPage = React.lazy(() => import("../pages/LandingPage"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
+const AsyncMyAccountPage = React.lazy(() => import("../pages/MyAccountPage"));
 const AsyncFeaturesPage = React.lazy(() => import("../pages/FeaturesPage"));
-const AsyncVendorsList = React.lazy(() => import("../pages/VendorsList"));
+const AsyncVendorsList = React.lazy(() => import("../pages/VendorsListPage"));
 const AsyncViewVendorPage = React.lazy(() => import("../pages/ViewVendorPage"));
 
 function App() {
-  const { user, fetchCurrentUser } = useContext(UserContext);
+  const { user, fetchCurrentUser, isLoading } = useContext(UserContext);
   const { fetchVendors } = useContext(VendorContext);
 
   useEffect(() => {
@@ -28,25 +29,23 @@ function App() {
 
     // fetch vendors
     fetchVendors();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className="App">
       <NavBar />
       <Suspense fallback={<h1>Loading...</h1>}>
         <Routes>
-          <Route exact path="/testing" element={<h1>Test Route</h1>} />
-          <Route exact path="/myaccount" element={<h1>My Account Page</h1>} />
-          <Route exact path="/features" element={<AsyncFeaturesPage />} />
+          <Route path="/testing" element={<h1>Test Route</h1>} />
+          <Route path="/features" element={<AsyncFeaturesPage />} />
 
-          <Route exact path="/vendors" element={<AsyncVendorsList />} />
+          <Route path="/vendors" element={<AsyncVendorsList />} />
 
-          <Route
-            exact
-            path="/vendors/:vendorId"
-            element={<AsyncViewVendorPage />}
-          />
+          <Route path="/vendors/:vendorId" element={<AsyncViewVendorPage />} />
 
           {/* test out stripe sdk */}
           <Route
@@ -59,13 +58,18 @@ function App() {
           />
 
           <Route path="/landing" element={<AsyncLandingPage />} />
-          <Route exact path="/" element={<Navigate to="/landing" replace />} />
+          <Route path="/" element={<Navigate to="/landing" replace />} />
+
           {!user && (
             <>
-              <Route exact path="/login" element={<AsyncAuthPage />} />
-              <Route exact path="/signup" element={<AsyncAuthPage />} />
+              <Route path="/login" element={<AsyncAuthPage />} />
+              <Route path="/signup" element={<AsyncAuthPage />} />
+              <Route path="/myaccount" element={<Navigate to="/login" />} />
             </>
           )}
+
+          {user && <Route path="/myaccount" element={<AsyncMyAccountPage />} />}
+
           <Route path="*" element={<Navigate to="/landing" />} />
         </Routes>
       </Suspense>

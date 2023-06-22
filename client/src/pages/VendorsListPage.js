@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import VendorContext from "../context/vendor";
 import VendorCard from "../components/VendorCard";
 
-function VendorsList() {
+function VendorsListPage() {
   const { vendors } = useContext(VendorContext);
 
   return (
@@ -27,4 +27,4 @@ function VendorsList() {
   );
 }
 
-export default VendorsList;
+export default VendorsListPage;

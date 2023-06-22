@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const resetErrors = () => setErrors([]);
@@ -61,11 +61,12 @@ export const UserProvider = ({ children }) => {
     if (r.ok) {
       r.json().then((user) => {
         setUser(user);
+        setIsLoading(false);
       });
     } else {
       setUser(null);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const authResponseHandler = (r) => {
