@@ -1,70 +1,49 @@
 import React, { useContext } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import UserContext from "../context/auth";
+import LinkButton from "./LinkButton";
+import { FaShoppingCart } from "react-icons/fa";
 
 function NavBar() {
-  const { user, logoutUser } = useContext(UserContext);
-
-  function handleLogout() {
-    logoutUser();
-  }
+  const { user } = useContext(UserContext);
 
   return (
     <nav className="bg-accent fixed w-full z-50 shadow-md transition-all duration-300 ease-in-out">
       <div className="container mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between py-2">
           <div className="text-center sm:text-left">
-            <RouterLink
+            <LinkButton
               to="/"
-              className="font-lato text-2xl sm:text-3xl text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
-              aria-label="Landing"
+              additionalStyles="font-lato text-2xl sm:text-3xl text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
             >
               Infinite Eats
-            </RouterLink>
+            </LinkButton>
           </div>
 
           <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 lg:space-x-6 text-sm sm:text-base">
-            <RouterLink
-              to="/"
-              className="py-1 px-2 sm:py-2 sm:px-3 text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
-              aria-label="Home"
-            >
-              Home
-            </RouterLink>
-            <RouterLink
-              to="/features"
-              className="py-1 px-2 sm:py-2 sm:px-3 text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
-              aria-label="Features"
-            >
-              Features
-            </RouterLink>
+            <LinkButton to="/">Home</LinkButton>
+            <LinkButton to="/features">Features</LinkButton>
+
+            {user && <LinkButton to="/myaccount">My Account</LinkButton>}
 
             <span className="border-l-2 border-white h-5 mx-1 sm:mx-2 md:mx-4"></span>
 
             {!user ? (
               <>
-                <RouterLink
-                  to="/login"
-                  className="py-1 px-2 sm:py-2 sm:px-3 text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
-                  aria-label="Log In"
-                >
-                  Log In
-                </RouterLink>
-                <RouterLink
+                <LinkButton to="/login">Log In</LinkButton>
+                <LinkButton
                   to="/signup"
-                  className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-secondary hover:scale-105 transition-all duration-300 ease-in-out rounded-md"
-                  aria-label="Sign Up"
+                  additionalStyles="bg-secondary rounded-md"
                 >
                   Sign Up
-                </RouterLink>
+                </LinkButton>
               </>
             ) : (
-              <button
-                onClick={handleLogout}
-                className="py-1 px-2 sm:py-2 sm:px-3 text-white bg-accent hover:opacity-60 transition-all duration-300 ease-in-out rounded font-medium"
+              <LinkButton
+                to="/checkout"
+                additionalStyles="bg-secondary rounded-md"
               >
-                Logout
-              </button>
+                <FaShoppingCart />
+              </LinkButton>
             )}
           </div>
         </div>
