@@ -10,39 +10,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_617_090_423) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_22_140351) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'username'
-    t.string 'email'
-    t.string 'password_digest'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'first_name'
-    t.string 'last_name'
-    t.string 'street_address'
-    t.string 'city'
-    t.string 'state'
-    t.string 'postal_code'
-    t.string 'phone_number'
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "image_url"
+    t.decimal "price"
+    t.integer "quantity"
+    t.string "category"
+    t.string "brand"
+    t.string "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'vendors', force: :cascade do |t|
-    t.string 'name', null: false
-    t.string 'email', null: false
-    t.string 'phone_number'
-    t.string 'address'
-    t.string 'city'
-    t.string 'state'
-    t.string 'zip_code'
-    t.string 'website'
-    t.string 'description'
-    t.string 'delivery_schedule'
-    t.decimal 'average_rating'
-    t.string 'logo_image_url'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "street_address"
+    t.string "city"
+    t.string "state"
+    t.string "postal_code"
+    t.string "phone_number"
   end
+
+  create_table "vendors", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "phone_number"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "website"
+    t.string "description"
+    t.string "delivery_schedule"
+    t.decimal "average_rating"
+    t.string "logo_image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vendors_products", force: :cascade do |t|
+    t.bigint "vendor_id", null: false
+    t.bigint "product_id", null: false
+    t.decimal "price"
+    t.integer "quantity"
+    t.string "category"
+    t.string "brand"
+    t.string "size"
+    t.string "description"
+    t.string "image_url"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_vendors_products_on_product_id"
+    t.index ["vendor_id"], name: "index_vendors_products_on_vendor_id"
+  end
+
+  add_foreign_key "vendors_products", "products"
+  add_foreign_key "vendors_products", "vendors"
 end

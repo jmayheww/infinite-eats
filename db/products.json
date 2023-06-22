@@ -1,0 +1,272 @@
+[
+    {
+        "id": 1,
+        "product_name": "Apple Granny Smith",
+        "category": "Fruits",
+        "price": "0.99",
+        "image_url": "https://example.com/images/apple_granny_smith.jpg",
+        "description": "Crisp and juicy with a slightly sour finish, Granny Smith apples are excellent for pies, salads, and sauces.",
+        "brand": "Generic"
+    },
+    {
+        "id": 2,
+        "product_name": "Organic Whole Milk",
+        "category": "Dairy",
+        "price": "3.49",
+        "image_url": "https://example.com/images/organic_whole_milk.jpg",
+        "description": "Organic whole milk from grass-fed cows. Rich, creamy, and full of beneficial vitamins, protein, and minerals.",
+        "brand": "Happy Cow"
+    },
+    {
+        "id": 3,
+        "product_name": "Almond Butter",
+        "category": "Pantry",
+        "price": "7.99",
+        "image_url": "https://example.com/images/almond_butter.jpg",
+        "description": "Creamy almond butter made from 100% pure, roasted and ground almonds. Great in smoothies, oatmeal, and on toast.",
+        "brand": "Healthy Nut"
+    },
+    {
+        "id": 4,
+        "product_name": "Free Range Eggs",
+        "category": "Dairy",
+        "price": "2.99",
+        "image_url": "https://example.com/images/free_range_eggs.jpg",
+        "description": "One dozen large free-range eggs. Our hens are humanely raised outdoors, producing delicious eggs with rich, orange yolks.",
+        "brand": "Happy Hen"
+    },
+    {
+        "id": 5,
+        "product_name": "Sourdough Bread",
+        "category": "Bakery",
+        "price": "3.99",
+        "image_url": "https://example.com/images/sourdough_bread.jpg",
+        "description": "Crusty, chewy, and with a robust flavor, our sourdough bread is perfect for sandwiches, toast, and more.",
+        "brand": "Fresh Loaf"
+    },
+    {
+        "id": 6,
+        "product_name": "Organic Baby Spinach",
+        "category": "Vegetables",
+        "price": "2.49",
+        "image_url": "https://example.com/images/organic_baby_spinach.jpg",
+        "description": "Fresh organic baby spinach, perfect for salads, smoothies, and side dishes. High in iron and vitamins.",
+        "brand": "Green Farm"
+    },
+    {
+        "id": 7,
+        "product_name": "Brown Rice",
+        "category": "Pantry",
+        "price": "1.99",
+        "image_url": "https://example.com/images/brown_rice.jpg",
+        "description": "Whole grain brown rice, naturally low in fat and high in fiber. A versatile and filling addition to any meal.",
+        "brand": "Healthy Grain"
+    },
+    {
+        "id": 8,
+        "product_name": "Olive Oil Extra Virgin",
+        "category": "Pantry",
+        "price": "8.99",
+        "image_url": "https://example.com/images/olive_oil.jpg",
+        "description": "Extra virgin olive oil made from 100% cold-pressed olives. Rich flavor for dressings, cooking, and dipping.",
+        "brand": "Golden Olive"
+    },
+    {
+        "id": 9,
+        "product_name": "Canned Tuna in Water",
+        "category": "Pantry",
+        "price": "1.89",
+        "image_url": "https://example.com/images/canned_tuna.jpg",
+        "description": "Premium canned tuna, packed in water for a fresh flavor. Perfect for salads, sandwiches, and pasta dishes.",
+        "brand": "Ocean's Best"
+    },
+    {
+        "id": 10,
+        "product_name": "Organic Tomato Sauce",
+        "category": "Pantry",
+        "price": "2.29",
+        "image_url": "https://example.com/images/tomato_sauce.jpg",
+        "description": "Organic tomato sauce made from vine-ripened tomatoes, perfect for pasta, pizza, and other Italian dishes.",
+        "brand": "Italiano"
+    },
+    {
+        "id": 11,
+        "product_name": "Ground Coffee Beans",
+        "category": "Beverages",
+        "price": "6.99",
+        "image_url": "https://example.com/images/ground_coffee_beans.jpg",
+        "description": "Rich, full-bodied ground coffee beans for a strong and flavorful cup every time. Perfect for your morning ritual.",
+        "brand": "Morning Roast"
+    },
+    {
+        "id": 12,
+        "product_name": "Boneless Chicken Breast",
+        "category": "Meats",
+        "price": "8.49",
+        "image_url": "https://example.com/images/boneless_chicken_breast.jpg",
+        "description": "Fresh, lean, boneless chicken breasts, perfect for grilling, baking, or sautéing. High in protein and flavor.",
+        "brand": "Farm Fresh"
+    },
+    {
+        "id": 13,
+        "product_name": "Organic Avocados",
+        "category": "Fruits",
+        "price": "1.49",
+        "image_url": "https://example.com/images/organic_avocados.jpg",
+        "description": "Ripe and creamy organic avocados. Delicious on toast, in salads, or as a healthy snack. High in heart-healthy fats.",
+        "brand": "Green Life"
+    },
+    {
+        "id": 14,
+        "product_name": "Greek Yogurt",
+        "category": "Dairy",
+        "price": "3.99",
+        "image_url": "https://example.com/images/greek_yogurt.jpg",
+        "description": "Thick and creamy Greek yogurt, high in protein and calcium. Perfect for breakfast or a healthy snack.",
+        "brand": "Greek Delight"
+    },
+    {
+        "id": 15,
+        "product_name": "Whole Grain Pasta",
+        "category": "Pantry",
+        "price": "2.29",
+        "image_url": "https://example.com/images/whole_grain_pasta.jpg",
+        "description": "Whole grain pasta, a great source of fiber and protein. Cooks up perfectly every time for your favorite pasta dishes.",
+        "brand": "Pasta Prima"
+    },
+    {
+        "id": 16,
+        "product_name": "Red Bell Peppers",
+        "category": "Vegetables",
+        "price": "1.99",
+        "image_url": "https://example.com/images/red_bell_peppers.jpg",
+        "description": "Crisp and sweet red bell peppers, great for salads, stir-fries, or stuffing. High in vitamin C and antioxidants.",
+        "brand": "Green Market"
+    },
+    {
+        "id": 17,
+        "product_name": "Salmon Fillets",
+        "category": "Seafood",
+        "price": "13.99",
+        "image_url": "https://example.com/images/salmon_fillets.jpg",
+        "description": "Fresh salmon fillets, high in Omega-3 fatty acids. Great for grilling, baking, or pan-searing.",
+        "brand": "Ocean Fresh"
+    },
+    {
+        "id": 18,
+        "product_name": "Peanut Butter",
+        "category": "Pantry",
+        "price": "3.49",
+        "image_url": "https://example.com/images/peanut_butter.jpg",
+        "description": "Creamy and delicious peanut butter, made from 100% ground peanuts. Great on sandwiches or for baking.",
+        "brand": "Nutty Goodness"
+    },
+    {
+        "id": 19,
+        "product_name": "Organic Apples",
+        "category": "Fruits",
+        "price": "0.99",
+        "image_url": "https://example.com/images/organic_apples.jpg",
+        "description": "Fresh organic apples, crisp and sweet. Perfect for snacking, in salads, or for baking.",
+        "brand": "Orchard Fresh"
+    },
+    {
+        "id": 20,
+        "product_name": "Brown Eggs",
+        "category": "Dairy",
+        "price": "3.29",
+        "image_url": "https://example.com/images/brown_eggs.jpg",
+        "description": "Fresh brown eggs, a great source of protein. Perfect for breakfast, baking, or cooking.",
+        "brand": "Farm Fresh"
+    },
+    {
+        "id": 21,
+        "product_name": "Baby Spinach",
+        "category": "Vegetables",
+        "price": "3.99",
+        "image_url": "https://example.com/images/baby_spinach.jpg",
+        "description": "Fresh and crisp baby spinach. Great for salads, smoothies, or sautéing.",
+        "brand": "Green Life"
+    },
+    {
+        "id": 22,
+        "product_name": "Tomato Ketchup",
+        "category": "Pantry",
+        "price": "2.49",
+        "image_url": "https://example.com/images/tomato_ketchup.jpg",
+        "description": "Classic tomato ketchup with the perfect balance of sweet and tangy. Great with fries, burgers, and more.",
+        "brand": "Classic Condiments"
+    },
+    {
+        "id": 23,
+        "product_name": "Mozzarella Cheese",
+        "category": "Dairy",
+        "price": "4.99",
+        "image_url": "https://example.com/images/mozzarella_cheese.jpg",
+        "description": "Soft and creamy mozzarella cheese. Perfect for pizzas, salads, or snacking.",
+        "brand": "Dairy Delights"
+    },
+    {
+        "id": 24,
+        "product_name": "Almond Milk",
+        "category": "Beverages",
+        "price": "2.99",
+        "image_url": "https://example.com/images/almond_milk.jpg",
+        "description": "Creamy almond milk, a great dairy-free option. Perfect for cereals, coffee, or smoothies.",
+        "brand": "Nuts About Milk"
+    },
+    {
+        "id": 25,
+        "product_name": "Orange Juice",
+        "category": "Beverages",
+        "price": "3.49",
+        "image_url": "https://example.com/images/orange_juice.jpg",
+        "description": "Freshly squeezed orange juice. High in vitamin C and a great way to start your day.",
+        "brand": "Juicy Delights"
+    },
+    {
+        "id": 26,
+        "product_name": "Whole Grain Bread",
+        "category": "Bakery",
+        "price": "3.49",
+        "image_url": "https://example.com/images/whole_grain_bread.jpg",
+        "description": "Wholesome whole grain bread, high in fiber. Perfect for sandwiches or toast.",
+        "brand": "Bakery Fresh"
+    },
+    {
+        "id": 27,
+        "product_name": "Extra Virgin Olive Oil",
+        "category": "Pantry",
+        "price": "8.99",
+        "image_url": "https://example.com/images/extra_virgin_olive_oil.jpg",
+        "description": "High-quality extra virgin olive oil. Perfect for dressings, cooking, or dipping.",
+        "brand": "Mediterranean Gold"
+    },
+    {
+        "id": 28,
+        "product_name": "Sweet Potatoes",
+        "category": "Vegetables",
+        "price": "1.49",
+        "image_url": "https://example.com/images/sweet_potatoes.jpg",
+        "description": "Sweet and nutritious sweet potatoes, high in fiber and vitamin A. Great for roasting, mashing, or baking.",
+        "brand": "Farm Fresh"
+    },
+    {
+        "id": 29,
+        "product_name": "Whole Wheat Pasta",
+        "category": "Pantry",
+        "price": "2.99",
+        "image_url": "https://example.com/images/whole_wheat_pasta.jpg",
+        "description": "Wholesome whole wheat pasta, a great source of complex carbohydrates. Perfect for pasta dishes.",
+        "brand": "Pasta Delight"
+    },
+    {
+        "id": 30,
+        "product_name": "Bananas",
+        "category": "Fruits",
+        "price": "0.79",
+        "image_url": "https://example.com/images/bananas.jpg",
+        "description": "Fresh bananas, sweet and rich in potassium. Great for snacking, in desserts, or smoothies.",
+        "brand": "Tropical Fruits"
+    }
+]
