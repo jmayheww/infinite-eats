@@ -40,7 +40,7 @@ function NavBar() {
             ) : (
               <LinkButton
                 to="/checkout"
-                additionalStyles="bg-secondary rounded-md"
+                additionalStyles="bg-secondary rounded-md hover:bg-tertiary hover:text"
               >
                 <FaShoppingCart />
               </LinkButton>
