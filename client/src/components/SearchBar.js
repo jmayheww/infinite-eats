@@ -6,7 +6,7 @@ function SearchBar() {
     useContext(SearchContext);
 
   return (
-    <form className="bg-white rounded-b-lg p-3">
+    <form className="bg-white rounded-b-lg p-3" onSubmit={handleSubmit}>
       <div className="flex items-center">
         <input
           value={queryInput}
