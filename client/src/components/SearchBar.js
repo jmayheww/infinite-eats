@@ -1,31 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { SearchContext } from "../context/search";
 
-function SearchBar({ handleSearch }) {
-  const [input, setInput] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleSearch(input);
-  };
+function SearchBar() {
+  const { queryInput, handleInput, handleSubmit, handleReset } =
+    useContext(SearchContext);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white rounded-b-lg p-3 flex items-center justify-between"
-    >
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="border-2 border-accent rounded w-full p-2"
-        type="text"
-        placeholder="Search by name or category..."
-      />
-      <button
-        className="ml-3 bg-secondary text-white rounded p-2"
-        type="submit"
-      >
-        Search
-      </button>
+    <form className="bg-white rounded-b-lg p-3">
+      <div className="flex items-center">
+        <input
+          value={queryInput}
+          onChange={handleInput}
+          className="border-2 border-accent rounded w-full p-2"
+          type="text"
+          placeholder="Search by product name or category..."
+        />
+        <button
+          className="ml-3 bg-secondary text-white rounded p-2"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          Search
+        </button>
+      </div>
+      {queryInput && (
+        <div className="flex justify-center mt-2">
+          <button
+            className="bg-secondary text-white rounded p-2 text-sm"
+            type="button"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+        </div>
+      )}
     </form>
   );
 }

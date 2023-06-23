@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/auth";
 import { VendorProvider } from "./context/vendor";
 import { ModalProvider } from "./context/modal";
+import { SearchProvider } from "./context/search";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,9 @@ root.render(
     <UserProvider>
       <VendorProvider>
         <ModalProvider>
-          <App />
+          <SearchProvider>
+            <App />
+          </SearchProvider>
         </ModalProvider>
       </VendorProvider>
     </UserProvider>
