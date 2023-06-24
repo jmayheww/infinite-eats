@@ -4,12 +4,13 @@ require 'faker'
 puts 'Seeding the database...'
 
 # Clear db before seeding
+User.destroy_all
+Vendor.destroy_all
+Product.destroy_all
+VendorsProduct.destroy_all
+Order.destroy_all
 OrderItem.destroy_all
 FridgeItem.destroy_all
-Order.destroy_all
-Product.destroy_all
-Vendor.destroy_all
-User.destroy_all
 
 # Sample vendors
 puts 'Creating vendors...'

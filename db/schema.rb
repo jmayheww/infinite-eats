@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_24_094123) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_24_151656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_24_094123) do
 
   create_table "order_items", force: :cascade do |t|
     t.bigint "order_id", null: false
-    t.bigint "vendor_product_id", null: false
+    t.bigint "vendors_product_id", null: false
     t.integer "quantity", null: false
     t.decimal "price", precision: 10, scale: 2, null: false
     t.datetime "created_at", null: false
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_24_094123) do
     t.bigint "fridge_item_id"
     t.index ["fridge_item_id"], name: "index_order_items_on_fridge_item_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
-    t.index ["vendor_product_id"], name: "index_order_items_on_vendor_product_id"
+    t.index ["vendors_product_id"], name: "index_order_items_on_vendors_product_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -117,7 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_24_094123) do
   add_foreign_key "fridge_items", "vendors_products"
   add_foreign_key "order_items", "fridge_items"
   add_foreign_key "order_items", "orders"
-  add_foreign_key "order_items", "vendors_products", column: "vendor_product_id"
+  add_foreign_key "order_items", "vendors_products"
   add_foreign_key "orders", "users"
   add_foreign_key "orders", "vendors"
   add_foreign_key "vendors_products", "products"
