@@ -7,7 +7,6 @@ puts 'Seeding the database...'
 OrderItem.destroy_all
 FridgeItem.destroy_all
 Order.destroy_all
-VendorsProduct.destroy_all
 Product.destroy_all
 Vendor.destroy_all
 User.destroy_all
