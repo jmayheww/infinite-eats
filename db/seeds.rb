@@ -1,22 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-
 require 'json'
 require 'faker'
 
-puts 'seeding database...'
+puts 'Seeding the database...'
 
 # Clear db before seeding
-User.destroy_all
-Vendor.destroy_all
-Product.destroy_all
+OrderItem.destroy_all
+FridgeItem.destroy_all
+Order.destroy_all
 VendorsProduct.destroy_all
+Product.destroy_all
+Vendor.destroy_all
+User.destroy_all
 
-# sample vendors
+# Sample vendors
+puts 'Creating vendors...'
 
-puts 'creating vendors...'
-
-walmart = {
+walmart = Vendor.create!(
   name: 'Walmart',
   email: 'support@walmart.com',
   phone_number: '1234567890',
@@ -29,9 +28,9 @@ walmart = {
   delivery_schedule: 'Monday to Friday',
   average_rating: 4.5,
   logo_image_url: 'https://cdn.corporate.walmart.com/dims4/WMT/71169a3/2147483647/strip/true/crop/2389x930+0+0/resize/980x381!/quality/90/?url=https%3A%2F%2Fcdn.corporate.walmart.com%2Fd6%2Fe7%2F48e91bac4a8ca8f22985b3682370%2Fwalmart-logos-lockupwtag-horiz-blu-rgb.png'
-}
+)
 
-target = {
+target = Vendor.create!(
   name: 'Target',
   email: 'customer.service@target.com',
   phone_number: '8005913869',
@@ -44,9 +43,9 @@ target = {
   delivery_schedule: 'Monday to Sunday',
   average_rating: 4.3,
   logo_image_url: 'https://www.denverchildrensfoundation.org/wp-content/uploads/2021/09/target-logo-300x90.png'
-}
+)
 
-costco = {
+costco = Vendor.create!(
   name: 'Costco',
   email: 'costcocare@costco.com',
   phone_number: '8007742678',
@@ -59,14 +58,10 @@ costco = {
   delivery_schedule: 'Monday to Sunday',
   average_rating: 4.2,
   logo_image_url: 'https://upload.wikimedia.org/wikipedia/commons/5/59/Costco_Wholesale_logo_2010-10-26.svg'
-}
+)
 
-# create vendors in db
-
-Vendor.create!([walmart, target, costco])
-
-# create products in db
-puts 'creating products...'
+# Create products
+puts 'Creating products...'
 
 products_file = File.read('db/products.json')
 products_data = JSON.parse(products_file)
@@ -79,27 +74,86 @@ products_data.each do |product|
     image_url: product['image_url'],
     name: product['product_name'],
     quantity: Faker::Number.between(from: 1, to: 100),
-    price: Faker::Commerce.price,
+    price: Faker::Commerce.price(range: 1..100.0, as_string: true),
     size: Faker::Number.between(from: 1, to: 100)
   )
 end
 
-# create vendors_products in db
-puts 'creating vendors_products...'
-
-# Fetch all products and vendors
-products = Product.all
-vendors = Vendor.all
-
 # Create vendors_products
-products.each do |product|
-  vendors_product = VendorsProduct.create!(
+puts 'Creating vendors_products...'
+
+Product.all.each do |product|
+  VendorsProduct.create!(
+    vendor: [walmart, target, costco].sample,
     product: product,
-    vendor: vendors.sample,
-    price: Faker::Commerce.price,
+    price: Faker::Commerce.price(range: 1..100.0, as_string: true),
     quantity: Faker::Number.between(from: 1, to: 100)
   )
-  product.vendors_products << vendors_product
 end
 
-puts 'done seeding'
+# Create users
+puts 'Creating users...'
+
+10.times do
+  User.create!(
+    username: Faker::Internet.username,
+    email: Faker::Internet.email,
+    password: 'password',
+    password_confirmation: 'password',
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    street_address: Faker::Address.street_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state_abbr,
+    postal_code: Faker::Address.zip_code,
+    phone_number: Faker::PhoneNumber.phone_number
+  )
+end
+
+# Create orders, order_items, fridge_items
+puts 'Creating orders, order_items, fridge_items...'
+
+users = User.all
+vendors_products = VendorsProduct.all
+
+users.each do |user|
+  order = Order.create!(
+    user: user,
+    vendor: [walmart, target, costco].sample,
+    status: %w[pending completed].sample,
+    total_price: Faker::Commerce.price(range: 1..1000.0, as_string: true),
+    delivery_address: Faker::Address.full_address,
+    payment_method: ['Credit Card', 'PayPal', 'Cash on Delivery'].sample,
+    stripe_payment_intent_id: Faker::Alphanumeric.alphanumeric(number: 10)
+  )
+
+  # Creating between 1-5 order_items per order
+  rand(1..5).times do
+    quantity = Faker::Number.between(from: 1, to: 10)
+    vendors_product = vendors_products.sample
+    OrderItem.create!(
+      order: order,
+      vendors_product: vendors_product,
+      quantity: quantity,
+      price: vendors_product.price
+    )
+
+    # Check if user already has a fridge item for the vendors product
+    fridge_item = user.fridge_items.find_by(vendors_product: vendors_product)
+
+    if fridge_item
+      # Update the quantity of existing fridge item
+      fridge_item.quantity += quantity
+      fridge_item.save!
+    else
+      # Create new fridge item for the user
+      FridgeItem.create!(
+        user: user,
+        vendors_product: vendors_product,
+        quantity: quantity
+      )
+    end
+  end
+end
+
+puts 'Done seeding the database!'
