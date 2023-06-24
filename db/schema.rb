@@ -10,19 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_24_065913) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_24_071930) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "fridge_items", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "vendors_product_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_fridge_items_on_user_id"
+    t.index ["vendors_product_id"], name: "index_fridge_items_on_vendors_product_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.bigint "order_id", null: false
-    t.bigint "vendor_product_id", null: false
+    t.bigint "vendors_product_id", null: false
     t.integer "quantity", null: false
     t.decimal "price", precision: 10, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_order_items_on_order_id"
-    t.index ["vendor_product_id"], name: "index_order_items_on_vendor_product_id"
+    t.index ["vendors_product_id"], name: "index_order_items_on_vendors_product_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -101,6 +111,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_24_065913) do
     t.index ["vendor_id"], name: "index_vendors_products_on_vendor_id"
   end
 
+  add_foreign_key "fridge_items", "users"
+  add_foreign_key "fridge_items", "vendors_products"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "vendors_products"
+  add_foreign_key "orders", "users"
+  add_foreign_key "orders", "vendors"
   add_foreign_key "vendors_products", "products"
   add_foreign_key "vendors_products", "vendors"
 end

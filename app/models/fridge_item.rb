@@ -1,0 +1,2 @@
+class FridgeItem < ApplicationRecord
+end
