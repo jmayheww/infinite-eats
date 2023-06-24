@@ -19,7 +19,7 @@ function NavBar() {
             </LinkButton>
           </div>
 
-          <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 lg:space-x-6 text-sm sm:text-base">
+          <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 lg:space-x-6 text-sm sm:text-base ml-auto">
             <LinkButton to="/">Home</LinkButton>
             <LinkButton to="/features">Features</LinkButton>
 
@@ -32,7 +32,7 @@ function NavBar() {
                 <LinkButton to="/login">Log In</LinkButton>
                 <LinkButton
                   to="/signup"
-                  additionalStyles="bg-secondary rounded-md"
+                  additionalStyles="bg-secondary rounded-md hover:bg-primary hover:text"
                 >
                   Sign Up
                 </LinkButton>

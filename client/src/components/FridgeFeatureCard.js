@@ -1,6 +1,6 @@
 import React from "react";
 
-function FeatureCard({ icon, title, description }) {
+function FridgeFeatureCard({ icon, title, description }) {
   return (
     <div className="flex flex-col items-center p-8 border rounded-lg shadow-lg h-full bg-tertiary">
       {icon}
@@ -11,4 +11,4 @@ function FeatureCard({ icon, title, description }) {
   );
 }
 
-export default FeatureCard;
+export default FridgeFeatureCard;

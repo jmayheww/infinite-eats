@@ -1,6 +1,6 @@
 import React from "react";
 import { FaRegCheckCircle, FaChartPie, FaShoppingCart } from "react-icons/fa";
-import FeatureCard from "../components/FeatureCard";
+import FridgeFeatureCard from "../components/FridgeFeatureCard";
 
 function FridgeManagementSection() {
   return (
@@ -16,7 +16,7 @@ function FridgeManagementSection() {
           again.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <FeatureCard
+          <FridgeFeatureCard
             icon={
               <FaRegCheckCircle
                 className="text-3xl mb-4 text-secondary"
@@ -26,7 +26,7 @@ function FridgeManagementSection() {
             title="Real-time Updates"
             description="Update and monitor your fridge inventory in real time. Always know what you have and what you need."
           />
-          <FeatureCard
+          <FridgeFeatureCard
             icon={
               <FaChartPie
                 className="text-3xl mb-4 text-secondary"
@@ -36,7 +36,7 @@ function FridgeManagementSection() {
             title="Customizable Orders"
             description="Customize your orders according to your needs. Whether you want to try something new or stock up on favorites, we've got you covered."
           />
-          <FeatureCard
+          <FridgeFeatureCard
             icon={
               <FaShoppingCart
                 className="text-3xl mb-4 text-secondary"

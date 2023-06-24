@@ -17,7 +17,7 @@ function VendorCard({ vendor }) {
       <p className="text-primary mb-4">{vendor.description}</p>
       <Link
         to={`/vendors/${vendor.id}`}
-        className="py-2 px-6 bg-secondary text-white rounded-md hover:bg-primary hover:text-accent border border-primary transition-all duration-300"
+        className="py-2 px-6 bg-secondary text-white rounded-md hover:bg-primary hover:text-secondary border border-primary transition-all duration-300"
       >
         Discover Our Products &rarr;
       </Link>
