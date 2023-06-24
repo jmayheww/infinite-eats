@@ -19,7 +19,7 @@ function VendorCard({ vendor }) {
         to={`/vendors/${vendor.id}`}
         className="py-2 px-6 bg-secondary text-white rounded-md hover:bg-primary hover:text-accent border border-primary transition-all duration-300"
       >
-        Browse Items
+        Discover Our Products &rarr;
       </Link>
     </div>
   );

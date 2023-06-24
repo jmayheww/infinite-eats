@@ -7,33 +7,31 @@ function SearchBar() {
 
   return (
     <form className="bg-white rounded-b-lg p-3" onSubmit={handleSubmit}>
-      <div className="flex items-center">
+      <div className="flex items-center justify-center">
         <input
           value={queryInput}
           onChange={handleInput}
-          className="border-2 border-accent rounded w-full p-2"
+          className="border-2 border-accent rounded w-full md:w-1/2 lg:w-1/3 p-2"
           type="text"
           placeholder="Search by product name or category..."
         />
         <button
-          className="ml-3 bg-secondary text-white rounded p-2"
+          className="ml-3 bg-secondary text-white rounded px-4 py-2 hover:bg-accent"
           type="submit"
           onClick={handleSubmit}
         >
           Search
         </button>
-      </div>
-      {queryInput && (
-        <div className="flex justify-center mt-2">
+        {queryInput && (
           <button
-            className="bg-secondary text-white rounded p-2 text-sm"
+            className="ml-3 bg-secondary text-white rounded px-4 py-2 hover:bg-accent"
             type="button"
             onClick={handleReset}
           >
             Reset
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </form>
   );
 }
