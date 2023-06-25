@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import VendorContext from "../context/vendor";
-import { OrderContext } from "../context/order"; // import OrderContext
+import { OrderContext } from "../context/order";
 import { SearchContext } from "../context/search";
 import VendorProductCard from "../components/VendorProductCard";
 
 function VendorProductSection() {
   const { vendors } = useContext(VendorContext);
-  const { selectedProducts } = useContext(OrderContext); // get selectedProducts from OrderContext
+  const { selectedProducts } = useContext(OrderContext);
   const { submitQuery, handleReset } = useContext(SearchContext);
   const { vendorId } = useParams();
-  const navigate = useNavigate();
 
   const selectedVendorProducts = vendors?.find(
     (vendor) => vendor.id === parseInt(vendorId)
@@ -28,10 +27,6 @@ function VendorProductSection() {
     );
   });
 
-  const handleBrowseVendors = () => {
-    navigate("/vendors");
-  };
-
   const handleCheckout = () => {
     // Here you would add your functionality to add selected products to the checkout cart
     console.log("Add to checkout", selectedProducts);
@@ -39,9 +34,20 @@ function VendorProductSection() {
 
   return (
     <section className="bg-primary py-12 px-4 sm:px-6 lg:px-8">
+      {selectedProducts.length > 0 && (
+        <div className="flex justify-center mb-4">
+          <button
+            className="bg-secondary text-white py-2 px-4 rounded-lg text-sm hover:bg-accent hover:text"
+            type="button"
+            onClick={handleCheckout}
+          >
+            Add All Selected to Checkout
+          </button>
+        </div>
+      )}
       {filteredProducts?.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4 justify-center">
-          {filteredProducts?.map((product) => (
+          {filteredProducts.map((product) => (
             <div key={product.id}>
               <VendorProductCard product={product} />
             </div>
@@ -54,32 +60,17 @@ function VendorProductSection() {
           </p>
         </div>
       )}
-      <div className="flex justify-center mt-6">
-        <button
-          className="bg-secondary text-white py-2 px-4 rounded-lg hover:bg-accent hover:text"
-          onClick={handleBrowseVendors}
-        >
-          See Other Vendors
-        </button>
-        {submitQuery && (
+      {submitQuery && (
+        <div className="flex justify-center mt-6">
           <button
-            className="bg-secondary text-white py-2 px-4 rounded-lg text-sm ml-4 hover:bg-accent hover:text"
+            className="bg-secondary text-white py-2 px-4 rounded-lg text-sm hover:bg-accent hover:text"
             type="button"
             onClick={handleReset}
           >
             Reset
           </button>
-        )}
-        {selectedProducts?.length > 0 && ( // Show "Add All Selected to Checkout" button only when there are selected products
-          <button
-            className="bg-secondary text-white py-2 px-4 rounded-lg text-sm ml-4 hover:bg-accent hover:text"
-            type="button"
-            onClick={handleCheckout}
-          >
-            Add All Selected to Checkout
-          </button>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }

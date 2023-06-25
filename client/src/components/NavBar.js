@@ -28,9 +28,7 @@ function NavBar() {
             <LinkButton to="/">Home</LinkButton>
             <LinkButton to="/features">Features</LinkButton>
 
-            {onVendorPage && (
-              <LinkButton to="/vendors">Browse Vendors</LinkButton>
-            )}
+            <LinkButton to="/vendors"> Vendors</LinkButton>
 
             {user && <LinkButton to="/myaccount">My Account</LinkButton>}
 
