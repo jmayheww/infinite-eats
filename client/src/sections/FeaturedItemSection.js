@@ -16,22 +16,22 @@ function FeaturedItemSection() {
     .slice(0, 4);
 
   return (
-    <section className="bg-secondary py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-6">
-          <h2 className="text-4xl font-extrabold text-primary mb-6 text-center">
+    <section className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-semibold text-gray-800 mb-2">
             Best Sellers
           </h2>
-          <p className="text-xl text-primary mb-8 text-center">
-            See our most popular products
+          <p className="text-lg text-gray-600">
+            Discover our most popular products
           </p>
         </div>
 
         {bestSellingProducts?.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {bestSellingProducts?.map((product) => (
               <div
-                className="bg-white rounded-lg p-6 shadow-lg"
+                className="bg-white rounded-lg overflow-hidden shadow-md border"
                 key={product.id}
               >
                 <VendorProductCard product={product} />
@@ -40,15 +40,16 @@ function FeaturedItemSection() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center">
-            <p className="text-secondary mb-4">
+            <p className="text-gray-600 mb-4">
               No products found. Please search again.
             </p>
           </div>
         )}
+
         <div className="flex justify-center mt-8">
           <Link
             to="/vendors"
-            className="py-3 px-6 bg-secondary text-white rounded-md hover:bg-primary hover:text-secondary border border-primary transition-colors duration-300"
+            className="py-3 px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors duration-300"
           >
             See All Best Sellers &rarr;
           </Link>

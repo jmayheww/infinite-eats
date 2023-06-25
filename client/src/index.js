@@ -8,6 +8,7 @@ import { UserProvider } from "./context/auth";
 import { VendorProvider } from "./context/vendor";
 import { ModalProvider } from "./context/modal";
 import { SearchProvider } from "./context/search";
+import { OrderProvider } from "./context/order";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,9 @@ root.render(
       <VendorProvider>
         <ModalProvider>
           <SearchProvider>
-            <App />
+            <OrderProvider>
+              <App />
+            </OrderProvider>
           </SearchProvider>
         </ModalProvider>
       </VendorProvider>
