@@ -47,12 +47,19 @@ function VendorProductCard({ product }) {
     <div
       className={`rounded-lg overflow-hidden shadow-lg border ${cardStyles}`}
     >
-      <div className="aspect-w-3 aspect-h-2">
-        <img
-          className="object-cover w-full h-full"
-          src={product.image_url}
-          alt={product.name}
+      <div className="flex items-center">
+        <Checkbox
+          checked={isSelected}
+          onChange={toggleSelection}
+          className="text-primary"
         />
+        <div className="aspect-w-3 aspect-h-2 flex-shrink-0 ml-2">
+          <img
+            className="object-cover w-full h-full"
+            src={product.image_url}
+            alt={product.name}
+          />
+        </div>
       </div>
       <div className="p-4">
         <h2 className="text-lg font-bold text-secondary mb-2">
@@ -68,51 +75,45 @@ function VendorProductCard({ product }) {
         <p className="text-xs text-gray-500">
           <span className="font-medium">Size:</span> {product.size}
         </p>
-      </div>
-      <div className="flex flex-col items-center bg-secondary py-2 px-4">
-        <span className="text-sm font-semibold text-white">
-          Price: ${product.price}
-        </span>
-        <div className="flex items-center mt-3">
-          <span className="text-sm text-primary font-semibold">Quantity:</span>
-          <div className="flex items-center ml-3">
-            <button
-              className="text-primary focus:outline-none text-sm border border-primary rounded-full w-8 h-8 ml-1"
-              onClick={decrementQuantity}
-              disabled={!orderQuantity}
-            >
-              -
-            </button>
-            <span className="text-primary font-semibold text-lg mx-2">
-              {orderQuantity}
+        <div className="flex items-center mt-3 justify-between">
+          <div className="flex items-center">
+            <span className="text-md font-semibold text-secondary">
+              Quantity:
             </span>
-            <button
-              className="text-primary focus:outline-none text-sm border border-primary rounded-full w-8 h-8"
-              onClick={incrementQuantity}
-            >
-              +
-            </button>
+            <div className="flex items-center ml-3">
+              <button
+                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
+                onClick={decrementQuantity}
+                disabled={!orderQuantity}
+              >
+                -
+              </button>
+              <span className="text-secondary font-semibold text-lg mx-2">
+                {orderQuantity}
+              </span>
+              <button
+                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
+                onClick={incrementQuantity}
+              >
+                +
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center mt-3">
-          <Checkbox
-            checked={isSelected}
-            onChange={toggleSelection}
-            className="text-primary"
-          />
-          <span className="ml-2 text-sm text-primary">
-            {isSelected ? "Deselect Product" : "Select for Purchase"}
-          </span>
           {!isSelected && (
             <button
-              className="text-primary focus:outline-none text-sm ml-4 hover:bg-primary hover:text-secondary transition-colors duration-300 hover:border-primary border border-primary rounded-md px-4 py-1"
+              className="text-secondary focus:outline-none text-sm ml-4 border border-secondary hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300 rounded-md px-4 py-1"
               onClick={resetQuantity}
             >
               Reset
             </button>
           )}
         </div>
-        <div className="mt-2">
+      </div>
+      <div className="flex items-center bg-secondary py-2 px-4">
+        <span className="text-sm font-semibold text-white">
+          Price: ${product.price}
+        </span>
+        <div className="ml-auto">
           <span
             className={`text-sm ${
               isSelected ? "text-green-600" : "text-gray-500"

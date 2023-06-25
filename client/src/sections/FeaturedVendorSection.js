@@ -26,7 +26,7 @@ function FeaturedVendorSection() {
             to="/vendors"
             className="py-3 px-6 bg-secondary text-white rounded-md hover:bg-accent hover:text-white border border-primary transition-colors duration-300"
           >
-            Browse All Vendors
+            See All Vendors &rarr;
           </Link>
         </div>
       </div>
