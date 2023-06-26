@@ -1,9 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
+import UserContext from "./auth";
 
 export const PaymentContext = createContext();
 
 export function PaymentProvider({ children }) {
+  const { setUser } = useContext(UserContext); // Access setUser from UserContext
   const stripe = useStripe();
   const elements = useElements();
   const [showCardInput, setShowCardInput] = useState(false);
@@ -50,6 +52,7 @@ export function PaymentProvider({ children }) {
         setLoading(false);
         console.log("[data]", data);
         console.log("[PaymentMethod]", paymentMethod);
+        setUser(data); // Update the user state
       })
       .catch((error) => {
         setLoading(false);

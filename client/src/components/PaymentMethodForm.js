@@ -83,7 +83,7 @@ function PaymentMethodForm() {
   const formContent = user.payment_method_id ? (
     <div>
       <h2 className="text-lg font-bold mb-2">My Payment Methods</h2>
-      <p>Visa ending in ****</p>
+      <p>Card ending in ****</p>
       {addPaymentButton}
       {cardInputElement}
     </div>
