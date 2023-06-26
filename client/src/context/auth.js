@@ -139,6 +139,7 @@ export const UserProvider = ({ children }) => {
 
   const handleProfileEdit = () => {
     resetErrors();
+    setUpdatedUser({ ...user });
     setEditMode(true);
   };
 
