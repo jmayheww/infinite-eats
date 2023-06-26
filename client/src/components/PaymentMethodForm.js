@@ -30,6 +30,7 @@ function PaymentMethodForm() {
       .catch((error) => {
         console.log("[error]", error);
       });
+    setShowCardInput(false);
   };
 
   const cardInputElement = (
