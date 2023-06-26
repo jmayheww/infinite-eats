@@ -13,8 +13,10 @@ function UserProfileSection() {
     handleProfileEdit,
   } = useContext(UserContext);
 
+  console.log(user);
+
   return (
-    <div className="bg-white shadow sm:rounded-lg w-full max-w-md p-6">
+    <div className="bg-white shadow sm:rounded-lg w-full max-w-md p-6 space-y-4">
       {errors && errors.length > 0 && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 mb-4 rounded">
           {errors.map((error, i) => (
@@ -74,15 +76,14 @@ function UserProfileSection() {
             src={user.user_image || "https://via.placeholder.com/150"}
             alt="User profile"
           />
-          <h2 className="text-2xl font-bold text-primary">
+          <h2 className="text-2xl font-bold text-secondary">
             {user.first_name} {user.last_name}
           </h2>
-          <p className="text-gray-500">{user.email}</p>
+          <p className="text-secondary">{user.email}</p>
           <div className="mt-4 text-left w-full">
             <p className="font-semibold">
-              <span className="mr-2">Address:</span>
-              {user.street_address}, {user.city}, {user.state},{" "}
-              {user.postal_code}
+              <span className="mr-2">Address:</span>{" "}
+              {`${user.street_address}, ${user.city}, ${user.state}, ${user.postal_code}`}
             </p>
             <p className="font-semibold">
               <span className="mr-2">Phone Number:</span>
@@ -91,7 +92,7 @@ function UserProfileSection() {
           </div>
           <button
             onClick={handleProfileEdit}
-            className="mt-4 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            className="mt-4 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
             Edit
           </button>

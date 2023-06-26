@@ -8,4 +8,5 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, on: :create
+  validates :payment_method_id, presence: true, on: :save_payment_method
 end

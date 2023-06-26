@@ -8,9 +8,7 @@ import VendorContext from "../context/vendor";
 import NavBar from "./NavBar";
 import PaymentMethodForm from "./PaymentMethodForm";
 
-const stripePromise = loadStripe(
-  String(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
-);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
 
 const AsyncLandingPage = React.lazy(() => import("../pages/LandingPage"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
@@ -42,7 +40,13 @@ function App() {
             exact
             path="/myaccount"
             element={
-              user ? <AsyncMyAccountPage /> : <Navigate to="/login" replace />
+              user ? (
+                <Elements stripe={stripePromise}>
+                  <AsyncMyAccountPage />
+                </Elements>
+              ) : (
+                <Navigate to="/login" replace />
+              )
             }
           />
 
@@ -57,18 +61,7 @@ function App() {
           />
 
           {/* conditional routing for checkout */}
-          <Route
-            path="/checkout"
-            element={
-              user ? (
-                <Elements stripe={stripePromise}>
-                  <PaymentMethodForm />
-                </Elements>
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
+          <Route path="/checkout" element={<h1>Checkout</h1>} />
 
           <Route path="/landing" element={<AsyncLandingPage />} />
           <Route exact path="/" element={<Navigate to="/landing" replace />} />

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_26_111211) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_26_151149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,6 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_26_111211) do
     t.string "user_image"
     t.string "stripe_customer_id"
     t.string "stripe_default_payment_method"
+    t.string "payment_method_id"
   end
 
   create_table "vendors", force: :cascade do |t|

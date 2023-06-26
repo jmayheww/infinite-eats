@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  before_action :set_current_user, only: %i[show update destroy]
+  before_action :set_current_user, only: %i[show update destroy save_payment_method]
   before_action :authorize_user, only: %i[show update destroy save_payment_method]
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found_response
@@ -8,6 +8,10 @@ class Api::UsersController < ApplicationController
 
   def create
     new_user = User.create!(user_params)
+
+    # Set your secret key. Remember to switch to your live secret key in production!
+    # See your keys here: https://dashboard.stripe.com/account/apikeys
+    Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
 
     # Creates a new Stripe customer on signup
     customer = Stripe::Customer.create({ email: new_user.email })
@@ -60,14 +64,20 @@ class Api::UsersController < ApplicationController
   # strong params: whitelist of allowed fields for user creation
 
   def user_params
-    params.permit(:email, :password, :password_confirmation)
+    params.permit(:email, :password, :password_confirmation, :stripe_customer_id)
   end
 
   # strong params: whitelist of allowed fields for user update
 
   def profile_params
-    params.permit(:user_image, :first_name, :last_name, :street_address, :username, :city, :state, :zip_code,
+    params.permit(:user_image, :first_name, :last_name, :street_address, :username, :city, :state, :postal_code,
                   :phone_number, :email)
+  end
+
+  # strong params for stripe payment updates
+
+  def payment_method_params
+    params.permit(:payment_method_id)
   end
 
   # rescue_from handlers
