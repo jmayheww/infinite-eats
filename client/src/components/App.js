@@ -6,9 +6,10 @@ import UserContext from "../context/auth";
 import VendorContext from "../context/vendor";
 
 import NavBar from "./NavBar";
-import PaymentMethodForm from "./PaymentMethodForm";
+import { PaymentProvider } from "../context/payment";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
+console.log("stripePromise: ", stripePromise);
 
 const AsyncLandingPage = React.lazy(() => import("../pages/LandingPage"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));
@@ -23,7 +24,6 @@ function App() {
 
   useEffect(() => {
     fetchCurrentUser();
-
     fetchVendors();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +42,9 @@ function App() {
             element={
               user ? (
                 <Elements stripe={stripePromise}>
-                  <AsyncMyAccountPage />
+                  <PaymentProvider>
+                    <AsyncMyAccountPage />
+                  </PaymentProvider>
                 </Elements>
               ) : (
                 <Navigate to="/login" replace />

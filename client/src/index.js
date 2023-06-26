@@ -14,6 +14,7 @@ import { OrderProvider } from "./context/order";
 import { PaymentProvider } from "./context/payment";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
+console.log("stripePromise: ", stripePromise);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
