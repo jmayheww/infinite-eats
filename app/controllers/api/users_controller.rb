@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
   before_action :set_current_user, only: %i[show update destroy]
-  before_action :authorize_user, only: %i[show update destroy]
+  before_action :authorize_user, only: %i[show update destroy save_payment_method]
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
@@ -8,6 +8,13 @@ class Api::UsersController < ApplicationController
 
   def create
     new_user = User.create!(user_params)
+
+    # Creates a new Stripe customer on signup
+    customer = Stripe::Customer.create({ email: new_user.email })
+
+    # Update the user with their new Stripe customer ID
+    new_user.update!(stripe_customer_id: customer.id)
+
     session[:user_id] = new_user.id
     render json: new_user, status: :created
   end
@@ -26,6 +33,14 @@ class Api::UsersController < ApplicationController
     @current_user.destroy
 
     head :no_content
+  end
+
+  def save_payment_method
+    pm_id = params.require(:pm_id)
+
+    @current_user.update(payment_method_id: pm_id)
+
+    render json: @current_user, status: :ok
   end
 
   private

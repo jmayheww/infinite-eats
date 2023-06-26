@@ -6,7 +6,7 @@ import UserContext from "../context/auth";
 import VendorContext from "../context/vendor";
 
 import NavBar from "./NavBar";
-import CheckoutForm from "./CheckoutForm";
+import PaymentMethodForm from "./PaymentMethodForm";
 
 const stripePromise = loadStripe(
   String(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
@@ -62,7 +62,7 @@ function App() {
             element={
               user ? (
                 <Elements stripe={stripePromise}>
-                  <CheckoutForm />
+                  <PaymentMethodForm />
                 </Elements>
               ) : (
                 <Navigate to="/login" replace />

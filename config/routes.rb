@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :orders
 
     post '/signup', to: 'users#create'
+    post '/users/save_payment_method', to: 'users#save_payment_method'
     post '/login', to: 'sessions#create'
     get '/me', to: 'users#show'
     delete '/logout', to: 'sessions#destroy'
