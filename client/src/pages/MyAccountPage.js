@@ -19,11 +19,6 @@ function MyAccountPage() {
     openModal();
   };
 
-  const handleConfirmDeletion = () => {
-    deleteUser();
-    closeModal();
-  };
-
   const handleConfirm = () => {
     if (modalAction === "logout") {
       logoutUser();
@@ -54,7 +49,7 @@ function MyAccountPage() {
         </button>
         <button
           onClick={handleDelete}
-          className="py-2 px-4 bg-accent text-white rounded-md hover:bg-secondary hover:opacity-80 transition-all duration-300"
+          className="py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 hover:opacity-80 transition-all duration-300 ease-in-out"
         >
           Delete Account
         </button>
@@ -77,4 +72,5 @@ function MyAccountPage() {
     </div>
   );
 }
+
 export default MyAccountPage;

@@ -51,7 +51,8 @@ class Api::UsersController < ApplicationController
   # strong params: whitelist of allowed fields for user update
 
   def profile_params
-    params.permit(:user_image, :first_name, :last_name, :address, :city, :state, :zip_code, :phone_number, :email)
+    params.permit(:user_image, :first_name, :last_name, :street_address, :username, :city, :state, :zip_code,
+                  :phone_number, :email)
   end
 
   # rescue_from handlers

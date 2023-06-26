@@ -11,18 +11,34 @@ const headers = {
 };
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({});
-  const [errors, setErrors] = useState([]);
-
   const initialUserAuthInput = {
     email: "",
     password: "",
     password_confirmation: "",
   };
 
+  const initialProfileInput = {
+    username: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+    street_address: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    country: "",
+    user_image: "",
+  };
+
+  const [user, setUser] = useState({});
+  console.log("user: ", user);
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [errors, setErrors] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [updatedUser, setUpdatedUser] = useState({ ...user });
+  console.log("updatedUser: ", updatedUser);
 
   const resetErrors = () => setErrors([]);
 
@@ -57,12 +73,12 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const updateUser = (updateUserData) => {
+  const updateUser = (updatedUserData) => {
     setIsLoading(true);
     fetch(`/api/users/${user.id}`, {
       method: "PATCH",
       headers: headers,
-      body: JSON.stringify(updateUserData),
+      body: JSON.stringify(updatedUserData),
     }).then(updateResponseHandler);
   };
 
@@ -78,6 +94,7 @@ export const UserProvider = ({ children }) => {
     if (r.ok) {
       r.json().then((user) => {
         setUser(user);
+        setUpdatedUser(user);
       });
     } else {
       setUser(null);
@@ -134,6 +151,31 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const handleProfileEdit = () => {
+    resetErrors();
+    setEditMode(true);
+  };
+
+  const handleCancel = () => {
+    resetErrors();
+    setEditMode(false);
+  };
+
+  const handleSave = () => {
+    resetErrors();
+    updateUser(updatedUser);
+    setEditMode(false);
+  };
+
+  const handleProfileChange = (e) => {
+    setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
+  };
+
+  const handleProfileSubmit = (e) => {
+    e.preventDefault();
+    handleSave();
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -155,6 +197,14 @@ export const UserProvider = ({ children }) => {
         setIsLoading,
         userAuthInput,
         handleUserAuthInput,
+        initialProfileInput,
+        editMode,
+        handleProfileEdit,
+        handleCancel,
+        handleSave,
+        handleProfileChange,
+        handleProfileSubmit,
+        updatedUser,
       }}
     >
       {children}

@@ -1,34 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import UserContext from "../context/auth";
 
 function UserProfileSection() {
-  const { user, updateUser, errors, resetErrors } = useContext(UserContext);
-  const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({ ...user });
-
-  const handleEdit = () => {
-    resetErrors();
-    setFormData({ ...user });
-    setEditMode(true);
-  };
-
-  const handleCancel = () => {
-    resetErrors();
-    setEditMode(false);
-  };
-
-  const handleSave = () => {
-    resetErrors();
-    updateUser(formData);
-    setEditMode(false);
-  };
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const {
+    user,
+    errors,
+    editMode,
+    handleProfileChange,
+    handleProfileSubmit,
+    handleCancel,
+    updatedUser,
+    handleProfileEdit,
+  } = useContext(UserContext);
 
   return (
     <div className="bg-white shadow sm:rounded-lg w-full max-w-md p-6">
@@ -41,10 +24,11 @@ function UserProfileSection() {
       )}
 
       {editMode ? (
-        <>
+        <form onSubmit={handleProfileSubmit}>
           {[
             "username",
             "email",
+            "user_image",
             "first_name",
             "last_name",
             "street_address",
@@ -54,7 +38,7 @@ function UserProfileSection() {
             "phone_number",
           ].map((field) => (
             <div key={field}>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-secondary">
                 {field
                   .split("_")
                   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -63,30 +47,31 @@ function UserProfileSection() {
               <input
                 type="text"
                 name={field}
-                value={formData[field]}
-                onChange={handleInputChange}
+                value={updatedUser[field] || ""}
+                onChange={handleProfileChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
             </div>
           ))}
           <button
-            onClick={handleSave}
-            className="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            type="submit"
+            className="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-accent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
             Save
           </button>
           <button
+            type="button"
             onClick={handleCancel}
-            className="mt-4 ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-primary bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            className="mt-4 ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
             Cancel
           </button>
-        </>
+        </form>
       ) : (
         <div className="flex flex-col items-center text-center">
           <img
             className="w-24 h-24 rounded-full object-cover mb-4"
-            src="/default-user-image.png"
+            src={user.user_image || "https://via.placeholder.com/150"}
             alt="User profile"
           />
           <h2 className="text-2xl font-bold text-primary">
@@ -105,7 +90,7 @@ function UserProfileSection() {
             </p>
           </div>
           <button
-            onClick={handleEdit}
+            onClick={handleProfileEdit}
             className="mt-4 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
             Edit

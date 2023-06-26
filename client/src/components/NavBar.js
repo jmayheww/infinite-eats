@@ -2,14 +2,9 @@ import React, { useContext } from "react";
 import UserContext from "../context/auth";
 import LinkButton from "./LinkButton";
 import { FaShoppingCart } from "react-icons/fa";
-import { useLocation } from "react-router-dom"; // Import useLocation hook
 
 function NavBar() {
   const { user } = useContext(UserContext);
-  const location = useLocation(); // get current location
-
-  // This will be true if the current page is an individual vendor page
-  const onVendorPage = location.pathname.includes("vendors/");
 
   return (
     <nav className="bg-accent fixed w-full z-50 shadow-md transition-all duration-300 ease-in-out">
@@ -28,9 +23,11 @@ function NavBar() {
             <LinkButton to="/">Home</LinkButton>
             <LinkButton to="/features">Features</LinkButton>
 
-            <LinkButton to="/vendors"> Vendors</LinkButton>
-
-            {user && <LinkButton to="/myaccount">My Account</LinkButton>}
+            {user && (
+              <>
+                <LinkButton to="/myaccount">My Account</LinkButton>
+              </>
+            )}
 
             <span className="border-l-2 border-white h-5 mx-1 sm:mx-2 md:mx-4"></span>
 
