@@ -17,28 +17,14 @@ export const UserProvider = ({ children }) => {
     password_confirmation: "",
   };
 
-  const initialProfileInput = {
-    username: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-    street_address: "",
-    city: "",
-    state: "",
-    postal_code: "",
-    country: "",
-    user_image: "",
-  };
-
   const [user, setUser] = useState({});
-  console.log("user: ", user);
+
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [errors, setErrors] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [updatedUser, setUpdatedUser] = useState({ ...user });
-  console.log("updatedUser: ", updatedUser);
 
   const resetErrors = () => setErrors([]);
 
@@ -197,7 +183,6 @@ export const UserProvider = ({ children }) => {
         setIsLoading,
         userAuthInput,
         handleUserAuthInput,
-        initialProfileInput,
         editMode,
         handleProfileEdit,
         handleCancel,
