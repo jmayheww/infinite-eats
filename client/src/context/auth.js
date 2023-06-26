@@ -57,6 +57,23 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const updateUser = (updateUserData) => {
+    setIsLoading(true);
+    fetch(`/api/users/${user.id}`, {
+      method: "PATCH",
+      headers: headers,
+      body: JSON.stringify(updateUserData),
+    }).then(updateResponseHandler);
+  };
+
+  const deleteUser = () => {
+    setIsLoading(true);
+    fetch(`/api/users/${user.id}`, { method: "DELETE" }).then(() => {
+      setUser(null);
+      navigate("/login");
+    });
+  };
+
   const currentUserResp = (r) => {
     if (r.ok) {
       r.json().then((user) => {
@@ -66,15 +83,6 @@ export const UserProvider = ({ children }) => {
       setUser(null);
     }
     setIsLoading(false);
-  };
-
-  const updateUser = (updateUserData) => {
-    setIsLoading(true);
-    fetch(`/api/users/${user.id}`, {
-      method: "PATCH",
-      headers: headers,
-      body: JSON.stringify(updateUserData),
-    }).then(updateResponseHandler);
   };
 
   const authResponseHandler = (r) => {
@@ -136,6 +144,7 @@ export const UserProvider = ({ children }) => {
         signupUser,
         logoutUser,
         updateUser,
+        deleteUser,
         buttonClickResponseHandler,
         headers,
         errors,

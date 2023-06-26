@@ -7,5 +7,5 @@ class User < ApplicationRecord
   has_many :vendor_products, through: :fridge_items
 
   validates :email, presence: true, uniqueness: true
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, on: :create
 end

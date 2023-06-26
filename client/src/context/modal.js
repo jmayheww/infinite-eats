@@ -6,6 +6,7 @@ export default ModalContext;
 
 export const ModalProvider = ({ children }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState("");
 
   const openModal = () => {
     setModalOpen(true);
@@ -16,7 +17,9 @@ export const ModalProvider = ({ children }) => {
   };
 
   return (
-    <ModalContext.Provider value={{ modalOpen, openModal, closeModal }}>
+    <ModalContext.Provider
+      value={{ modalOpen, openModal, closeModal, modalAction, setModalAction }}
+    >
       {children}
     </ModalContext.Provider>
   );
