@@ -68,12 +68,38 @@ export const UserProvider = ({ children }) => {
     setIsLoading(false);
   };
 
+  const updateUser = (updateUserData) => {
+    setIsLoading(true);
+    fetch(`/api/users/${user.id}`, {
+      method: "PATCH",
+      headers: headers,
+      body: JSON.stringify(updateUserData),
+    }).then(updateResponseHandler);
+  };
+
   const authResponseHandler = (r) => {
     if (r.ok) {
       r.json().then((user) => {
         setUser(user);
         setUserAuthInput(initialUserAuthInput);
         navigate("/landing");
+      });
+    } else {
+      r.json().then((data) => {
+        if (data.errors) {
+          setErrors(data.errors);
+        } else {
+          setErrors([data.error]);
+        }
+      });
+    }
+    setIsLoading(false);
+  };
+
+  const updateResponseHandler = (r) => {
+    if (r.ok) {
+      r.json().then((user) => {
+        setUser(user);
       });
     } else {
       r.json().then((data) => {
@@ -109,6 +135,7 @@ export const UserProvider = ({ children }) => {
         loginUser,
         signupUser,
         logoutUser,
+        updateUser,
         buttonClickResponseHandler,
         headers,
         errors,

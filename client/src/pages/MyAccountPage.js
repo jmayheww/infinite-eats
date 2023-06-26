@@ -22,18 +22,21 @@ function MyAccountPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold">My Account</h1>
-
-      <UserProfileSection />
-
-      <button
-        onClick={handleLogout}
-        className="mt-4 py-2 px-4 bg-red-500 text-white rounded"
-      >
-        Log Out
-      </button>
-
+    <div className="pt-20 px-8">
+      {" "}
+      {/* Adjusted padding-top to pt-20 from pt-12 */}
+      <h1 className="text-3xl font-bold mb-6 text-center">My Account</h1>
+      <div className="flex justify-center">
+        <UserProfileSection />
+      </div>
+      <div className="mt-4 text-center">
+        <button
+          onClick={handleLogout}
+          className="py-2 px-4 bg-red-500 text-white rounded"
+        >
+          Log Out
+        </button>
+      </div>
       <Modal
         isOpen={modalOpen}
         title="Confirm Logout"

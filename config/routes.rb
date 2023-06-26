@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  resources :fridge_items
-  resources :order_items
-  resources :orders
   namespace :api do
     resources :users, only: %i[show create update destroy]
     resources :products
     resources :vendors
+    resources :fridge_items
+    resources :order_items
+    resources :orders
 
     post '/signup', to: 'users#create'
     post '/login', to: 'sessions#create'
