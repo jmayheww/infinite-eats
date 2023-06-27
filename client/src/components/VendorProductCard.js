@@ -1,15 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../context/order";
 import Checkbox from "./Checkbox";
 
 function VendorProductCard({ product }) {
   const { addProduct, removeProduct, updateQuantity, selectedProducts } =
     useContext(OrderContext);
+  const isSelected = selectedProducts?.some(
+    (p) => p.id === product.id && p.selected
+  );
 
-  const isSelected = selectedProducts?.some((p) => p.id === product.id);
   const productData = selectedProducts?.find((p) => p.id === product.id);
-  const initialQuantity = productData ? productData.orderQuantity : 0;
-  const [orderQuantity, setOrderQuantity] = useState(initialQuantity);
+  console.log("productData: ", productData);
+
+  const [orderQuantity, setOrderQuantity] = useState(
+    isSelected ? productData?.quantity : 0
+  );
+
+  useEffect(() => {
+    // refresh local state and reset local orderQuantity state to 0 following successful order submission resets selectedProduct array to empty
+    console.log("productData?.quantity", productData?.quantity);
+    setOrderQuantity(productData?.quantity || 0);
+  }, [productData]);
 
   const incrementQuantity = () => {
     if (!isSelected) {

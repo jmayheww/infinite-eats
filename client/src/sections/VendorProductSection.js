@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
+import UserContext from "../context/auth";
 import VendorContext from "../context/vendor";
 import { OrderContext } from "../context/order";
 import { SearchContext } from "../context/search";
@@ -7,8 +8,9 @@ import VendorProductCard from "../components/VendorProductCard";
 
 function VendorProductSection() {
   const { vendors } = useContext(VendorContext);
-  const { selectedProducts } = useContext(OrderContext);
+  const { selectedProducts, submitOrder } = useContext(OrderContext);
   const { submitQuery, handleReset } = useContext(SearchContext);
+  const { user } = useContext(UserContext);
   const { vendorId } = useParams();
 
   const selectedVendorProducts = vendors?.find(
@@ -28,13 +30,13 @@ function VendorProductSection() {
   });
 
   const handleCheckout = () => {
-    // Here you would add your functionality to add selected products to the checkout cart
+    submitOrder(user, vendorId);
     console.log("Add to checkout", selectedProducts);
   };
 
   return (
     <section className="bg-primary py-12 px-4 sm:px-6 lg:px-8">
-      {selectedProducts.length > 0 && (
+      {selectedProducts.some((p) => p.selected) && (
         <div className="flex justify-center mb-4">
           <button
             className="bg-secondary text-white py-2 px-4 rounded-lg text-sm hover:bg-accent hover:text"

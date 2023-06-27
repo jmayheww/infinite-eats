@@ -4,9 +4,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserContext from "../context/auth";
 import VendorContext from "../context/vendor";
-
-import NavBar from "./NavBar";
 import { PaymentProvider } from "../context/payment";
+import NavBar from "./NavBar";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
 console.log("stripePromise: ", stripePromise);
@@ -17,6 +16,9 @@ const AsyncFeaturesPage = React.lazy(() => import("../pages/FeaturesPage"));
 const AsyncVendorsList = React.lazy(() => import("../pages/VendorsListPage"));
 const AsyncViewVendorPage = React.lazy(() => import("../pages/ViewVendorPage"));
 const AsyncMyAccountPage = React.lazy(() => import("../pages/MyAccountPage"));
+const AsyncOrderCheckoutPage = React.lazy(() =>
+  import("../pages/OrderCheckoutPage")
+);
 
 function App() {
   const { user, fetchCurrentUser } = useContext(UserContext);
@@ -62,8 +64,16 @@ function App() {
             element={<AsyncViewVendorPage />}
           />
 
-          {/* conditional routing for checkout */}
-          <Route path="/checkout" element={<h1>Checkout</h1>} />
+          {user && (
+            <Route
+              path="/checkout"
+              element={
+                <Elements stripe={stripePromise}>
+                  <AsyncOrderCheckoutPage />
+                </Elements>
+              }
+            />
+          )}
 
           <Route path="/landing" element={<AsyncLandingPage />} />
           <Route exact path="/" element={<Navigate to="/landing" replace />} />
