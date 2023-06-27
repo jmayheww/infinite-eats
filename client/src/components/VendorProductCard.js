@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../context/order";
+import UserContext from "../context/auth";
 import Checkbox from "./Checkbox";
 
 function VendorProductCard({ product }) {
   const { addProduct, removeProduct, updateQuantity, selectedProducts } =
     useContext(OrderContext);
+  const { user } = useContext(UserContext);
+  console.log("user: ", user);
+
   const isSelected = selectedProducts?.some(
     (p) => p.id === product.id && p.selected
   );
@@ -54,19 +58,58 @@ function VendorProductCard({ product }) {
     ? "bg-green-100 border-green-500"
     : "bg-white border-gray-200";
 
+  // Conditional rendering of order button and quantities
+  const OrderControls = () => {
+    if (user) {
+      return (
+        <div className="flex items-center">
+          <span className="text-md font-semibold text-secondary">
+            Quantity:
+          </span>
+          <div className="flex items-center ml-3">
+            <button
+              className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
+              onClick={decrementQuantity}
+              disabled={!orderQuantity}
+            >
+              -
+            </button>
+            <span className="text-secondary font-semibold text-lg mx-2">
+              {orderQuantity}
+            </span>
+            <button
+              className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
+              onClick={incrementQuantity}
+            >
+              +
+            </button>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <p>Please log in to place orders.</p>
+        </div>
+      );
+    }
+  };
+
   return (
     <div
       className={`rounded-lg overflow-hidden shadow-lg border ${cardStyles}`}
     >
-      <div className="flex items-center">
-        <Checkbox
-          checked={isSelected}
-          onChange={toggleSelection}
-          className="text-primary"
-        />
-        <div className="aspect-w-3 aspect-h-2 flex-shrink-0 ml-2">
+      <div className="flex justify-start items-center p-6">
+        {user && (
+          <Checkbox
+            checked={isSelected}
+            onChange={toggleSelection}
+            className="text-primary mr-20 flex-shrink-0"
+          />
+        )}
+        <div className="aspect-w-3 aspect-h-2 flex-grow flex justify-center items-center">
           <img
-            className="object-cover w-full h-full"
+            className="object-contain w-auto h-auto max-w-full max-h-32"
             src={product.image_url}
             alt={product.name}
           />
@@ -87,30 +130,8 @@ function VendorProductCard({ product }) {
           <span className="font-medium">Size:</span> {product.size}
         </p>
         <div className="flex items-center mt-3 justify-between">
-          <div className="flex items-center">
-            <span className="text-md font-semibold text-secondary">
-              Quantity:
-            </span>
-            <div className="flex items-center ml-3">
-              <button
-                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
-                onClick={decrementQuantity}
-                disabled={!orderQuantity}
-              >
-                -
-              </button>
-              <span className="text-secondary font-semibold text-lg mx-2">
-                {orderQuantity}
-              </span>
-              <button
-                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
-                onClick={incrementQuantity}
-              >
-                +
-              </button>
-            </div>
-          </div>
-          {!isSelected && (
+          <OrderControls />
+          {!isSelected && user && (
             <button
               className="text-secondary focus:outline-none text-sm ml-4 border border-secondary hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300 rounded-md px-4 py-1"
               onClick={resetQuantity}

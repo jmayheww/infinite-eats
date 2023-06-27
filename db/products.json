@@ -4,7 +4,7 @@
         "product_name": "Apple Granny Smith",
         "category": "Fruits",
         "price": "0.99",
-        "image_url": "https://example.com/images/apple_granny_smith.jpg",
+        "image_url": "https://i5.walmartimages.com/asr/bf2ec88a-2f36-41f2-93d3-c3161772733d_1.cdc913433c6acc6bf9201dc1fa86bac9.jpeg",
         "description": "Crisp and juicy with a slightly sour finish, Granny Smith apples are excellent for pies, salads, and sauces.",
         "brand": "Generic"
     },
@@ -13,7 +13,7 @@
         "product_name": "Organic Whole Milk",
         "category": "Dairy",
         "price": "3.49",
-        "image_url": "https://example.com/images/organic_whole_milk.jpg",
+        "image_url": "https://images.squarespace-cdn.com/content/v1/58dc3904be65945ca29a37d2/1609872588694-ZDTCET1VTG6N9Y7U1P0F/Screen+Shot+2021-01-05+at+1.49.15+PM.png?format=1000w",
         "description": "Organic whole milk from grass-fed cows. Rich, creamy, and full of beneficial vitamins, protein, and minerals.",
         "brand": "Happy Cow"
     },
