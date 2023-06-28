@@ -36,7 +36,7 @@ function VendorProductCard({ product }) {
   }, [initialQuantity]);
 
   const incrementQuantity = () => {
-    if (!isSelected) {
+    if (isSelected) {
       const newQuantity = orderQuantity + 1;
       setOrderQuantity(newQuantity);
       updateQuantity(product, newQuantity);
@@ -44,7 +44,7 @@ function VendorProductCard({ product }) {
   };
 
   const decrementQuantity = () => {
-    if (!isSelected && orderQuantity > 0) {
+    if (isSelected && orderQuantity > 0) {
       const newQuantity = orderQuantity - 1;
       setOrderQuantity(newQuantity);
       updateQuantity(product, newQuantity);
@@ -68,9 +68,10 @@ function VendorProductCard({ product }) {
     ? "bg-green-100 border-green-500"
     : "bg-white border-gray-200";
 
-  // Conditional rendering of order button and quantities based on user
+  /* Conditional rendering of order button and quantities based on user */
+
   const OrderControls = () => {
-    if (user) {
+    if (user && isSelected) {
       return (
         <>
           <div className="flex items-center">
@@ -81,7 +82,7 @@ function VendorProductCard({ product }) {
               <button
                 className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
                 onClick={decrementQuantity}
-                disabled={!orderQuantity}
+                disabled={!isSelected || !orderQuantity}
               >
                 -
               </button>
@@ -91,18 +92,19 @@ function VendorProductCard({ product }) {
               <button
                 className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
                 onClick={incrementQuantity}
+                disabled={!isSelected}
               >
                 +
+              </button>
+              <button
+                className="text-secondary focus:outline-none text-sm ml-4 border border-secondary hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300 rounded-md px-4 py-1"
+                onClick={resetQuantity}
+              >
+                Reset
               </button>
             </div>
           </div>
         </>
-      );
-    } else {
-      return (
-        <div>
-          <p>Please log in to place orders.</p>
-        </div>
       );
     }
   };
@@ -142,27 +144,19 @@ function VendorProductCard({ product }) {
           <span className="font-medium">Size:</span> {product.size}
         </p>
         {/* Quantity reflects message */}
-        {user && (
+        {user && isSelected && (
           <div className="mt-3 mb-3 bg-blue-100 text-blue-800 p-2 rounded">
             <p className="text-xs">
-              <span className="font-bold">Note:</span> Quantity reflects the
-              number of items you have selected in checkout and not the number
-              of items in stock. Updates to quantity here will be reflected in
-              checkout.
+              <span className="font-bold">Note:</span> Quantity shown reflects
+              the number of items you have pending in checkout and not the
+              number of items in stock. Changes to quantities here will be
+              reflected at checkout.
             </p>
           </div>
         )}
-        {/* Order controls and Reset button */}
+        {/* Order controls */}
         <div className="flex items-center mt-3 justify-between">
           <OrderControls />
-          {!isSelected && user && (
-            <button
-              className="text-secondary focus:outline-none text-sm ml-4 border border-secondary hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300 rounded-md px-4 py-1"
-              onClick={resetQuantity}
-            >
-              Reset
-            </button>
-          )}
         </div>
       </div>
       <div className="flex items-center bg-secondary py-2 px-4">
