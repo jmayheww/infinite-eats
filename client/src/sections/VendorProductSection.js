@@ -43,7 +43,9 @@ function VendorProductSection() {
             type="button"
             onClick={handleCheckout}
           >
-            Add All Selected to Checkout
+            {user.order_items.length > 0
+              ? "Update Selections in Checkout"
+              : "Add Selections to Checkout"}
           </button>
         </div>
       )}

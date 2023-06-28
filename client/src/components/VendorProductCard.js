@@ -11,24 +11,29 @@ function VendorProductCard({ product }) {
     selectedProducts,
     errors,
     setErrors,
+    getUserOrderItems,
+    findProductInOrderItems,
   } = useContext(OrderContext);
+
   const { user } = useContext(UserContext);
 
   const isSelected = selectedProducts?.some(
     (p) => p.id === product.id && p.selected
   );
 
-  const productData = selectedProducts?.find((p) => p.id === product.id);
+  const userOrderItems = getUserOrderItems(user);
 
-  const [orderQuantity, setOrderQuantity] = useState(
-    isSelected ? productData?.quantity : 0
-  );
+  const productData = findProductInOrderItems(userOrderItems, product.id);
+
+  const initialQuantity = productData?.quantity || 0;
+
+  const [orderQuantity, setOrderQuantity] = useState(initialQuantity);
 
   useEffect(() => {
     // refresh local state and reset local orderQuantity state to 0 following successful order submission resets selectedProduct array to empty
 
-    setOrderQuantity(productData?.quantity || 0);
-  }, [productData]);
+    setOrderQuantity(initialQuantity);
+  }, [initialQuantity]);
 
   const incrementQuantity = () => {
     if (!isSelected) {
@@ -67,29 +72,31 @@ function VendorProductCard({ product }) {
   const OrderControls = () => {
     if (user) {
       return (
-        <div className="flex items-center">
-          <span className="text-md font-semibold text-secondary">
-            Quantity:
-          </span>
-          <div className="flex items-center ml-3">
-            <button
-              className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
-              onClick={decrementQuantity}
-              disabled={!orderQuantity}
-            >
-              -
-            </button>
-            <span className="text-secondary font-semibold text-lg mx-2">
-              {orderQuantity}
+        <>
+          <div className="flex items-center">
+            <span className="text-md font-semibold text-secondary">
+              Quantity:
             </span>
-            <button
-              className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
-              onClick={incrementQuantity}
-            >
-              +
-            </button>
+            <div className="flex items-center ml-3">
+              <button
+                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
+                onClick={decrementQuantity}
+                disabled={!orderQuantity}
+              >
+                -
+              </button>
+              <span className="text-secondary font-semibold text-lg mx-2">
+                {orderQuantity}
+              </span>
+              <button
+                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
+                onClick={incrementQuantity}
+              >
+                +
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       );
     } else {
       return (
@@ -134,6 +141,18 @@ function VendorProductCard({ product }) {
         <p className="text-xs text-gray-500">
           <span className="font-medium">Size:</span> {product.size}
         </p>
+        {/* Quantity reflects message */}
+        {user && (
+          <div className="mt-3 mb-3 bg-blue-100 text-blue-800 p-2 rounded">
+            <p className="text-xs">
+              <span className="font-bold">Note:</span> Quantity reflects the
+              number of items you have selected in checkout and not the number
+              of items in stock. Updates to quantity here will be reflected in
+              checkout.
+            </p>
+          </div>
+        )}
+        {/* Order controls and Reset button */}
         <div className="flex items-center mt-3 justify-between">
           <OrderControls />
           {!isSelected && user && (

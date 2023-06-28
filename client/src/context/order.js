@@ -17,6 +17,13 @@ export const OrderProvider = ({ children }) => {
     });
   };
 
+  // help find the user's current order items
+  const getUserOrderItems = (user) => user.order_items;
+
+  // help find a product in the order items array
+  const findProductInOrderItems = (orderItems, productId) =>
+    orderItems?.find((item) => item.vendors_product_id === productId);
+
   const addProduct = (product, quantity) => {
     setSelectedProducts((prev) => {
       const productInList = prev.find((p) => p.id === product.id);
@@ -69,7 +76,7 @@ export const OrderProvider = ({ children }) => {
         if (existingItem) {
           const updatedItem = {
             ...existingItem,
-            quantity: existingItem.quantity + product.quantity,
+            quantity: product.quantity,
           };
 
           updatedOrderItems.push(updatedItem);
@@ -100,6 +107,16 @@ export const OrderProvider = ({ children }) => {
             return r.json().then((data) => {
               setSelectedProducts([]);
               setErrors([]);
+              setOrders((prev) => {
+                const updatedOrders = prev.map((order) => {
+                  if (order.id === data.id) {
+                    return data;
+                  } else {
+                    return order;
+                  }
+                });
+                return updatedOrders;
+              });
             });
           } else {
             return r.json().then((data) => {
@@ -153,6 +170,8 @@ export const OrderProvider = ({ children }) => {
         setErrors,
         fetchOrders,
         orders,
+        getUserOrderItems,
+        findProductInOrderItems,
       }}
     >
       {children}
