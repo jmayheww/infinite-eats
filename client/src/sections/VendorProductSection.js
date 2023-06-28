@@ -16,11 +16,11 @@ function VendorProductSection() {
 
   const selectedVendorProducts = vendors?.find(
     (vendor) => vendor.id === parseInt(vendorId)
-  ).vendors_products;
+  )?.vendors_products;
 
   const filteredProducts = selectedVendorProducts?.filter((product) => {
-    const productNameCase = product.name.toLowerCase();
-    const productCategoryCase = product.category.toLowerCase();
+    const productNameCase = product?.name.toLowerCase();
+    const productCategoryCase = product?.category.toLowerCase();
 
     const queryInputCase = submitQuery.toLowerCase();
 
@@ -36,7 +36,7 @@ function VendorProductSection() {
 
   return (
     <section className="bg-primary py-12 px-4 sm:px-6 lg:px-8">
-      {selectedProducts.some((p) => p.selected) && (
+      {selectedProducts?.some((p) => p.selected) && (
         <div className="flex justify-center mb-4">
           <button
             className="bg-secondary text-white py-2 px-4 rounded-lg text-sm hover:bg-accent hover:text"

@@ -125,7 +125,7 @@ ActiveRecord::Base.transaction do
     order = Order.create!(
       user: user,
       vendor: [walmart, target, costco].sample,
-      status: %w[pending completed].sample,
+      status: 'completed',
       total_price: Faker::Commerce.price(range: 1..1000.0),
       delivery_address: Faker::Address.full_address,
       payment_method: ['Credit Card', 'PayPal', 'Cash on Delivery'].sample,

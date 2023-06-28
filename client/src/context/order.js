@@ -52,17 +52,17 @@ export const OrderProvider = ({ children }) => {
       price: product.price,
     }));
 
+    const orderData = {
+      user_id: userId,
+      vendor_id: vendorId,
+      status: "pending",
+      order_items_attributes: orderItems,
+    };
+
     fetch("/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        order: {
-          user_id: userId,
-          vendor_id: vendorId,
-          status: "pending",
-          order_items_attributes: orderItems,
-        },
-      }),
+      body: JSON.stringify({ order: orderData }),
     })
       .then((r) => {
         if (r.ok) {
