@@ -4,17 +4,20 @@ import UserContext from "../context/auth";
 import Checkbox from "./Checkbox";
 
 function VendorProductCard({ product }) {
-  const { addProduct, removeProduct, updateQuantity, selectedProducts } =
-    useContext(OrderContext);
+  const {
+    addProduct,
+    removeProduct,
+    updateQuantity,
+    selectedProducts,
+    errors,
+  } = useContext(OrderContext);
   const { user } = useContext(UserContext);
-  console.log("user: ", user);
 
   const isSelected = selectedProducts?.some(
     (p) => p.id === product.id && p.selected
   );
 
   const productData = selectedProducts?.find((p) => p.id === product.id);
-  console.log("productData: ", productData);
 
   const [orderQuantity, setOrderQuantity] = useState(
     isSelected ? productData?.quantity : 0
@@ -22,7 +25,7 @@ function VendorProductCard({ product }) {
 
   useEffect(() => {
     // refresh local state and reset local orderQuantity state to 0 following successful order submission resets selectedProduct array to empty
-    console.log("productData?.quantity", productData?.quantity);
+
     setOrderQuantity(productData?.quantity || 0);
   }, [productData]);
 
@@ -50,7 +53,9 @@ function VendorProductCard({ product }) {
     if (isSelected) {
       removeProduct(product);
     } else {
+      // if (orderQuantity > 0) {
       addProduct(product, orderQuantity);
+      // }
     }
   };
 
@@ -58,7 +63,7 @@ function VendorProductCard({ product }) {
     ? "bg-green-100 border-green-500"
     : "bg-white border-gray-200";
 
-  // Conditional rendering of order button and quantities
+  // Conditional rendering of order button and quantities based on user
   const OrderControls = () => {
     if (user) {
       return (
@@ -155,6 +160,9 @@ function VendorProductCard({ product }) {
           </span>
         </div>
       </div>
+      {errors && errors.length > 0 && (
+        <p className="text-red-500 p-4">{errors[0]}</p>
+      )}
     </div>
   );
 }

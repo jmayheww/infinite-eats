@@ -4,8 +4,10 @@ export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   const addProduct = (product, quantity) => {
+    // if (quantity > 0) {
     setSelectedProducts((prev) => {
       const productInList = prev.find((p) => p.id === product.id);
       if (productInList) {
@@ -16,6 +18,7 @@ export const OrderProvider = ({ children }) => {
       return [...prev, { ...product, quantity, selected: true }];
     });
   };
+  // };
 
   const removeProduct = (product) => {
     setSelectedProducts((prev) =>
@@ -31,6 +34,7 @@ export const OrderProvider = ({ children }) => {
 
   const submitOrder = (currentUser, vendorId) => {
     const userId = currentUser.id;
+    setErrors([]);
 
     const orderItems = selectedProducts.map((product) => ({
       vendors_product_id: product.id,
@@ -49,20 +53,23 @@ export const OrderProvider = ({ children }) => {
           order_items_attributes: orderItems,
         },
       }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error creating order and order items");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Order and order items created successfully!");
-        setSelectedProducts([]);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => {
+          console.log("data: ", data);
+          console.log("Order and order items created successfully!");
+          setSelectedProducts([]);
+        });
+      } else {
+        r.json().then((data) => {
+          if (data.errors) {
+            setErrors(data.errors);
+          } else {
+            setErrors([data.error]);
+          }
+        });
+      }
+    });
   };
 
   return (
@@ -73,6 +80,7 @@ export const OrderProvider = ({ children }) => {
         removeProduct,
         updateQuantity,
         submitOrder,
+        errors,
       }}
     >
       {children}
