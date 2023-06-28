@@ -3,8 +3,20 @@ import React, { createContext, useState } from "react";
 export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
+  const [orders, setOrders] = useState([]);
+  console.log("orders: ", orders);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState([]);
+
+  const fetchOrders = () => {
+    fetch("/api/orders").then((r) => {
+      if (r.ok) {
+        r.json().then((data) => setOrders(data));
+      } else {
+        r.json().then((err) => console.error(err));
+      }
+    });
+  };
 
   const addProduct = (product, quantity) => {
     setSelectedProducts((prev) => {
@@ -30,7 +42,7 @@ export const OrderProvider = ({ children }) => {
     );
   };
 
-  const submitOrder = (currentUser, vendorId) => {
+  const submitOrderItemsToCheckout = (currentUser, vendorId) => {
     const userId = currentUser.id;
     setErrors([]);
 
@@ -78,9 +90,10 @@ export const OrderProvider = ({ children }) => {
         addProduct,
         removeProduct,
         updateQuantity,
-        submitOrder,
+        submitOrderItemsToCheckout,
         errors,
         setErrors,
+        fetchOrders,
       }}
     >
       {children}

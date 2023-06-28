@@ -5,6 +5,11 @@ class Api::OrdersController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
+  def index
+    orders = Order.all
+    render json: orders, status: :ok
+  end
+
   def create
     order = Order.create!(order_params)
 

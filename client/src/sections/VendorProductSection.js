@@ -8,7 +8,8 @@ import VendorProductCard from "../components/VendorProductCard";
 
 function VendorProductSection() {
   const { vendors } = useContext(VendorContext);
-  const { selectedProducts, submitOrder, errors } = useContext(OrderContext);
+  const { selectedProducts, submitOrderItemsToCheckout } =
+    useContext(OrderContext);
   const { submitQuery, handleReset } = useContext(SearchContext);
   const { user } = useContext(UserContext);
   const { vendorId } = useParams();
@@ -30,8 +31,7 @@ function VendorProductSection() {
   });
 
   const handleCheckout = () => {
-    submitOrder(user, vendorId);
-    console.log("Add to checkout", selectedProducts);
+    submitOrderItemsToCheckout(user, vendorId);
   };
 
   return (
