@@ -18,7 +18,7 @@ export const OrderProvider = ({ children }) => {
   };
 
   // help find the user's current order items
-  const getUserOrderItems = (user) => user.order_items;
+  const getUserOrderItems = (user) => user?.order_items;
 
   // help find a product in the order items array
   const findProductInOrderItems = (orderItems, productId) =>

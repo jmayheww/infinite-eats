@@ -23,7 +23,9 @@ function VendorProductCard({ product }) {
 
   const userOrderItems = getUserOrderItems(user);
 
-  const productData = findProductInOrderItems(userOrderItems, product.id);
+  const productData = userOrderItems
+    ? findProductInOrderItems(userOrderItems, product.id)
+    : null;
 
   const initialQuantity = productData?.quantity || 0;
 
