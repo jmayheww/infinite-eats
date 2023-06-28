@@ -140,7 +140,8 @@ ActiveRecord::Base.transaction do
         order: order,
         vendors_product: vendors_product,
         quantity: quantity,
-        price: vendors_product.price
+        price: vendors_product.price,
+        name: vendors_product.name
       )
 
       # Check if user already has a fridge item for the vendors product

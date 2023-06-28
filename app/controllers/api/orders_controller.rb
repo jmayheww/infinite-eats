@@ -16,6 +16,12 @@ class Api::OrdersController < ApplicationController
     render json: order
   end
 
+  def update
+    order = Order.find(params[:id])
+    order.update!(order_params)
+    render json: order, status: :ok
+  end
+
   private
 
   def set_current_user
@@ -31,8 +37,12 @@ class Api::OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:user_id, :vendor_id, :status,
-                                  order_items_attributes: %i[vendors_product_id quantity price])
+    params.require(:order).permit(
+      :user_id,
+      :vendor_id,
+      :status,
+      order_items_attributes: %i[id name quantity price vendors_product_id order_id]
+    )
   end
 
   def render_record_not_found_response(exception)

@@ -4,7 +4,6 @@ export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
-  console.log("orders: ", orders);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState([]);
 
@@ -13,7 +12,7 @@ export const OrderProvider = ({ children }) => {
       if (r.ok) {
         r.json().then((data) => setOrders(data));
       } else {
-        r.json().then((err) => console.error(err));
+        r.json().then((err) => setErrors(err.errors));
       }
     });
   };
@@ -46,41 +45,100 @@ export const OrderProvider = ({ children }) => {
     const userId = currentUser.id;
     setErrors([]);
 
-    const orderItems = selectedProducts.map((product) => ({
+    const orderItems = selectedProducts?.map((product) => ({
       vendors_product_id: product.id,
       quantity: product.quantity,
       price: product.price,
+      name: product.name,
     }));
 
-    const orderData = {
-      user_id: userId,
-      vendor_id: vendorId,
-      status: "pending",
-      order_items_attributes: orderItems,
-    };
+    const existingOrder = orders?.find(
+      (order) =>
+        order.vendor_id === parseInt(vendorId) && order.status === "pending"
+    );
 
-    fetch("/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ order: orderData }),
-    })
-      .then((r) => {
-        if (r.ok) {
-          return r.json().then((data) => {
-            setSelectedProducts([]);
-            setErrors([]);
-          });
+    if (existingOrder) {
+      const existingOrderItems = existingOrder.order_items;
+      const updatedOrderItems = [];
+
+      selectedProducts.forEach((product) => {
+        const existingItem = existingOrderItems.find(
+          (item) => item.vendors_product_id === product.id
+        );
+
+        if (existingItem) {
+          const updatedItem = {
+            ...existingItem,
+            quantity: existingItem.quantity + product.quantity,
+          };
+
+          updatedOrderItems.push(updatedItem);
         } else {
-          return r.json().then((data) => {
-            if (data.errors) {
-              setErrors(data.errors);
-            }
-          });
+          const newOrderItem = {
+            vendors_product_id: product.id,
+            quantity: product.quantity,
+            price: product.price,
+            name: product.name,
+          };
+          updatedOrderItems.push(newOrderItem);
         }
-      })
-      .catch((error) => {
-        console.log(error);
       });
+
+      const updatedOrder = {
+        ...existingOrder,
+        user_id: existingOrder.user.id,
+        order_items_attributes: updatedOrderItems,
+      };
+
+      fetch(`/api/orders/${existingOrder.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order: updatedOrder }),
+      })
+        .then((r) => {
+          if (r.ok) {
+            return r.json().then((data) => {
+              setSelectedProducts([]);
+              setErrors([]);
+            });
+          } else {
+            return r.json().then((data) => {
+              if (data.errors) {
+                setErrors(data.errors);
+              }
+            });
+          }
+        })
+        .catch((error) => {});
+    } else {
+      const orderData = {
+        user_id: userId,
+        vendor_id: vendorId,
+        status: "pending",
+        order_items_attributes: orderItems,
+      };
+
+      fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order: orderData }),
+      })
+        .then((r) => {
+          if (r.ok) {
+            return r.json().then((data) => {
+              setSelectedProducts([]);
+              setErrors([]);
+            });
+          } else {
+            return r.json().then((data) => {
+              if (data.errors) {
+                setErrors(data.errors);
+              }
+            });
+          }
+        })
+        .catch((error) => {});
+    }
   };
 
   return (
@@ -94,6 +152,7 @@ export const OrderProvider = ({ children }) => {
         errors,
         setErrors,
         fetchOrders,
+        orders,
       }}
     >
       {children}
