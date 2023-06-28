@@ -7,7 +7,6 @@ export const OrderProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
 
   const addProduct = (product, quantity) => {
-    // if (quantity > 0) {
     setSelectedProducts((prev) => {
       const productInList = prev.find((p) => p.id === product.id);
       if (productInList) {
@@ -18,7 +17,6 @@ export const OrderProvider = ({ children }) => {
       return [...prev, { ...product, quantity, selected: true }];
     });
   };
-  // };
 
   const removeProduct = (product) => {
     setSelectedProducts((prev) =>
@@ -53,23 +51,24 @@ export const OrderProvider = ({ children }) => {
           order_items_attributes: orderItems,
         },
       }),
-    }).then((r) => {
-      if (r.ok) {
-        r.json().then((data) => {
-          console.log("data: ", data);
-          console.log("Order and order items created successfully!");
-          setSelectedProducts([]);
-        });
-      } else {
-        r.json().then((data) => {
-          if (data.errors) {
-            setErrors(data.errors);
-          } else {
-            setErrors([data.error]);
-          }
-        });
-      }
-    });
+    })
+      .then((r) => {
+        if (r.ok) {
+          return r.json().then((data) => {
+            setSelectedProducts([]);
+            setErrors([]);
+          });
+        } else {
+          return r.json().then((data) => {
+            if (data.errors) {
+              setErrors(data.errors);
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -81,6 +80,7 @@ export const OrderProvider = ({ children }) => {
         updateQuantity,
         submitOrder,
         errors,
+        setErrors,
       }}
     >
       {children}

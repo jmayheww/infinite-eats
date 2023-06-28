@@ -35,7 +35,16 @@ class Api::OrdersController < ApplicationController
   end
 
   def render_unprocessable_entity_response(exception)
-    puts exception.record.errors.full_messages
-    render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
+    order_items_attributes = order_params[:order_items_attributes]
+
+    error_messages = exception.record.errors.full_messages.map do |error_message|
+      product_id = error_message.scan(/\d+/).last.to_i
+      order_item = order_items_attributes.find { |item| item[:vendors_product_id].to_i == product_id }
+      next if order_item.nil? || product_id.zero?
+
+      { product_id: product_id, error: error_message, order_item: order_item }
+    end.compact
+
+    render json: { errors: error_messages }, status: :unprocessable_entity
   end
 end

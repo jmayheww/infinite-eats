@@ -8,7 +8,7 @@ import VendorProductCard from "../components/VendorProductCard";
 
 function VendorProductSection() {
   const { vendors } = useContext(VendorContext);
-  const { selectedProducts, submitOrder } = useContext(OrderContext);
+  const { selectedProducts, submitOrder, errors } = useContext(OrderContext);
   const { submitQuery, handleReset } = useContext(SearchContext);
   const { user } = useContext(UserContext);
   const { vendorId } = useParams();

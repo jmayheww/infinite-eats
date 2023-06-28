@@ -8,7 +8,6 @@ import { PaymentProvider } from "../context/payment";
 import NavBar from "./NavBar";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
-console.log("stripePromise: ", stripePromise);
 
 const AsyncLandingPage = React.lazy(() => import("../pages/LandingPage"));
 const AsyncAuthPage = React.lazy(() => import("../pages/AuthenticationPage"));

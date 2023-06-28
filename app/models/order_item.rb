@@ -3,5 +3,11 @@ class OrderItem < ApplicationRecord
   belongs_to :vendors_product
 
   validates_presence_of :quantity, :price
-  validates :quantity, numericality: { greater_than: 0, message: ' must be greater than 0' }
+  validates :quantity, numericality: { greater_than: 0 }
+
+  validate :quantity_greater_than_zero
+
+  def quantity_greater_than_zero
+    errors.add(:quantity, "must be greater than 0 for product #{vendors_product_id}") if quantity.nil? || quantity <= 0
+  end
 end

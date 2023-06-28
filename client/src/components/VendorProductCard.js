@@ -10,6 +10,7 @@ function VendorProductCard({ product }) {
     updateQuantity,
     selectedProducts,
     errors,
+    setErrors,
   } = useContext(OrderContext);
   const { user } = useContext(UserContext);
 
@@ -52,10 +53,9 @@ function VendorProductCard({ product }) {
   const toggleSelection = () => {
     if (isSelected) {
       removeProduct(product);
+      setErrors([]);
     } else {
-      // if (orderQuantity > 0) {
       addProduct(product, orderQuantity);
-      // }
     }
   };
 
@@ -161,7 +161,16 @@ function VendorProductCard({ product }) {
         </div>
       </div>
       {errors && errors.length > 0 && (
-        <p className="text-red-500 p-4">{errors[0]}</p>
+        <div className="text-red-500 p-4">
+          {errors
+            .filter((error) => error.product_id === product.id)
+            .map((error, index) => (
+              <p key={index}>
+                Error: Cannot add product to checkout if quantity is 0. Please
+                adjust quantity or deselect product.
+              </p>
+            ))}
+        </div>
       )}
     </div>
   );
