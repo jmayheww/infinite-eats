@@ -18,7 +18,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const [user, setUser] = useState({});
-
+  const [userOrders, setUserOrders] = useState([]);
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -80,6 +80,7 @@ export const UserProvider = ({ children }) => {
     if (r.ok) {
       r.json().then((user) => {
         setUser(user);
+        setUserOrders(user?.orders);
         setUpdatedUser(user);
       });
     } else {
@@ -92,6 +93,7 @@ export const UserProvider = ({ children }) => {
     if (r.ok) {
       r.json().then((user) => {
         setUser(user);
+        setUserOrders(user?.orders);
         setUserAuthInput(initialUserAuthInput);
         navigate("/landing");
       });
@@ -167,6 +169,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        userOrders,
         setUser,
         fetchCurrentUser,
         loginUser,

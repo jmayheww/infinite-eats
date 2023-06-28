@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import UserContext from "../context/auth";
+import UserContext from "../context/user";
 
 function LoginSignupForm() {
   const {

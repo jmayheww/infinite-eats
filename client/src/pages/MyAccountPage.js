@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import UserProfileSection from "../sections/UserProfileSection";
-import UserContext from "../context/auth";
+import UserContext from "../context/user";
 import ModalContext from "../context/modal";
 import Modal from "../components/Modal";
 import PaymentMethodForm from "../components/PaymentMethodForm";

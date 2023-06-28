@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import UserContext from "../context/auth";
+import UserContext from "../context/user";
 import VendorContext from "../context/vendor";
 import { OrderContext } from "../context/order";
 import { PaymentProvider } from "../context/payment";
@@ -23,12 +23,10 @@ const AsyncOrderCheckoutPage = React.lazy(() =>
 function App() {
   const { user, fetchCurrentUser } = useContext(UserContext);
   const { fetchVendors } = useContext(VendorContext);
-  const { fetchOrders } = useContext(OrderContext);
 
   useEffect(() => {
     fetchCurrentUser();
     fetchVendors();
-    fetchOrders();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

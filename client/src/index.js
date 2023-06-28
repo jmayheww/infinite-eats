@@ -6,7 +6,7 @@ import "./index.css";
 import App from "../src/components/App";
 import { BrowserRouter as Router } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import { UserProvider } from "./context/auth";
+import { UserProvider } from "./context/user";
 import { VendorProvider } from "./context/vendor";
 import { ModalProvider } from "./context/modal";
 import { SearchProvider } from "./context/search";

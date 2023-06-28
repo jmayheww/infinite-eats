@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../context/order";
-import UserContext from "../context/auth";
+import UserContext from "../context/user";
 import Checkbox from "./Checkbox";
 
 function VendorProductCard({ product }) {
@@ -11,21 +11,21 @@ function VendorProductCard({ product }) {
     selectedProducts,
     errors,
     setErrors,
-    getUserOrderItems,
-    findProductInOrderItems,
   } = useContext(OrderContext);
 
-  const { user } = useContext(UserContext);
+  const { user, userOrders } = useContext(UserContext);
+  console.log("userOrders: ", userOrders);
 
   const isSelected = selectedProducts?.some(
     (p) => p.id === product.id && p.selected
   );
 
-  const userOrderItems = getUserOrderItems(user);
-
-  const productData = userOrderItems
-    ? findProductInOrderItems(userOrderItems, product.id)
-    : null;
+  const productData = userOrders
+    ?.find(
+      (order) =>
+        order.vendor_id === product.vendor_id && order.status === "pending"
+    )
+    ?.order_items?.find((item) => item.vendors_product_id === product.id);
 
   const initialQuantity = productData?.quantity || 0;
 

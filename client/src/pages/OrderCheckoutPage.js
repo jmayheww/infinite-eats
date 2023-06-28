@@ -1,5 +1,28 @@
+import React, { useContext } from "react";
+import { OrderContext } from "../context/order";
+
 function OrderCheckoutPage() {
-  <h1>Checkout</h1>;
+  const { orders, updateOrder, removeOrder, checkout } =
+    useContext(OrderContext);
+
+  console.log("orders", orders);
+
+  return (
+    <div className="checkout-page">
+      <h2>Checkout</h2>
+      {orders.map((order) => (
+        <div key={order.id}>
+          <h3>{order.name}</h3>
+          <p>{order.description}</p>
+          <p>{order.price}</p>
+          <p>{order.quantity}</p>
+          <button onClick={() => updateOrder(order)}>Update</button>
+          <button onClick={() => removeOrder(order)}>Remove</button>
+        </div>
+      ))}
+      <button onClick={() => checkout()}>Pay</button>
+    </div>
+  );
 }
 
 export default OrderCheckoutPage;

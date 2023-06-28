@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { PaymentContext } from "../context/payment";
-import UserContext from "../context/auth";
+import UserContext from "../context/user";
 
 function PaymentMethodForm() {
   const {

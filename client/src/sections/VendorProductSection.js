@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import UserContext from "../context/auth";
+import UserContext from "../context/user";
 import VendorContext from "../context/vendor";
 import { OrderContext } from "../context/order";
 import { SearchContext } from "../context/search";
@@ -12,6 +12,7 @@ function VendorProductSection() {
     useContext(OrderContext);
   const { submitQuery, handleReset } = useContext(SearchContext);
   const { user } = useContext(UserContext);
+
   const { vendorId } = useParams();
 
   const selectedVendorProducts = vendors?.find(

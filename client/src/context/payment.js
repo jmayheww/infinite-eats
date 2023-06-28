@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-import UserContext from "./auth";
+import UserContext from "./user";
 
 export const PaymentContext = createContext();
 

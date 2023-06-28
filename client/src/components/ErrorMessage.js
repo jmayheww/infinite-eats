@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import UserContext from "../context/auth";
+import UserContext from "../context/user";
 
 function ErrorMessage() {
   const { errors } = useContext(UserContext);

@@ -1,28 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
+import UserContext from "./user";
 
 export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
-  const [orders, setOrders] = useState([]);
+  const { userOrders, setUserOrders } = useContext(UserContext);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState([]);
-
-  const fetchOrders = () => {
-    fetch("/api/orders").then((r) => {
-      if (r.ok) {
-        r.json().then((data) => setOrders(data));
-      } else {
-        r.json().then((err) => setErrors(err.errors));
-      }
-    });
-  };
-
-  // help find the user's current order items
-  const getUserOrderItems = (user) => user?.order_items;
-
-  // help find a product in the order items array
-  const findProductInOrderItems = (orderItems, productId) =>
-    orderItems?.find((item) => item.vendors_product_id === productId);
 
   const addProduct = (product, quantity) => {
     setSelectedProducts((prev) => {
@@ -49,17 +33,22 @@ export const OrderProvider = ({ children }) => {
   };
 
   const submitOrderItemsToCheckout = (currentUser, vendorId) => {
-    const userId = currentUser.id;
+    const userId = currentUser?.id;
     setErrors([]);
 
-    const orderItems = selectedProducts?.map((product) => ({
-      vendors_product_id: product.id,
-      quantity: product.quantity,
-      price: product.price,
-      name: product.name,
-    }));
+    const orderItems = selectedProducts?.map((product, index) => {
+      if (!product) {
+        return;
+      }
+      return {
+        vendors_product_id: product.id,
+        quantity: product.quantity,
+        price: product.price,
+        name: product.name,
+      };
+    });
 
-    const existingOrder = orders?.find(
+    const existingOrder = userOrders?.find(
       (order) =>
         order.vendor_id === parseInt(vendorId) && order.status === "pending"
     );
@@ -69,7 +58,7 @@ export const OrderProvider = ({ children }) => {
       const updatedOrderItems = [];
 
       selectedProducts.forEach((product) => {
-        const existingItem = existingOrderItems.find(
+        const existingItem = existingOrderItems?.find(
           (item) => item.vendors_product_id === product.id
         );
 
@@ -93,7 +82,7 @@ export const OrderProvider = ({ children }) => {
 
       const updatedOrder = {
         ...existingOrder,
-        user_id: existingOrder.user.id,
+        user_id: existingOrder.user_id,
         order_items_attributes: updatedOrderItems,
       };
 
@@ -107,7 +96,7 @@ export const OrderProvider = ({ children }) => {
             return r.json().then((data) => {
               setSelectedProducts([]);
               setErrors([]);
-              setOrders((prev) => {
+              setUserOrders((prev) => {
                 const updatedOrders = prev.map((order) => {
                   if (order.id === data.id) {
                     return data;
@@ -145,6 +134,9 @@ export const OrderProvider = ({ children }) => {
             return r.json().then((data) => {
               setSelectedProducts([]);
               setErrors([]);
+
+              // Update userOrders in the UserContext
+              setUserOrders((prevUserOrders) => [...prevUserOrders, data]);
             });
           } else {
             return r.json().then((data) => {
@@ -168,10 +160,7 @@ export const OrderProvider = ({ children }) => {
         submitOrderItemsToCheckout,
         errors,
         setErrors,
-        fetchOrders,
-        orders,
-        getUserOrderItems,
-        findProductInOrderItems,
+        userOrders,
       }}
     >
       {children}
