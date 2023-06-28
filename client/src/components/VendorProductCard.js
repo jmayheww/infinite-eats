@@ -12,10 +12,9 @@ function VendorProductCard({ product }) {
     selectedProducts,
     errors,
     setErrors,
-    userOrders,
   } = useContext(OrderContext);
 
-  const { user } = useContext(UserContext);
+  const { user, userOrders } = useContext(UserContext);
   const { vendorId } = useParams();
 
   const isSelected = selectedProducts?.some(
@@ -23,9 +22,7 @@ function VendorProductCard({ product }) {
   );
 
   const [orderQuantity, setOrderQuantity] = useState(0);
-
-  console.log(userOrders);
-
+  console.log("orders: ", userOrders);
   useEffect(() => {
     if (userOrders) {
       const productData = userOrders

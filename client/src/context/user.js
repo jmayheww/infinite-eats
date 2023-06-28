@@ -170,6 +170,7 @@ export const UserProvider = ({ children }) => {
       value={{
         user,
         userOrders,
+        setUserOrders,
         setUser,
         fetchCurrentUser,
         loginUser,

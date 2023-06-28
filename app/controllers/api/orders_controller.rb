@@ -33,11 +33,21 @@ class Api::OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      :user_id,
-      :vendor_id,
+      :id,
       :status,
-      :total_price,
-      order_items_attributes: %i[id name quantity price vendors_product_id order_id]
+      :vendor_id,
+      :user_id,
+      order_items_attributes: %i[
+        id
+        order_id
+        vendors_product_id
+        quantity
+        price
+        created_at
+        updated_at
+        fridge_item_id
+        name
+      ]
     )
   end
 

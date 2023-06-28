@@ -1,12 +1,17 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import UserContext from "./user";
 
 export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const { userOrders, setUserOrders } = useContext(UserContext);
+  console.log("userOrders: ", userOrders);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    setUserOrders(userOrders);
+  }, [userOrders, setUserOrders]);
 
   const addProduct = (product, quantity) => {
     setSelectedProducts((prev) => {
@@ -36,7 +41,7 @@ export const OrderProvider = ({ children }) => {
     const userId = currentUser?.id;
     setErrors([]);
 
-    const orderItems = selectedProducts?.map((product, index) => {
+    const orderItems = selectedProducts?.map((product) => {
       if (!product) {
         return;
       }
@@ -53,8 +58,11 @@ export const OrderProvider = ({ children }) => {
         order.vendor_id === parseInt(vendorId) && order.status === "pending"
     );
 
+    console.log("existingOrder", existingOrder);
     if (existingOrder) {
       const existingOrderItems = existingOrder.order_items;
+      console.log("existingOrderItems: ", existingOrderItems);
+
       const updatedOrderItems = [];
 
       selectedProducts.forEach((product) => {
@@ -81,7 +89,9 @@ export const OrderProvider = ({ children }) => {
       });
 
       const updatedOrder = {
-        ...existingOrder,
+        id: existingOrder.id,
+        status: existingOrder.status,
+        vendor_id: existingOrder.vendor_id,
         user_id: existingOrder.user_id,
         order_items_attributes: updatedOrderItems,
       };
@@ -96,13 +106,14 @@ export const OrderProvider = ({ children }) => {
             return r.json().then((data) => {
               setSelectedProducts([]);
               setErrors([]);
-              setUserOrders((prev) => {
-                const updatedOrders = prev.map((order) => {
+
+              // Update userOrders in the UserContext
+              setUserOrders((prevOrders) => {
+                const updatedOrders = prevOrders.map((order) => {
                   if (order.id === data.id) {
                     return data;
-                  } else {
-                    return order;
                   }
+                  return order;
                 });
                 return updatedOrders;
               });
@@ -134,9 +145,11 @@ export const OrderProvider = ({ children }) => {
             return r.json().then((data) => {
               setSelectedProducts([]);
               setErrors([]);
-
+              console.log(data);
               // Update userOrders in the UserContext
-              setUserOrders((prevUserOrders) => [...prevUserOrders, data]);
+
+              setUserOrders((prevOrders) => [...prevOrders, data]);
+              console.log(userOrders);
             });
           } else {
             return r.json().then((data) => {
