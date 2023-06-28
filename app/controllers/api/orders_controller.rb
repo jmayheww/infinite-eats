@@ -36,6 +36,7 @@ class Api::OrdersController < ApplicationController
       :user_id,
       :vendor_id,
       :status,
+      :total_price,
       order_items_attributes: %i[id name quantity price vendors_product_id order_id]
     )
   end

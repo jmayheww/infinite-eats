@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { OrderContext } from "../context/order";
 import UserContext from "../context/user";
 import Checkbox from "./Checkbox";
@@ -11,31 +12,32 @@ function VendorProductCard({ product }) {
     selectedProducts,
     errors,
     setErrors,
+    userOrders,
   } = useContext(OrderContext);
 
-  const { user, userOrders } = useContext(UserContext);
-  console.log("userOrders: ", userOrders);
+  const { user } = useContext(UserContext);
+  const { vendorId } = useParams();
 
   const isSelected = selectedProducts?.some(
     (p) => p.id === product.id && p.selected
   );
 
-  const productData = userOrders
-    ?.find(
-      (order) =>
-        order.vendor_id === product.vendor_id && order.status === "pending"
-    )
-    ?.order_items?.find((item) => item.vendors_product_id === product.id);
+  const [orderQuantity, setOrderQuantity] = useState(0);
 
-  const initialQuantity = productData?.quantity || 0;
-
-  const [orderQuantity, setOrderQuantity] = useState(initialQuantity);
+  console.log(userOrders);
 
   useEffect(() => {
-    // refresh local state and reset local orderQuantity state to 0 following successful order submission resets selectedProduct array to empty
-
-    setOrderQuantity(initialQuantity);
-  }, [initialQuantity]);
+    if (userOrders) {
+      const productData = userOrders
+        ?.find(
+          (order) =>
+            order.vendor_id === parseInt(vendorId) && order.status === "pending"
+        )
+        ?.order_items?.find((item) => item.vendors_product_id === product.id);
+      const initialQuantity = productData?.quantity || 0;
+      setOrderQuantity(initialQuantity);
+    }
+  }, [userOrders, vendorId, product.id]);
 
   const incrementQuantity = () => {
     if (isSelected) {
