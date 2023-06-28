@@ -54,6 +54,7 @@ function VendorProductCard({ product }) {
 
   const resetQuantity = () => {
     setOrderQuantity(0);
+    updateQuantity(product, 0);
   };
 
   const toggleSelection = () => {
