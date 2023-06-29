@@ -18,7 +18,7 @@ function OrderItemCard({ item }) {
   };
 
   const handleCancelEdit = () => {
-    setQuantity(quantity);
+    setQuantity(item.quantity);
     setIsEditing(false);
   };
 

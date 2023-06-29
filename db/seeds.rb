@@ -87,7 +87,8 @@ ActiveRecord::Base.transaction do
       vendor: [walmart, target, costco].sample,
       product: product,
       price: Faker::Commerce.price(range: 1..100.0),
-      quantity: Faker::Number.between(from: 1, to: 100)
+      quantity: Faker::Number.between(from: 1, to: 100),
+      checkout_quantity: Faker::Number.between(from: 1, to: 100)
     )
   end
 

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { OrderContext } from "../context/order";
 import UserContext from "../context/user";
 import Checkbox from "./Checkbox";
+import OrderControls from "./OrderControls";
 
 function VendorProductCard({ product }) {
   console.log("product: ", product);
@@ -23,19 +24,27 @@ function VendorProductCard({ product }) {
     (p) => p.id === product.id && p.selected
   );
 
+  const findInitialQuantity = (userOrders, vendorId, productId) => {
+    const productData = userOrders
+      ?.find(
+        (order) =>
+          order.vendor_id === parseInt(vendorId) && order.status === "pending"
+      )
+      ?.order_items?.find((item) => item.vendors_product_id === productId);
+
+    return productData?.quantity || 0;
+  };
+
   const [orderQuantity, setOrderQuantity] = useState(0);
 
   useEffect(() => {
     if (userOrders) {
-      const productData = userOrders
-        ?.find(
-          (order) =>
-            order.vendor_id === parseInt(vendorId) && order.status === "pending"
-        )
-        ?.order_items?.find((item) => item.vendors_product_id === product.id);
-      const initialQuantity = productData?.quantity || 0;
+      const initialQuantity = findInitialQuantity(
+        userOrders,
+        vendorId,
+        product.id
+      );
       console.log("initialQuantity: ", initialQuantity);
-
       setOrderQuantity(initialQuantity);
     }
   }, [userOrders, vendorId, product.id]);
@@ -73,47 +82,6 @@ function VendorProductCard({ product }) {
   const cardStyles = isSelected
     ? "bg-green-100 border-green-500"
     : "bg-white border-gray-200";
-
-  /* Conditional rendering of order button and quantities based on user */
-
-  const OrderControls = () => {
-    if (user && isSelected) {
-      return (
-        <>
-          <div className="flex items-center">
-            <span className="text-md font-semibold text-secondary">
-              Quantity:
-            </span>
-            <div className="flex items-center ml-3">
-              <button
-                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
-                onClick={decrementQuantity}
-                disabled={!isSelected || !orderQuantity}
-              >
-                -
-              </button>
-              <span className="text-secondary font-semibold text-lg mx-2">
-                {orderQuantity}
-              </span>
-              <button
-                className="text-secondary focus:outline-none text-md border border-secondary rounded-full w-8 h-8 ml-1 hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300"
-                onClick={incrementQuantity}
-                disabled={!isSelected}
-              >
-                +
-              </button>
-              <button
-                className="text-secondary focus:outline-none text-sm ml-4 border border-secondary hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-300 rounded-md px-4 py-1"
-                onClick={resetQuantity}
-              >
-                Reset
-              </button>
-            </div>
-          </div>
-        </>
-      );
-    }
-  };
 
   return (
     <div
@@ -164,7 +132,13 @@ function VendorProductCard({ product }) {
         )}
         {/* Order controls */}
         <div className="flex items-center mt-3 justify-between">
-          <OrderControls />
+          <OrderControls
+            isSelected={isSelected}
+            orderQuantity={orderQuantity}
+            decrementQuantity={decrementQuantity}
+            incrementQuantity={incrementQuantity}
+            resetQuantity={resetQuantity}
+          />
         </div>
       </div>
       <div className="flex items-center bg-secondary py-2 px-4">
