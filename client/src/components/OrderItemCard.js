@@ -31,8 +31,6 @@ function OrderItemCard({ item }) {
     console.log("updated order item:", item);
 
     updateOrderItem(item.id, quantity);
-    setQuantity(quantity);
-    updateQuantity(item, item.quantity);
     setIsEditing(false);
   };
   const handleRemoveOrderItem = () => {};
