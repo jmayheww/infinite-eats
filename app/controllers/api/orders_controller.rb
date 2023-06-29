@@ -1,19 +1,55 @@
 class Api::OrdersController < ApplicationController
   before_action :set_current_user
   before_action :authorize_user
+  before_action :set_order, only: [:update]
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
-  def create
-    order = Order.create!(order_params)
+  # app/controllers/api/orders_controller.rb
 
-    render json: order
-  end
+  def create_or_update
+    # Check if an order exists for the current user belonging to a specific vendor and also pending
+    order = @current_user.orders.find_by(vendor_id: order_params[:vendor_id], status: 'pending')
+    puts order
 
-  def update
-    order = Order.find(params[:id])
-    order.update!(order_params)
+    if order
+      # If order exists, check if the order_items_attributes match any of the order item params in the request
+      order_items_attributes = order_params[:order_items_attributes]
+
+      order_items_attributes.each do |order_item_params|
+        order_item = order.order_items.find_by(vendors_product_id: order_item_params[:vendors_product_id])
+
+        if order_item
+          # If order item exists, update the quantity and price
+          order_item.update!(
+            quantity: order_item_params[:quantity],
+            price: order_item_params[:price]
+          )
+        else
+          # If order item does not exist, create a new order item
+          order.order_items.create!(
+            vendors_product_id: order_item_params[:vendors_product_id],
+            quantity: order_item_params[:quantity],
+            price: order_item_params[:price],
+            name: order_item_params[:name]
+          )
+        end
+      end
+    else
+      # If order does not exist, create a new order with order item attributes that take in your params
+      order = Order.create!(
+        user_id: @current_user.id,
+        vendor_id: order_params[:vendor_id],
+        status: 'pending',
+        order_items_attributes: order_params[:order_items_attributes]
+      )
+    end
+
+    # After creating or updating order items, update the order total
+    order.total_price = order.order_items.sum('price * quantity')
+    order.save!
+
     render json: order, status: :ok
   end
 
@@ -21,6 +57,10 @@ class Api::OrdersController < ApplicationController
 
   def set_current_user
     @current_user = User.find_by(id: session[:user_id])
+  end
+
+  def set_order
+    @order = Order.find(params[:id])
   end
 
   def authorize_user
@@ -32,19 +72,13 @@ class Api::OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      :id,
       :status,
       :vendor_id,
-      :user_id,
       order_items_attributes: %i[
         id
-        order_id
         vendors_product_id
         quantity
         price
-        created_at
-        updated_at
-        fridge_item_id
         name
       ]
     )

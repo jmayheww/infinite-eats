@@ -32,6 +32,7 @@ function VendorProductCard({ product }) {
         )
         ?.order_items?.find((item) => item.vendors_product_id === product.id);
       const initialQuantity = productData?.quantity || 0;
+      console.log("initialQuantity: ", initialQuantity);
       setOrderQuantity(initialQuantity);
     }
   }, [userOrders, vendorId, product.id]);

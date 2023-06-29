@@ -36,112 +36,66 @@ export const OrderProvider = ({ children }) => {
       prev.map((p) => (p.id === product.id ? { ...p, quantity } : p))
     );
   };
-
   const addUpdateOrderItemsToCheckout = async (currentUser, vendorId) => {
+    console.log("vendorId: ", vendorId);
+    console.log("currentUser: ", currentUser);
     const userId = currentUser?.id;
+    console.log("userId: ", userId);
     setErrors([]);
 
     const orderItems = selectedProducts?.map((product) => ({
+      user_id: userId,
       vendors_product_id: product.id,
       quantity: product.quantity,
       price: product.price,
       name: product.name,
     }));
 
-    const existingOrder = userOrders?.find(
-      (order) =>
-        order.vendor_id === parseInt(vendorId) && order.status === "pending"
-    );
+    const orderData = {
+      vendor_id: vendorId,
+      status: "pending",
+      order_items_attributes: orderItems,
+    };
+
+    console.log("orderData: ", orderData);
 
     try {
-      if (existingOrder) {
-        const existingOrderItems = existingOrder.order_items;
-        const updatedOrderItems = [];
+      const response = await fetch("/api/orders/create_or_update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order: orderData }),
+      });
 
-        selectedProducts.forEach((product) => {
-          const existingItem = existingOrderItems?.find(
-            (item) => item.vendors_product_id === product.id
-          );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data: ", data);
 
-          if (existingItem) {
-            const updatedItem = { ...existingItem, quantity: product.quantity };
-            updatedOrderItems.push(updatedItem);
-          } else {
-            const newOrderItem = {
-              vendors_product_id: product.id,
-              quantity: product.quantity,
-              price: product.price,
-              name: product.name,
-            };
-            updatedOrderItems.push(newOrderItem);
+        setErrors([]);
+        setSelectedProducts([]);
+        const updatedOrders = userOrders?.map((order) => {
+          if (order.vendor_id === data.vendor_id) {
+            return data;
           }
+          return order;
         });
-
-        const updatedOrder = {
-          id: existingOrder.id,
-          status: existingOrder.status,
-          vendor_id: existingOrder.vendor_id,
-          user_id: existingOrder.user_id,
-          order_items_attributes: updatedOrderItems,
-        };
-
-        const response = await fetch(`/api/orders/${existingOrder.id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order: updatedOrder }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setSelectedProducts([]);
-          setErrors([]);
-
-          // Update userOrders in the UserContext
-          setUserOrders((prevOrders) =>
-            prevOrders.map((order) => (order.id === data.id ? data : order))
-          );
-        } else {
-          const data = await response.json();
-          if (data.errors) {
-            setErrors(data.errors);
-          }
-        }
+        setUserOrders(updatedOrders);
       } else {
-        const orderData = {
-          user_id: userId,
-          vendor_id: vendorId,
-          status: "pending",
-          order_items_attributes: orderItems,
-        };
-
-        console.log("orderData", orderData);
-        const response = await fetch("/api/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order: orderData }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setSelectedProducts([]);
-          setErrors([]);
-
-          // Update userOrders in the UserContext
-          setUserOrders((prevOrders) => [...prevOrders, data]);
-        } else {
-          const data = await response.json();
-          if (data.errors) {
-            setErrors(data.errors);
-          }
+        const data = await response.json();
+        if (data.errors) {
+          setErrors(data.errors);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      // Handle the error
+    }
   };
 
   return (
     <OrderContext.Provider
       value={{
+        setUserOrders,
         selectedProducts,
+        setSelectedProducts,
         addProduct,
         removeProduct,
         updateQuantity,
