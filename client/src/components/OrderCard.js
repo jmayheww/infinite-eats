@@ -3,6 +3,7 @@ import OrderItemCard from "./OrderItemCard";
 
 function OrderCard({ order, onRemove }) {
   console.log("order: ", order);
+  console.log("order.order_items: ", order.order_items);
 
   const handleRemoveOrder = () => {
     onRemove(order.id);

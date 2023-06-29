@@ -72,12 +72,20 @@ export const OrderProvider = ({ children }) => {
 
         setErrors([]);
         setSelectedProducts([]);
+
         const updatedOrders = userOrders?.map((order) => {
           if (order.vendor_id === data.vendor_id) {
             return data;
           }
           return order;
         });
+
+        if (
+          !updatedOrders.some((order) => order.vendor_id === data.vendor_id)
+        ) {
+          updatedOrders.push(data);
+        }
+
         setUserOrders(updatedOrders);
       } else {
         const data = await response.json();
