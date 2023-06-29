@@ -22,6 +22,7 @@ const AsyncOrderCheckoutPage = React.lazy(() =>
 
 function App() {
   const { user, fetchCurrentUser } = useContext(UserContext);
+  console.log("user: ", user);
   const { fetchVendors } = useContext(VendorContext);
 
   useEffect(() => {

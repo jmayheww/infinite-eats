@@ -22,7 +22,7 @@ function VendorProductCard({ product }) {
   );
 
   const [orderQuantity, setOrderQuantity] = useState(0);
-  console.log("orders: ", userOrders);
+
   useEffect(() => {
     if (userOrders) {
       const productData = userOrders
@@ -150,9 +150,11 @@ function VendorProductCard({ product }) {
           <div className="mt-3 mb-3 bg-blue-100 text-blue-800 p-2 rounded">
             <p className="text-xs">
               <span className="font-bold">Note:</span> Quantity shown reflects
-              the number of items you have pending in checkout and not the
-              number of items in stock. Changes to quantities here will be
-              reflected at checkout.
+              the number of items you have currently added in checkout and not
+              the number of items in stock. Add or reduce the quantity to update
+              amount in checkout as needed. If reset after adding to cart, the
+              item will not be removed from your cart. You must visit your cart
+              to remove the item.
             </p>
           </div>
         )}

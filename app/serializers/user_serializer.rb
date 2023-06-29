@@ -1,14 +1,12 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :email, :created_at, :updated_at, :username, :first_name, :last_name, :street_address, :city, :state,
-             :postal_code, :phone_number, :user_image, :payment_method_id, :stripe_customer_id,
-             :order_items
-  has_many :orders
+  attributes :id, :email, :created_at, :updated_at, :username, :first_name, :last_name,
+             :street_address, :city, :state, :postal_code, :phone_number,
+             :user_image, :payment_method_id, :stripe_customer_id, :orders, :vendors
 
-  def order_items
-    object.orders.flat_map do |order|
-      order.order_items.map do |order_item|
-        OrderItemSerializer.new(order_item).attributes
-      end
-    end
+  has_many :orders
+  has_many :fridge_items
+
+  def vendors
+    object.orders.map(&:vendor).uniq
   end
 end

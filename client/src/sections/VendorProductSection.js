@@ -11,7 +11,8 @@ function VendorProductSection() {
   const { selectedProducts, submitOrderItemsToCheckout } =
     useContext(OrderContext);
   const { submitQuery, handleReset } = useContext(SearchContext);
-  const { user } = useContext(UserContext);
+  const { user, userOrders } = useContext(UserContext);
+  console.log("userOrders: ", userOrders);
 
   const { vendorId } = useParams();
 
@@ -44,7 +45,7 @@ function VendorProductSection() {
             type="button"
             onClick={handleCheckout}
           >
-            {user.order_items.length > 0
+            {userOrders?.some((order) => order.vendor_id === parseInt(vendorId))
               ? "Update Selections in Checkout"
               : "Add Selections to Checkout"}
           </button>

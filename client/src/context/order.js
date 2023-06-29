@@ -5,7 +5,7 @@ export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const { userOrders, setUserOrders } = useContext(UserContext);
-  console.log("userOrders: ", userOrders);
+
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState([]);
 
@@ -114,6 +114,7 @@ export const OrderProvider = ({ children }) => {
           order_items_attributes: orderItems,
         };
 
+        console.log("orderData", orderData);
         const response = await fetch("/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -134,9 +135,7 @@ export const OrderProvider = ({ children }) => {
           }
         }
       }
-    } catch (error) {
-      console.log("An error occurred:", error);
-    }
+    } catch (error) {}
   };
 
   return (
