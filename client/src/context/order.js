@@ -37,7 +37,7 @@ export const OrderProvider = ({ children }) => {
     );
   };
 
-  const submitOrderItemsToCheckout = async (currentUser, vendorId) => {
+  const addUpdateOrderItemsToCheckout = async (currentUser, vendorId) => {
     const userId = currentUser?.id;
     setErrors([]);
 
@@ -145,7 +145,7 @@ export const OrderProvider = ({ children }) => {
         addProduct,
         removeProduct,
         updateQuantity,
-        submitOrderItemsToCheckout,
+        addUpdateOrderItemsToCheckout,
         errors,
         setErrors,
         userOrders,

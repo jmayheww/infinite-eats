@@ -4,7 +4,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserContext from "../context/user";
 import VendorContext from "../context/vendor";
-import { OrderContext } from "../context/order";
 import { PaymentProvider } from "../context/payment";
 import NavBar from "./NavBar";
 

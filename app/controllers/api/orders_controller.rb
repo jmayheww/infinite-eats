@@ -21,7 +21,6 @@ class Api::OrdersController < ApplicationController
 
   def set_current_user
     @current_user = User.find_by(id: session[:user_id])
-    puts @current_user
   end
 
   def authorize_user

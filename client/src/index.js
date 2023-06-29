@@ -12,6 +12,7 @@ import { ModalProvider } from "./context/modal";
 import { SearchProvider } from "./context/search";
 import { OrderProvider } from "./context/order";
 import { PaymentProvider } from "./context/payment";
+import { CheckoutProvider } from "./context/checkout";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
 
@@ -25,7 +26,9 @@ root.render(
             <OrderProvider>
               <Elements stripe={stripePromise}>
                 <PaymentProvider>
-                  <App />
+                  <CheckoutProvider>
+                    <App />
+                  </CheckoutProvider>
                 </PaymentProvider>
               </Elements>
             </OrderProvider>

@@ -8,7 +8,7 @@ import VendorProductCard from "../components/VendorProductCard";
 
 function VendorProductSection() {
   const { vendors } = useContext(VendorContext);
-  const { selectedProducts, submitOrderItemsToCheckout } =
+  const { selectedProducts, addUpdateOrderItemsToCheckout } =
     useContext(OrderContext);
   const { submitQuery, handleReset } = useContext(SearchContext);
   const { user, userOrders } = useContext(UserContext);
@@ -33,7 +33,7 @@ function VendorProductSection() {
   });
 
   const handleCheckout = () => {
-    submitOrderItemsToCheckout(user, vendorId);
+    addUpdateOrderItemsToCheckout(user, vendorId);
   };
 
   return (

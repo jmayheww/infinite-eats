@@ -7,7 +7,7 @@ function OrdersSection() {
   console.log("userOrders: ", userOrders);
 
   const renderOrders = () => {
-    return userOrders.map((order) => (
+    return userOrders?.map((order) => (
       <OrderCard key={order.id} order={order} />
     ));
   };
