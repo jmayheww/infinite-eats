@@ -4,10 +4,8 @@ import { OrderContext } from "../context/order";
 
 function OrderItemCard({ item }) {
   console.log("item: ", item);
-  const { updateOrderItem, errors } = useContext(CheckoutContext);
-
-  const { selectedItems, updateQuantity } = useContext(OrderContext);
-  console.log("selectedItems: ", selectedItems);
+  const { updateOrderItem, deleteOrderItem, errors } =
+    useContext(CheckoutContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [quantity, setQuantity] = useState(item.quantity);
@@ -33,7 +31,11 @@ function OrderItemCard({ item }) {
     updateOrderItem(item.id, quantity);
     setIsEditing(false);
   };
-  const handleRemoveOrderItem = () => {};
+  const handleRemoveOrderItem = () => {
+    console.log("deleted order item:", item);
+    deleteOrderItem(item.id);
+    setIsEditing(false);
+  };
 
   return (
     <li className="flex justify-between items-center border-t border-gray-200 pt-4">

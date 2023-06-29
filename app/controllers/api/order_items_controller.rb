@@ -11,6 +11,12 @@ class Api::OrderItemsController < ApplicationController
     end
   end
 
+  def destroy
+    order_item = OrderItem.find(params[:id])
+    order_item.destroy
+    render json: { message: 'Order Item successfully deleted' }
+  end
+
   private
 
   def set_current_user

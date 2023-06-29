@@ -39,8 +39,39 @@ export const CheckoutProvider = ({ children }) => {
     }
   };
 
+  const deleteOrderItem = async (orderItemId) => {
+    const response = await fetch(`/api/order_items/${orderItemId}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      const deletedOrderItem = await response.json();
+      console.log("deleted", deletedOrderItem);
+
+      setUserOrders((prevOrders) =>
+        prevOrders.map((order) => ({
+          ...order,
+          order_items: order.order_items.filter(
+            (item) => item.id !== orderItemId
+          ),
+        }))
+      );
+
+      console.log("updatedUSeOrders: ", userOrders);
+
+      setErrors([]);
+    } else {
+      const data = await response.json();
+      if (data.errors) {
+        setErrors(data.errors);
+      }
+    }
+  };
+
   return (
-    <CheckoutContext.Provider value={{ updateOrderItem, errors }}>
+    <CheckoutContext.Provider
+      value={{ updateOrderItem, deleteOrderItem, errors }}
+    >
       {children}
     </CheckoutContext.Provider>
   );
