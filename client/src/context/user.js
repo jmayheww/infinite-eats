@@ -26,8 +26,6 @@ export const UserProvider = ({ children }) => {
   const [editMode, setEditMode] = useState(false);
   const [updatedUser, setUpdatedUser] = useState({ ...user });
 
-  console.log("userOrders", userOrders);
-
   const resetErrors = () => setErrors([]);
 
   const fetchCurrentUser = () => {

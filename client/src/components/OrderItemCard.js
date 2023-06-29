@@ -6,7 +6,8 @@ function OrderItemCard({ item }) {
   console.log("item: ", item);
   const { updateOrderItem, errors } = useContext(CheckoutContext);
 
-  const { setUserOrders } = useContext(OrderContext);
+  const { selectedItems, updateQuantity } = useContext(OrderContext);
+  console.log("selectedItems: ", selectedItems);
 
   const [isEditing, setIsEditing] = useState(false);
   const [quantity, setQuantity] = useState(item.quantity);
@@ -31,7 +32,7 @@ function OrderItemCard({ item }) {
 
     updateOrderItem(item.id, quantity);
     setQuantity(quantity);
-
+    updateQuantity(item, item.quantity);
     setIsEditing(false);
   };
   const handleRemoveOrderItem = () => {};

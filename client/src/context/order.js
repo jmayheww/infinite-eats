@@ -36,6 +36,7 @@ export const OrderProvider = ({ children }) => {
       prev.map((p) => (p.id === product.id ? { ...p, quantity } : p))
     );
   };
+
   const addUpdateOrderItemsToCheckout = async (currentUser, vendorId) => {
     console.log("vendorId: ", vendorId);
     console.log("currentUser: ", currentUser);
@@ -44,7 +45,6 @@ export const OrderProvider = ({ children }) => {
     setErrors([]);
 
     const orderItems = selectedProducts?.map((product) => ({
-      user_id: userId,
       vendors_product_id: product.id,
       quantity: product.quantity,
       price: product.price,

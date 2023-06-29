@@ -5,6 +5,7 @@ import UserContext from "../context/user";
 import Checkbox from "./Checkbox";
 
 function VendorProductCard({ product }) {
+  console.log("product: ", product);
   const {
     addProduct,
     removeProduct,
@@ -12,9 +13,10 @@ function VendorProductCard({ product }) {
     selectedProducts,
     errors,
     setErrors,
+    userOrders,
   } = useContext(OrderContext);
 
-  const { user, userOrders } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { vendorId } = useParams();
 
   const isSelected = selectedProducts?.some(
@@ -33,6 +35,7 @@ function VendorProductCard({ product }) {
         ?.order_items?.find((item) => item.vendors_product_id === product.id);
       const initialQuantity = productData?.quantity || 0;
       console.log("initialQuantity: ", initialQuantity);
+
       setOrderQuantity(initialQuantity);
     }
   }, [userOrders, vendorId, product.id]);

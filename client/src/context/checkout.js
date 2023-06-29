@@ -5,7 +5,8 @@ export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
-  const { userOrders, setUserOrders } = useContext(OrderContext);
+  const { userOrders, setUserOrders, setSelectedOrder, updateQuantity } =
+    useContext(OrderContext);
   console.log("userOrders: ", userOrders);
 
   const updateOrderItem = async (orderItemId, quantity) => {
@@ -20,22 +21,7 @@ export const CheckoutProvider = ({ children }) => {
     if (response.ok) {
       const data = await response.json();
       console.log("data", data);
-
-      const updatedItem = userOrders
-        ?.find((order) => order.id === data.order_id)
-        ?.order_items.find((item) => item.id === data.id);
-
-      setUserOrders((prev) =>
-        prev.map((order) => {
-          if (order.id === data.order_id) {
-            order.order_items = order.order_items.map((item) =>
-              item.id === data.id ? updatedItem : item
-            );
-          }
-          return order;
-        })
-      );
-
+      updateQuantity(data, data.quantity);
       setErrors([]);
     } else {
       const data = await response.json();

@@ -72,6 +72,7 @@ class Api::OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
+      :user_id,
       :status,
       :vendor_id,
       order_items_attributes: %i[
