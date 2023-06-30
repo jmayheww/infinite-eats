@@ -113,6 +113,7 @@ export const UserProvider = ({ children }) => {
     if (r.ok) {
       r.json().then((user) => {
         setUser(user);
+        setEditMode(false);
       });
     } else {
       r.json().then((data) => {
@@ -153,7 +154,6 @@ export const UserProvider = ({ children }) => {
   const handleSave = () => {
     resetErrors();
     updateUser(updatedUser);
-    setEditMode(false);
   };
 
   const handleProfileChange = (e) => {
