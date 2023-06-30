@@ -41,6 +41,21 @@ class Api::UsersController < ApplicationController
 
   def save_payment_method
     pm_id = params.require(:pm_id)
+    customer_id = @current_user.stripe_customer_id
+
+    Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
+
+    # Attach the PaymentMethod to the customer
+    Stripe::PaymentMethod.attach(
+      pm_id,
+      { customer: customer_id }
+    )
+
+    # Set it as the default payment method
+    Stripe::Customer.update(
+      customer_id,
+      { invoice_settings: { default_payment_method: pm_id } }
+    )
 
     @current_user.update(payment_method_id: pm_id)
 

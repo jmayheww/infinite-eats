@@ -4,7 +4,7 @@ import OrderItemCard from "./OrderItemCard";
 
 function OrderCard({ order }) {
   console.log("order: ", order);
-  const { deleteOrder, processPayment } = useContext(CheckoutContext);
+  const { deleteOrder, processPayment, errors } = useContext(CheckoutContext);
 
   const handleRemoveOrder = () => {
     deleteOrder(order.id);
@@ -47,6 +47,9 @@ function OrderCard({ order }) {
           </button>
         </div>
       </div>
+      {errors && errors.length > 0 && (
+        <div className="mt-4 text-red-500">{errors[0]}</div>
+      )}
     </div>
   );
 }

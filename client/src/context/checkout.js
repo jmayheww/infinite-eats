@@ -117,6 +117,28 @@ export const CheckoutProvider = ({ children }) => {
     }
   };
 
+  const updateOrderStatus = async (orderId, newStatus) => {
+    const response = await fetch(`/api/orders/${orderId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    if (response.ok) {
+      const updatedOrder = await response.json();
+      setUserOrders((prevOrders) =>
+        prevOrders.map((order) => (order.id === orderId ? updatedOrder : order))
+      );
+    } else {
+      const data = await response.json();
+      if (data.errors) {
+        setErrors(data.errors);
+      }
+    }
+  };
+
   const processPayment = async (order, user) => {
     // You may want to disable the button until the request finishes
     // Convert order total price to the smallest currency unit (e.g., cents)
@@ -145,11 +167,14 @@ export const CheckoutProvider = ({ children }) => {
     if (result.error) {
       // Show error to your customer (e.g., insufficient funds)
       console.log(result.error.message);
+      setErrors([result.error.message]);
     } else {
       if (result.paymentIntent.status === "succeeded") {
-        // Payment succeeded, update the UI and the server
         console.log("Payment succeeded!");
-        // ... you can call your backend to confirm the payment and create new fridge items
+        updateOrderStatus(order.id, "completed");
+        window.alert(
+          "Payment succeeded! Your order status has been updated to 'completed'."
+        );
       }
     }
   };
