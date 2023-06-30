@@ -2,9 +2,6 @@ import React from "react";
 import OrderItemCard from "./OrderItemCard";
 
 function OrderCard({ order, onRemove }) {
-  console.log("order: ", order);
-  console.log("order.order_items: ", order.order_items);
-
   const handleRemoveOrder = () => {
     onRemove(order.id);
   };
@@ -26,12 +23,15 @@ function OrderCard({ order, onRemove }) {
         <p className="text-gray-800 font-semibold">
           Total Price: ${order.total_price}
         </p>
-        <div className="flex justify-between items-center mt-4">
-          <button className="text-red-500 hover:text-red-700 transition-colors duration-200">
+        <div className="flex justify-end mt-4">
+          <button
+            className="text-red-500 hover:text-red-700 mr-4"
+            onClick={handleRemoveOrder}
+          >
             Delete Order
           </button>
           <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">
-            Approve Order for Purchase
+            Approve
           </button>
         </div>
       </div>

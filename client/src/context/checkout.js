@@ -28,13 +28,21 @@ export const CheckoutProvider = ({ children }) => {
       console.log("data", updatedOrderItem);
 
       setUserOrders((prevOrders) =>
-        prevOrders.map((order) => ({
-          ...order,
-          order_items: order.order_items.map((item) =>
-            item.id === updatedOrderItem.id ? updatedOrderItem : item
-          ),
-          total_price: calculateTotalPrice(order.order_items),
-        }))
+        prevOrders.map((order) => {
+          if (order.id === updatedOrderItem.order_id) {
+            const updatedOrderItems = order.order_items.map((item) =>
+              item.id === updatedOrderItem.id ? updatedOrderItem : item
+            );
+            const updatedTotalPrice = calculateTotalPrice(updatedOrderItems);
+
+            return {
+              ...order,
+              total_price: updatedTotalPrice,
+              order_items: updatedOrderItems,
+            };
+          }
+          return order;
+        })
       );
 
       setErrors([]);
