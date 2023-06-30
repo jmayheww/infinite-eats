@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import { useStripe, useElements } from "@stripe/react-stripe-js";
+import { useStripe } from "@stripe/react-stripe-js";
 import { OrderContext } from "./order";
 
 export const CheckoutContext = createContext();
@@ -8,7 +8,6 @@ export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const { userOrders, setUserOrders } = useContext(OrderContext);
   const stripe = useStripe();
-  const elements = useElements();
 
   const calculateTotalPrice = (orderItems) => {
     return orderItems.reduce(
