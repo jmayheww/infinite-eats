@@ -50,7 +50,9 @@ class Api::OrdersController < ApplicationController
     order.total_price = order.order_items.sum('price * quantity')
     order.save!
 
-    render json: order, status: :ok
+    user_orders = @current_user.orders
+
+    render json: user_orders, status: :ok
   end
 
   def update

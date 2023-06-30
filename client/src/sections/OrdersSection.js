@@ -4,11 +4,14 @@ import OrderCard from "../components/OrderCard";
 
 function OrdersSection() {
   const { userOrders } = useContext(OrderContext);
+  console.log("userOrders: ", userOrders);
 
   const renderOrders = () => {
     const pendingOrders = userOrders.filter(
       (order) => order.status === "pending"
     );
+
+    console.log(pendingOrders);
 
     if (pendingOrders.length > 0) {
       return pendingOrders.map((order) => (

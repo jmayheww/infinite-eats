@@ -1,12 +1,14 @@
 import React, { createContext, useState, useContext } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
 import { OrderContext } from "./order";
+import UserContext from "./user";
 
 export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const { userOrders, setUserOrders } = useContext(OrderContext);
+  const { setUser } = useContext(UserContext);
   const stripe = useStripe();
 
   const calculateTotalPrice = (orderItems) => {
@@ -138,6 +140,43 @@ export const CheckoutProvider = ({ children }) => {
     }
   };
 
+  const createFridgeItems = async (order) => {
+    console.log("order: ", order);
+    const eligibleItems = order?.map((item) => {
+      console.log("item: ", item.vendors_product_id);
+      return {
+        name: item.name,
+        quantity: item.quantity,
+        vendors_product_id: item.vendors_product_id,
+      };
+    });
+
+    const response = await fetch(`/api/fridge_items`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ fridge_items: eligibleItems }),
+    });
+
+    if (response.ok) {
+      const newFridgeItems = await response.json();
+      console.log("newFridgeItems: ", newFridgeItems);
+
+      setErrors([]);
+      setUser((p) => ({
+        ...p,
+        fridge_items: [...p.fridge_items, ...newFridgeItems],
+      }));
+    } else {
+      const data = await response.json();
+      if (data.errors) {
+        setErrors(data.errors);
+        console.log("errors: ", errors);
+      }
+    }
+  };
+
   const processPayment = async (order, user) => {
     // You may want to disable the button until the request finishes
     // Convert order total price to the smallest currency unit (e.g., cents)
@@ -170,7 +209,8 @@ export const CheckoutProvider = ({ children }) => {
     } else {
       if (result.paymentIntent.status === "succeeded") {
         console.log("Payment succeeded!");
-        updateOrderStatus(order.id, "completed");
+        await updateOrderStatus(order.id, "completed");
+        await createFridgeItems(order.order_items);
         window.alert(
           "Payment succeeded! Your order status has been updated to 'completed'."
         );

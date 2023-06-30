@@ -1,3 +1,3 @@
 class FridgeItemSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :name, :quantity
 end
