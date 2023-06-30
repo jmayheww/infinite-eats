@@ -13,6 +13,8 @@ class Api::OrderItemsController < ApplicationController
 
   def destroy
     order_item = OrderItem.find(params[:id])
+    order = Order.find(order_item.order_id)
+    order.update_total_price
     order_item.destroy
     render json: { message: 'Order Item successfully deleted' }
   end

@@ -8,11 +8,12 @@ function OrdersSection() {
 
   const renderOrders = () => {
     if (userOrders && userOrders.length > 0) {
-      return userOrders
-        .filter((order) => order.order_items && order.order_items.length > 0)
-        .map((order) => <OrderCard key={order.id} order={order} />);
+      return userOrders.map((order) => (
+        <div key={order.id}>
+          <OrderCard order={order} />
+        </div>
+      ));
     }
-    return null;
   };
 
   return (

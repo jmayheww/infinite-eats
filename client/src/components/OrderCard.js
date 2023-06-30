@@ -14,9 +14,13 @@ function OrderCard({ order, onRemove }) {
       <p className="text-gray-800 font-semibold text-lg">{order.vendor.name}</p>
       <p className="text-gray-600 text-sm">Status: {order.status}</p>
       <ul className="mt-4 space-y-4">
-        {order?.order_items?.map((item) => (
-          <OrderItemCard key={item.id} item={item} />
-        ))}
+        {order.order_items && order.order_items.length ? (
+          order.order_items.map((item) => (
+            <OrderItemCard key={item.id} item={item} />
+          ))
+        ) : (
+          <p>No items in this checkout order yet.</p>
+        )}
       </ul>
       <div className="mt-6">
         <p className="text-gray-800 font-semibold">

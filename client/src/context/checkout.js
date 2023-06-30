@@ -6,7 +6,13 @@ export const CheckoutContext = createContext();
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const { userOrders, setUserOrders } = useContext(OrderContext);
-  console.log("userOrders: ", userOrders);
+
+  const calculateTotalPrice = (orderItems) => {
+    return orderItems.reduce(
+      (total, item) => total + Number(item.price) * item.quantity,
+      0
+    );
+  };
 
   const updateOrderItem = async (orderItemId, quantity) => {
     const response = await fetch(`/api/order_items/${orderItemId}`, {
@@ -27,6 +33,7 @@ export const CheckoutProvider = ({ children }) => {
           order_items: order.order_items.map((item) =>
             item.id === updatedOrderItem.id ? updatedOrderItem : item
           ),
+          total_price: calculateTotalPrice(order.order_items),
         }))
       );
 
@@ -40,6 +47,11 @@ export const CheckoutProvider = ({ children }) => {
   };
 
   const deleteOrderItem = async (orderItemId) => {
+    const itemToDelete = userOrders.find((order) =>
+      order.order_items.some((item) => item.id === orderItemId)
+    );
+
+    console.log("itemToDelete: ", itemToDelete);
     const response = await fetch(`/api/order_items/${orderItemId}`, {
       method: "DELETE",
     });
@@ -49,15 +61,24 @@ export const CheckoutProvider = ({ children }) => {
       console.log("deleted", deletedOrderItem);
 
       setUserOrders((prevOrders) =>
-        prevOrders.map((order) => ({
-          ...order,
-          order_items: order.order_items.filter(
-            (item) => item.id !== orderItemId
-          ),
-        }))
+        prevOrders.map((order) => {
+          if (order.id === itemToDelete.id) {
+            const updatedOrderItems = order.order_items.filter(
+              (item) => item.id !== orderItemId
+            );
+            const updatedTotalPrice = calculateTotalPrice(updatedOrderItems);
+
+            return {
+              ...order,
+              total_price: updatedTotalPrice,
+              order_items: updatedOrderItems,
+            };
+          }
+          return order;
+        })
       );
 
-      console.log("updatedUSeOrders: ", userOrders);
+      console.log("updatedUserOrders: ", userOrders);
 
       setErrors([]);
     } else {
