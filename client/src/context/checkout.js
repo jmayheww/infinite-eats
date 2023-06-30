@@ -24,31 +24,12 @@ export const CheckoutProvider = ({ children }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ quantity }),
+      body: JSON.stringify({ order_item: { quantity } }),
     });
 
     if (response.ok) {
-      const updatedOrderItem = await response.json();
-      console.log("data", updatedOrderItem);
-
-      setUserOrders((prevOrders) =>
-        prevOrders.map((order) => {
-          if (order.id === updatedOrderItem.order_id) {
-            const updatedOrderItems = order.order_items.map((item) =>
-              item.id === updatedOrderItem.id ? updatedOrderItem : item
-            );
-            const updatedTotalPrice = calculateTotalPrice(updatedOrderItems);
-
-            return {
-              ...order,
-              total_price: updatedTotalPrice,
-              order_items: updatedOrderItems,
-            };
-          }
-          return order;
-        })
-      );
-
+      const updatedUserOrders = await response.json();
+      setUserOrders(updatedUserOrders);
       setErrors([]);
     } else {
       const data = await response.json();
@@ -59,38 +40,16 @@ export const CheckoutProvider = ({ children }) => {
   };
 
   const deleteOrderItem = async (orderItemId) => {
-    const itemToDelete = userOrders.find((order) =>
-      order.order_items.some((item) => item.id === orderItemId)
-    );
-
-    console.log("itemToDelete: ", itemToDelete);
     const response = await fetch(`/api/order_items/${orderItemId}`, {
       method: "DELETE",
     });
 
     if (response.ok) {
-      const deletedOrderItem = await response.json();
-      console.log("deleted", deletedOrderItem);
+      const updatedUserOrders = await response.json();
 
-      setUserOrders((prevOrders) =>
-        prevOrders.map((order) => {
-          if (order.id === itemToDelete.id) {
-            const updatedOrderItems = order.order_items.filter(
-              (item) => item.id !== orderItemId
-            );
-            const updatedTotalPrice = calculateTotalPrice(updatedOrderItems);
+      setUserOrders(updatedUserOrders);
 
-            return {
-              ...order,
-              total_price: updatedTotalPrice,
-              order_items: updatedOrderItems,
-            };
-          }
-          return order;
-        })
-      );
-
-      console.log("updatedUserOrders: ", userOrders);
+      console.log("updatedUserOrders: ", updatedUserOrders);
 
       setErrors([]);
     } else {

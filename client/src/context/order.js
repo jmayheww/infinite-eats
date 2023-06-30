@@ -9,10 +9,6 @@ export const OrderProvider = ({ children }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState([]);
 
-  useEffect(() => {
-    setUserOrders(userOrders);
-  }, [userOrders, setUserOrders]);
-
   const addProduct = (product, quantity) => {
     setSelectedProducts((prev) => {
       const productInList = prev.find((p) => p.id === product.id);

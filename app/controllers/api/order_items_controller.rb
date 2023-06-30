@@ -2,37 +2,50 @@ class Api::OrderItemsController < ApplicationController
   before_action :set_current_user
   before_action :authorize_user
 
-  def update
-    order_item = OrderItem.find(params[:id])
-    if order_item.update(order_item_params)
-      render json: order_item
-    else
-      render json: { errors: order_item.errors.full_messages }, status: :unprocessable_entity
+  class Api::OrderItemsController < ApplicationController
+    before_action :set_current_user
+    before_action :authorize_user
+
+    def update
+      order_item = OrderItem.find(params[:id])
+      order_item.update!(order_item_params)
+      order = Order.find(order_item.order_id)
+      order.update_total_price
+      order.save
+
+      render json: @current_user.orders
     end
-  end
 
-  def destroy
-    order_item = OrderItem.find(params[:id])
-    order = Order.find(order_item.order_id)
-    order.update_total_price
-    order_item.destroy
-    render json: { message: 'Order Item successfully deleted' }
-  end
+    def destroy
+      order_item = OrderItem.find(params[:id])
+      order = Order.find(order_item.order_id)
+      order_item.destroy
 
-  private
+      # Remove the destroyed order item from the order's association
+      order.order_items.delete(order_item)
 
-  def set_current_user
-    @current_user = User.find_by(id: session[:user_id])
-  end
+      # Update the total price after removing the order item
+      order.update_total_price
+      order.save
 
-  def authorize_user
-    return if @current_user
+      render json: @current_user.orders
+    end
 
-    render json: { error: 'Unauthorized Access. You must be logged in to access orders' },
-           status: :unauthorized
-  end
+    private
 
-  def order_item_params
-    params.require(:order_item).permit(:quantity, :name, :price)
+    def set_current_user
+      @current_user = User.find_by(id: session[:user_id])
+    end
+
+    def authorize_user
+      return if @current_user
+
+      render json: { error: 'Unauthorized Access. You must be logged in to access orders' },
+             status: :unauthorized
+    end
+
+    def order_item_params
+      params.require(:order_item).permit(:quantity, :name, :price)
+    end
   end
 end
