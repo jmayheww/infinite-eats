@@ -6,24 +6,19 @@ function OrdersSection() {
   const { userOrders } = useContext(OrderContext);
 
   const renderOrders = () => {
-    if (userOrders && userOrders.length > 0) {
-      return userOrders.map((order) =>
-        order.status === "pending" ? (
-          <div key={order.id} className="mb-6">
-            <OrderCard order={order} />
-          </div>
-        ) : (
-          <div className="flex justify-center items-center h-64">
-            <p className="text-gray-500 text-xl">No pending orders</p>
-          </div>
-        )
-      );
-    }
-    return (
-      <div className="flex justify-center items-center h-64">
-        <p className="text-gray-500 text-xl">No orders in checkout</p>
-      </div>
+    const pendingOrders = userOrders.filter(
+      (order) => order.status === "pending"
     );
+
+    if (pendingOrders.length > 0) {
+      return pendingOrders.map((order) => (
+        <div key={order.id} className="mb-6">
+          <OrderCard order={order} />
+        </div>
+      ));
+    } else {
+      return <p>No pending orders</p>;
+    }
   };
 
   return (

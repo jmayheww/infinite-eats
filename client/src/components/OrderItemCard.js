@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { CheckoutContext } from "../context/checkout";
-import { OrderContext } from "../context/order";
 
 function OrderItemCard({ item }) {
   console.log("item: ", item);
@@ -27,10 +26,10 @@ function OrderItemCard({ item }) {
 
   const handleOrderItemUpdate = () => {
     console.log("updated order item:", item);
-
     updateOrderItem(item.id, quantity);
     setIsEditing(false);
   };
+
   const handleRemoveOrderItem = () => {
     console.log("deleted order item:", item);
     deleteOrderItem(item.id);
@@ -56,6 +55,9 @@ function OrderItemCard({ item }) {
             onChange={handleQuantityChange}
             className="border border-gray-300 rounded w-16 text-center"
           />
+          {errors.length > 0 && (
+            <div className="text-red-500 text-sm">{errors.join(", ")}</div>
+          )}
           <button
             className="text-blue-500 hover:text-blue-700"
             onClick={handleOrderItemUpdate}
