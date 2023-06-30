@@ -97,9 +97,26 @@ export const CheckoutProvider = ({ children }) => {
     }
   };
 
+  const deleteOrder = async (orderId) => {
+    const response = await fetch(`/api/orders/${orderId}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      setUserOrders((prevOrders) =>
+        prevOrders.filter((order) => order.id !== orderId)
+      );
+    } else {
+      const data = await response.json();
+      if (data.errors) {
+        setErrors(data.errors);
+      }
+    }
+  };
+
   return (
     <CheckoutContext.Provider
-      value={{ updateOrderItem, deleteOrderItem, errors }}
+      value={{ updateOrderItem, deleteOrderItem, deleteOrder, errors }}
     >
       {children}
     </CheckoutContext.Provider>

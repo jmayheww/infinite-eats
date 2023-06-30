@@ -53,6 +53,12 @@ class Api::OrdersController < ApplicationController
     render json: order, status: :ok
   end
 
+  def destroy
+    order = Order.find(params[:id])
+    order.destroy
+    render json: { message: 'Order successfully deleted' }
+  end
+
   private
 
   def set_current_user

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CheckoutContext } from "../context/checkout";
 import OrderItemCard from "./OrderItemCard";
 
-function OrderCard({ order, onRemove }) {
+function OrderCard({ order }) {
+  const { deleteOrder } = useContext(CheckoutContext);
+
   const handleRemoveOrder = () => {
-    onRemove(order.id);
+    deleteOrder(order.id);
   };
 
   return (
