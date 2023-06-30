@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { OrderContext } from "./order";
 
 export const CheckoutContext = createContext();
@@ -6,6 +7,8 @@ export const CheckoutContext = createContext();
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const { userOrders, setUserOrders } = useContext(OrderContext);
+  const stripe = useStripe();
+  const elements = useElements();
 
   const calculateTotalPrice = (orderItems) => {
     return orderItems.reduce(
@@ -114,9 +117,52 @@ export const CheckoutProvider = ({ children }) => {
     }
   };
 
+  const processPayment = async (order, user) => {
+    // You may want to disable the button until the request finishes
+    // Convert order total price to the smallest currency unit (e.g., cents)
+    const paymentAmount = order.total_price * 100;
+
+    // Step 1: Initiate the payment process and create a PaymentIntent on the backend
+    const response = await fetch("/api/create-payment-intent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: paymentAmount,
+        // Add any other necessary data
+      }),
+    });
+
+    const data = await response.json();
+    console.log("data: ", data);
+
+    // Step 2: Confirm the payment with the client secret
+    const result = await stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: user.payment_method_id,
+    });
+
+    if (result.error) {
+      // Show error to your customer (e.g., insufficient funds)
+      console.log(result.error.message);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        // Payment succeeded, update the UI and the server
+        console.log("Payment succeeded!");
+        // ... you can call your backend to confirm the payment and create new fridge items
+      }
+    }
+  };
+
   return (
     <CheckoutContext.Provider
-      value={{ updateOrderItem, deleteOrderItem, deleteOrder, errors }}
+      value={{
+        updateOrderItem,
+        deleteOrderItem,
+        deleteOrder,
+        errors,
+        processPayment,
+      }}
     >
       {children}
     </CheckoutContext.Provider>

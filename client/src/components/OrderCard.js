@@ -3,10 +3,16 @@ import { CheckoutContext } from "../context/checkout";
 import OrderItemCard from "./OrderItemCard";
 
 function OrderCard({ order }) {
-  const { deleteOrder } = useContext(CheckoutContext);
+  console.log("order: ", order);
+  const { deleteOrder, processPayment } = useContext(CheckoutContext);
 
   const handleRemoveOrder = () => {
     deleteOrder(order.id);
+  };
+
+  const handleApproveOrder = () => {
+    console.log("approved order:", order);
+    processPayment(order, order.user);
   };
 
   return (
@@ -33,7 +39,10 @@ function OrderCard({ order }) {
           >
             Delete Order
           </button>
-          <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">
+          <button
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200"
+            onClick={handleApproveOrder}
+          >
             Approve
           </button>
         </div>

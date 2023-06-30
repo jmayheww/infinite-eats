@@ -12,7 +12,7 @@ function PaymentMethodForm() {
     loading,
   } = useContext(PaymentContext);
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -26,6 +26,7 @@ function PaymentMethodForm() {
     createPaymentMethod(cardElement)
       .then((paymentMethod) => {
         handleSavePaymentMethod(paymentMethod);
+        setUser({ ...user, payment_method_id: paymentMethod.id });
       })
       .catch((error) => {
         console.log("[error]", error);

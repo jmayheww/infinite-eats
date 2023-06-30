@@ -10,11 +10,13 @@ Rails.application.routes.draw do
         post :create_or_update
       end
     end
+    get '/me', to: 'users#show'
 
     post '/signup', to: 'users#create'
     post '/users/save_payment_method', to: 'users#save_payment_method'
     post '/login', to: 'sessions#create'
-    get '/me', to: 'users#show'
+    post '/create-payment-intent', to: 'payments#create_payment_intent'
+
     delete '/logout', to: 'sessions#destroy'
   end
 
