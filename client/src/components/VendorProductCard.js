@@ -46,7 +46,7 @@ function VendorProductCard({ product }) {
     if (isSelected) {
       const newQuantity = orderQuantity + 1;
       setOrderQuantity(newQuantity);
-      updateQuantity(product, newQuantity);
+      updateQuantity(product, newQuantity, isSelected);
     }
   };
 
@@ -54,7 +54,7 @@ function VendorProductCard({ product }) {
     if (isSelected && orderQuantity > 0) {
       const newQuantity = orderQuantity - 1;
       setOrderQuantity(newQuantity);
-      updateQuantity(product, newQuantity);
+      updateQuantity(product, newQuantity, isSelected);
     }
   };
 

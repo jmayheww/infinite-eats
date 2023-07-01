@@ -6,38 +6,40 @@ export const OrderContext = createContext();
 export const OrderProvider = ({ children }) => {
   const { userOrders, setUserOrders } = useContext(UserContext);
 
+  // selected products bridges the gap between the vendor and order context.
+  // it is a list of products that the user has selected to add to their order
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState([]);
 
-  const addProduct = (product, quantity) => {
+  //  logic to add, remove, and update quantity of products in the selected products list
+  const manipulateProduct = (product, selected, quantity) => {
     setSelectedProducts((prev) => {
       const productInList = prev.find((p) => p.id === product.id);
       if (productInList) {
         return prev.map((p) =>
-          p.id === product.id ? { ...p, quantity, selected: true } : p
+          p.id === product.id ? { ...p, quantity, selected } : p
         );
+      } else {
+        return [...prev, { ...product, quantity, selected }];
       }
-      return [...prev, { ...product, quantity, selected: true }];
     });
   };
 
-  const removeProduct = (product) => {
-    setSelectedProducts((prev) =>
-      prev.map((p) => (p.id === product.id ? { ...p, selected: false } : p))
-    );
-  };
+  // adds a product to the selected products list
+  const addProduct = (product, quantity) =>
+    manipulateProduct(product, true, quantity);
 
-  const updateQuantity = (product, quantity) => {
-    setSelectedProducts((prev) =>
-      prev.map((p) => (p.id === product.id ? { ...p, quantity } : p))
-    );
-  };
+  // removes a product from the selected products list
+  const removeProduct = (product) =>
+    manipulateProduct(product, false, product.quantity);
 
-  const addUpdateOrderItemsToCheckout = async (currentUser, vendorId) => {
-    console.log("vendorId: ", vendorId);
-    console.log("currentUser: ", currentUser);
-    const userId = currentUser?.id;
-    console.log("userId: ", userId);
+  // updates the quantity of a product in the selected products list and keeps it selected
+  const updateQuantity = (product, quantity, isSelected) =>
+    manipulateProduct(product, isSelected, quantity);
+
+  // adds selected products to the user's order, or updates the quantity of products in the user's order
+
+  const addUpdateOrderItemsToCheckout = async (vendorId) => {
     setErrors([]);
 
     const orderItems = selectedProducts?.map((product) => ({
@@ -52,8 +54,6 @@ export const OrderProvider = ({ children }) => {
       status: "pending",
       order_items_attributes: orderItems,
     };
-
-    console.log("orderData: ", orderData);
 
     try {
       const response = await fetch("/api/orders/create_or_update", {
@@ -75,7 +75,7 @@ export const OrderProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      // Handle the error
+      console.log(error);
     }
   };
 

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import UserContext from "../context/user";
 import VendorContext from "../context/vendor";
 import { OrderContext } from "../context/order";
 import { SearchContext } from "../context/search";
@@ -10,9 +9,8 @@ function VendorProductSection() {
   const { vendors } = useContext(VendorContext);
   const { selectedProducts, addUpdateOrderItemsToCheckout, userOrders } =
     useContext(OrderContext);
+
   const { submitQuery, handleReset } = useContext(SearchContext);
-  const { user } = useContext(UserContext);
-  console.log("userOrders: ", userOrders);
 
   const { vendorId } = useParams();
 
@@ -32,8 +30,12 @@ function VendorProductSection() {
     );
   });
 
+  const existingCheckoutOrder = userOrders?.some((order) => {
+    return order.vendor_id === parseInt(vendorId) && order.status === "pending";
+  });
+
   const handleCheckout = () => {
-    addUpdateOrderItemsToCheckout(user, vendorId);
+    addUpdateOrderItemsToCheckout(vendorId);
   };
 
   return (
@@ -45,15 +47,15 @@ function VendorProductSection() {
             type="button"
             onClick={handleCheckout}
           >
-            {userOrders?.some((order) => order.vendor_id === parseInt(vendorId))
-              ? "Update Selections in Checkout"
+            {existingCheckoutOrder
+              ? "Update Existing or Add Selections to Checkout"
               : "Add Selections to Checkout"}
           </button>
         </div>
       )}
       {filteredProducts?.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4 justify-center">
-          {filteredProducts.map((product) => (
+          {filteredProducts?.map((product) => (
             <div key={product.id}>
               <VendorProductCard product={product} />
             </div>
