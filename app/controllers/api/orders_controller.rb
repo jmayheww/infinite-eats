@@ -57,13 +57,15 @@ class Api::OrdersController < ApplicationController
 
   def update
     @order.update!(order_params)
-    render json: @order, status: :ok
+    user_orders = @current_user.orders
+    render json: user_orders, status: :ok
   end
 
   def destroy
     order = Order.find(params[:id])
     order.destroy
-    render json: { message: 'Order successfully deleted' }
+    user_orders = @current_user.orders
+    render json: user_orders, status: :ok
   end
 
   private

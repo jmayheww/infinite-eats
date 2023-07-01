@@ -6,7 +6,6 @@ import Checkbox from "./Checkbox";
 import OrderControls from "./OrderControls";
 
 function VendorProductCard({ product }) {
-  console.log("product: ", product);
   const {
     addProduct,
     removeProduct,
@@ -23,28 +22,22 @@ function VendorProductCard({ product }) {
   const isSelected = selectedProducts?.some(
     (p) => p.id === product.id && p.selected
   );
-
-  const findInitialQuantity = (userOrders, vendorId, productId) => {
-    const productData = userOrders
-      ?.find(
-        (order) =>
-          order.vendor_id === parseInt(vendorId) && order.status === "pending"
-      )
-      ?.order_items?.find((item) => item.vendors_product_id === productId);
-
-    return productData?.quantity || 0;
-  };
+  const displayControls = user && isSelected;
 
   const [orderQuantity, setOrderQuantity] = useState(0);
 
   useEffect(() => {
     if (userOrders) {
-      const initialQuantity = findInitialQuantity(
-        userOrders,
-        vendorId,
-        product.id
+      const pendingOrder = userOrders.find(
+        (order) =>
+          order.vendor_id === parseInt(vendorId) && order.status === "pending"
       );
-      console.log("initialQuantity: ", initialQuantity);
+
+      const productData = pendingOrder?.order_items?.find(
+        (item) => item.vendors_product_id === product.id
+      );
+
+      const initialQuantity = productData?.quantity || 0;
       setOrderQuantity(initialQuantity);
     }
   }, [userOrders, vendorId, product.id]);
@@ -132,13 +125,15 @@ function VendorProductCard({ product }) {
         )}
         {/* Order controls */}
         <div className="flex items-center mt-3 justify-between">
-          <OrderControls
-            isSelected={isSelected}
-            orderQuantity={orderQuantity}
-            decrementQuantity={decrementQuantity}
-            incrementQuantity={incrementQuantity}
-            resetQuantity={resetQuantity}
-          />
+          {displayControls && (
+            <OrderControls
+              isSelected={isSelected}
+              orderQuantity={orderQuantity}
+              decrementQuantity={decrementQuantity}
+              incrementQuantity={incrementQuantity}
+              resetQuantity={resetQuantity}
+            />
+          )}
         </div>
       </div>
       <div className="flex items-center bg-secondary py-2 px-4">

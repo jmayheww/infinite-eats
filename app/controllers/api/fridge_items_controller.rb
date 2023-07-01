@@ -11,7 +11,10 @@ class Api::FridgeItemsController < ApplicationController
       FridgeItem.create!(fridge_item_params(item_params))
     end
 
-    render json: fridge_items, status: :created
+    @current_user.fridge_items << fridge_items
+    @current_user.save!
+
+    render json: @current_user, status: :created
   end
 
   private

@@ -7,16 +7,9 @@ export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
-  const { userOrders, setUserOrders } = useContext(OrderContext);
+  const { setUserOrders } = useContext(OrderContext);
   const { setUser } = useContext(UserContext);
   const stripe = useStripe();
-
-  const calculateTotalPrice = (orderItems) => {
-    return orderItems.reduce(
-      (total, item) => total + Number(item.price) * item.quantity,
-      0
-    );
-  };
 
   const updateOrderItem = async (orderItemId, quantity) => {
     const response = await fetch(`/api/order_items/${orderItemId}`, {
@@ -66,9 +59,9 @@ export const CheckoutProvider = ({ children }) => {
     });
 
     if (response.ok) {
-      setUserOrders((prevOrders) =>
-        prevOrders.filter((order) => order.id !== orderId)
-      );
+      const updatedUserOrders = await response.json();
+      console.log("Order successfully deleted!");
+      setUserOrders(updatedUserOrders);
     } else {
       const data = await response.json();
       if (data.errors) {
@@ -87,10 +80,8 @@ export const CheckoutProvider = ({ children }) => {
     });
 
     if (response.ok) {
-      const updatedOrder = await response.json();
-      setUserOrders((prevOrders) =>
-        prevOrders.map((order) => (order.id === orderId ? updatedOrder : order))
-      );
+      const updatedUserOrders = await response.json();
+      setUserOrders(updatedUserOrders);
     } else {
       const data = await response.json();
       if (data.errors) {
@@ -99,9 +90,8 @@ export const CheckoutProvider = ({ children }) => {
     }
   };
 
-  const createFridgeItems = async (order) => {
-    console.log("order: ", order);
-    const eligibleItems = order?.map((item) => {
+  const createFridgeItems = async (orderItems) => {
+    const eligibleItems = orderItems?.map((item) => {
       console.log("item: ", item.vendors_product_id);
       return {
         name: item.name,
@@ -119,14 +109,10 @@ export const CheckoutProvider = ({ children }) => {
     });
 
     if (response.ok) {
-      const newFridgeItems = await response.json();
-      console.log("newFridgeItems: ", newFridgeItems);
+      const updatedUser = await response.json();
 
       setErrors([]);
-      setUser((p) => ({
-        ...p,
-        fridge_items: [...p.fridge_items, ...newFridgeItems],
-      }));
+      setUser(updatedUser);
     } else {
       const data = await response.json();
       if (data.errors) {
@@ -171,7 +157,7 @@ export const CheckoutProvider = ({ children }) => {
         await updateOrderStatus(order.id, "completed");
         await createFridgeItems(order.order_items);
         window.alert(
-          "Payment succeeded! Your order status has been updated to 'completed'."
+          "Payment succeeded! Your order status has been updated to 'completed' and your items have been added to the fridge."
         );
       }
     }

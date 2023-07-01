@@ -25,14 +25,13 @@ export function PaymentProvider({ children }) {
         setLoading(false);
 
         if (result.error) {
-          console.log("[error]", result.error);
           return Promise.reject(result.error);
         }
         return result.paymentMethod;
       })
       .catch((error) => {
         setLoading(false);
-        console.log("[error]", error);
+
         return Promise.reject(error);
       });
   };
@@ -50,13 +49,11 @@ export function PaymentProvider({ children }) {
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
-        console.log("[data]", data);
-        console.log("[PaymentMethod]", paymentMethod);
+
         setUser(data); // Update the user state
       })
       .catch((error) => {
         setLoading(false);
-        console.log("[error]", error);
       });
   };
 
