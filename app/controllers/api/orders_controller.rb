@@ -8,48 +8,55 @@ class Api::OrdersController < ApplicationController
 
   # app/controllers/api/orders_controller.rb
 
+  # def create_or_update
+  #   # Check if an order exists for the current user belonging to a specific vendor and also pending
+  #   order = @current_user.orders.find_by(vendor_id: order_params[:vendor_id], status: 'pending')
+  #   puts order
+
+  #   if order
+  #     # If order exists, check if the order_items_attributes match any of the order item params in the request
+  #     order_items_attributes = order_params[:order_items_attributes]
+
+  #     order_items_attributes.each do |order_item_params|
+  #       order_item = order.order_items.find_by(vendors_product_id: order_item_params[:vendors_product_id])
+
+  #       if order_item
+  #         # If order item exists, update the quantity and price
+  #         order_item.update!(
+  #           quantity: order_item_params[:quantity],
+  #           price: order_item_params[:price]
+  #         )
+  #       else
+  #         # If order item does not exist, create a new order item
+  #         order.order_items.create!(
+  #           vendors_product_id: order_item_params[:vendors_product_id],
+  #           quantity: order_item_params[:quantity],
+  #           price: order_item_params[:price],
+  #           name: order_item_params[:name]
+  #         )
+  #       end
+  #     end
+  #   else
+  #     # If order does not exist, create a new order with order item attributes that take in your params
+  #     order = Order.create!(
+  #       user_id: @current_user.id,
+  #       vendor_id: order_params[:vendor_id],
+  #       status: 'pending',
+  #       order_items_attributes: order_params[:order_items_attributes]
+  #     )
+  #   end
+
+  #   # After creating or updating order items, update the order total
+  #   order.total_price = order.order_items.sum('price * quantity')
+  #   order.save!
+
+  #   user_orders = @current_user.orders
+
+  #   render json: user_orders, status: :ok
+  # end
+
   def create_or_update
-    # Check if an order exists for the current user belonging to a specific vendor and also pending
-    order = @current_user.orders.find_by(vendor_id: order_params[:vendor_id], status: 'pending')
-    puts order
-
-    if order
-      # If order exists, check if the order_items_attributes match any of the order item params in the request
-      order_items_attributes = order_params[:order_items_attributes]
-
-      order_items_attributes.each do |order_item_params|
-        order_item = order.order_items.find_by(vendors_product_id: order_item_params[:vendors_product_id])
-
-        if order_item
-          # If order item exists, update the quantity and price
-          order_item.update!(
-            quantity: order_item_params[:quantity],
-            price: order_item_params[:price]
-          )
-        else
-          # If order item does not exist, create a new order item
-          order.order_items.create!(
-            vendors_product_id: order_item_params[:vendors_product_id],
-            quantity: order_item_params[:quantity],
-            price: order_item_params[:price],
-            name: order_item_params[:name]
-          )
-        end
-      end
-    else
-      # If order does not exist, create a new order with order item attributes that take in your params
-      order = Order.create!(
-        user_id: @current_user.id,
-        vendor_id: order_params[:vendor_id],
-        status: 'pending',
-        order_items_attributes: order_params[:order_items_attributes]
-      )
-    end
-
-    # After creating or updating order items, update the order total
-    order.total_price = order.order_items.sum('price * quantity')
-    order.save!
-
+    Order.create_or_update(order_params, @current_user)
     user_orders = @current_user.orders
 
     render json: user_orders, status: :ok

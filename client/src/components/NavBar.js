@@ -12,7 +12,7 @@ function NavBar() {
         <div className="flex items-center justify-between py-2">
           <div className="text-center sm:text-left">
             <LinkButton
-              to="/"
+              to="/home"
               additionalStyles="font-lato text-2xl sm:text-3xl text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
             >
               Infinite Eats
@@ -20,11 +20,12 @@ function NavBar() {
           </div>
 
           <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 lg:space-x-6 text-sm sm:text-base ml-auto">
-            <LinkButton to="/">Home</LinkButton>
+            <LinkButton to="/home">Home</LinkButton>
             <LinkButton to="/features">Features</LinkButton>
 
             {user && (
               <>
+                <LinkButton to="/fridge">Fridge</LinkButton>
                 <LinkButton to="/myaccount">My Account</LinkButton>
               </>
             )}

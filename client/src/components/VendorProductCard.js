@@ -60,7 +60,7 @@ function VendorProductCard({ product }) {
 
   const resetQuantity = () => {
     setOrderQuantity(0);
-    updateQuantity(product, 0);
+    updateQuantity(product, 0, isSelected);
   };
 
   const toggleSelection = () => {
@@ -150,18 +150,17 @@ function VendorProductCard({ product }) {
           </span>
         </div>
       </div>
-      {errors && errors.length > 0 && (
-        <div className="text-red-500 p-4">
-          {errors
-            .filter((error) => error.product_id === product.id)
-            .map((error, index) => (
-              <p key={index}>
+      {errors &&
+        errors
+          .filter((error) => error.product_id === product.id)
+          .map((error, index) => (
+            <div key={index} className="text-red-500 p-4">
+              <p>
                 Error: Cannot add product to checkout if quantity is 0. Please
                 adjust quantity or deselect product.
               </p>
-            ))}
-        </div>
-      )}
+            </div>
+          ))}
     </div>
   );
 }

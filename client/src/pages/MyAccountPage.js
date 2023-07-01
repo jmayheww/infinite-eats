@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import UserProfileSection from "../sections/UserProfileSection";
 import UserContext from "../context/user";
 import ModalContext from "../context/modal";
+import FridgeSection from "../sections/FridgeSection";
 import Modal from "../components/Modal";
 import PaymentMethodForm from "../components/PaymentMethodForm";
 
@@ -40,6 +41,7 @@ function MyAccountPage() {
       </h1>
       <div className="flex flex-col justify-center items-center space-y-8">
         <UserProfileSection />
+        <FridgeSection />
         <PaymentMethodForm />
         <div className="flex justify-between w-full max-w-md mt-4">
           <button

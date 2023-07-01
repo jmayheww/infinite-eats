@@ -7,6 +7,8 @@ class OrderItem < ApplicationRecord
 
   validate :quantity_greater_than_zero
 
+  private
+
   def quantity_greater_than_zero
     errors.add(:quantity, "must be greater than 0 for product #{vendors_product_id}") if quantity.nil? || quantity <= 0
   end

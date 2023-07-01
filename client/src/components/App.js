@@ -18,6 +18,7 @@ const AsyncMyAccountPage = React.lazy(() => import("../pages/MyAccountPage"));
 const AsyncOrderCheckoutPage = React.lazy(() =>
   import("../pages/OrderCheckoutPage")
 );
+const AsyncFridgePage = React.lazy(() => import("../pages/ManageFridgePage"));
 
 function App() {
   const { user, fetchCurrentUser } = useContext(UserContext);
@@ -36,8 +37,8 @@ function App() {
       <NavBar />
       <Suspense fallback={<h1>Loading...</h1>}>
         <Routes>
-          <Route exact path="/testing" element={<h1>Test Route</h1>} />
-          {/* conditional check for user */}
+          <Route path="/home" element={<AsyncLandingPage />} />
+          <Route exact path="/" element={<Navigate to="/home" replace />} />
           <Route
             exact
             path="/myaccount"
@@ -49,41 +50,38 @@ function App() {
                   </PaymentProvider>
                 </Elements>
               ) : (
-                <Navigate to="/login" replace />
+                <Navigate to="/home" replace />
               )
             }
           />
-
           <Route exact path="/features" element={<AsyncFeaturesPage />} />
-
           <Route exact path="/vendors" element={<AsyncVendorsList />} />
-
           <Route
             exact
             path="/vendors/:vendorId"
             element={<AsyncViewVendorPage />}
           />
-
           {user && (
-            <Route
-              path="/checkout"
-              element={
-                <Elements stripe={stripePromise}>
-                  <AsyncOrderCheckoutPage />
-                </Elements>
-              }
-            />
-          )}
+            <>
+              <Route
+                path="/checkout"
+                element={
+                  <Elements stripe={stripePromise}>
+                    <AsyncOrderCheckoutPage />
+                  </Elements>
+                }
+              />
 
-          <Route path="/landing" element={<AsyncLandingPage />} />
-          <Route exact path="/" element={<Navigate to="/landing" replace />} />
+              <Route path="/fridge" element={<AsyncFridgePage />} />
+            </>
+          )}
           {!user && (
             <>
               <Route exact path="/login" element={<AsyncAuthPage />} />
               <Route exact path="/signup" element={<AsyncAuthPage />} />
             </>
           )}
-          <Route path="*" element={<Navigate to="/landing" />} />
+          <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </Suspense>
     </div>
