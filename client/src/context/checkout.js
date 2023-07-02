@@ -119,7 +119,6 @@ export const CheckoutProvider = ({ children }) => {
 
   const processPayment = async (order, user) => {
     try {
-      // Convert order total price to the smallest currency unit (e.g., cents)
       const paymentAmount = order.total_price * 100;
 
       // Step 1: Initiate the payment process and create a PaymentIntent on the backend
@@ -130,7 +129,6 @@ export const CheckoutProvider = ({ children }) => {
         },
         body: JSON.stringify({
           amount: paymentAmount,
-          // Add any other necessary data
         }),
       });
 
@@ -154,7 +152,7 @@ export const CheckoutProvider = ({ children }) => {
             setErrors(
               "There was a problem adding your items to the fridge. Please try again."
             );
-            throw error; // re-throw the error if you want to stop executing the rest of the code
+            throw error; // throw to stop the function from continuing
           }
 
           window.alert(

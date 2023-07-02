@@ -5,7 +5,7 @@ import UserContext from "./user";
 export const PaymentContext = createContext();
 
 export function PaymentProvider({ children }) {
-  const { setUser } = useContext(UserContext); // Access setUser from UserContext
+  const { setUser } = useContext(UserContext);
   const stripe = useStripe();
   const elements = useElements();
   const [showCardInput, setShowCardInput] = useState(false);

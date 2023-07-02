@@ -8,7 +8,6 @@ function VendorsListPage() {
   return (
     <main className="pt-24 bg-primary min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       {" "}
-      {/* Increased padding-top */}
       <div className="max-w-7xl text-center mx-auto">
         <h1 className="text-5xl font-extrabold text-secondary mb-6">
           Our Vendors
