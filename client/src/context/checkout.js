@@ -1,14 +1,14 @@
 import React, { createContext, useState, useContext } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
-import { OrderContext } from "./order";
 import UserContext from "./user";
 
 export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
-  const { setUserOrders } = useContext(OrderContext);
-  const { setUser } = useContext(UserContext);
+
+  const { setUser, setUserOrders, setUserFridgeItems } =
+    useContext(UserContext);
   const stripe = useStripe();
 
   const updateOrderItem = async (orderItemId, quantity) => {
@@ -156,6 +156,7 @@ export const CheckoutProvider = ({ children }) => {
         console.log("Payment succeeded!");
         await updateOrderStatus(order.id, "completed");
         await createFridgeItems(order.order_items);
+        setUserFridgeItems(user?.fridge_items);
         window.alert(
           "Payment succeeded! Your order status has been updated to 'completed' and your items have been added to the fridge."
         );

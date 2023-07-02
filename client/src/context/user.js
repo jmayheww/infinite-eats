@@ -19,6 +19,8 @@ export const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState({});
   const [userOrders, setUserOrders] = useState([]);
+  const [userFridgeItems, setUserFridgeItems] = useState([]);
+  console.log("userFridgeItems: ", userFridgeItems);
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -81,6 +83,7 @@ export const UserProvider = ({ children }) => {
       r.json().then((user) => {
         setUser(user);
         setUserOrders(user?.orders);
+        setUserFridgeItems(user?.fridge_items);
         setUpdatedUser(user);
       });
     } else {
@@ -94,6 +97,7 @@ export const UserProvider = ({ children }) => {
       r.json().then((user) => {
         setUser(user);
         setUserOrders(user?.orders);
+        setUserFridgeItems(user?.fridge_items);
         setUserAuthInput(initialUserAuthInput);
         navigate("/landing");
       });
@@ -170,6 +174,8 @@ export const UserProvider = ({ children }) => {
       value={{
         user,
         userOrders,
+        userFridgeItems,
+        setUserFridgeItems,
         setUserOrders,
         setUser,
         fetchCurrentUser,

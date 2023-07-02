@@ -5,11 +5,11 @@ export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const { userOrders, setUserOrders } = useContext(UserContext);
+  const [errors, setErrors] = useState([]);
 
   // selected products bridges the gap between the vendor and order context.
   // it is a list of products that the user has selected to add to their order
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [errors, setErrors] = useState([]);
 
   //  logic to add, remove, and update quantity of products in the selected products list
   const manipulateProduct = (product, selected, quantity) => {
