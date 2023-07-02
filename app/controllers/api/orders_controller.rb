@@ -119,7 +119,8 @@ class Api::OrdersController < ApplicationController
       order_item = order_items_attributes.find { |item| item[:vendors_product_id].to_i == product_id }
       next if order_item.nil? || product_id.zero?
 
-      { product_id: product_id, error: error_message, order_item: order_item }
+      { product_id: product_id,
+        error: 'You cannot add or update any selections to checkout with the quantity of 0. Please adjust the quantity and try again.', order_item: order_item }
     end.compact
 
     render json: { errors: error_messages }, status: :unprocessable_entity

@@ -10,6 +10,8 @@ function PaymentMethodForm() {
     createPaymentMethod,
     handleSavePaymentMethod,
     loading,
+    error,
+    setError,
   } = useContext(PaymentContext);
 
   const { user, setUser } = useContext(UserContext);
@@ -23,15 +25,16 @@ function PaymentMethodForm() {
 
     const cardElement = elements.getElement(CardElement);
 
-    createPaymentMethod(cardElement)
-      .then((paymentMethod) => {
-        handleSavePaymentMethod(paymentMethod);
-        setUser({ ...user, payment_method_id: paymentMethod.id });
-      })
-      .catch((error) => {
-        console.log("[error]", error);
-      });
-    setShowCardInput(false);
+    try {
+      const paymentMethod = await createPaymentMethod(cardElement);
+      await handleSavePaymentMethod(paymentMethod);
+      setUser({ ...user, payment_method_id: paymentMethod.id });
+      setShowCardInput(false);
+    } catch (error) {
+      console.log("error: ", error.message);
+      console.log("error", error);
+      setError(error);
+    }
   };
 
   const cardInputElement = (
@@ -42,6 +45,9 @@ function PaymentMethodForm() {
       >
         Save Payment Method
       </label>
+      {error && error?.message && (
+        <div className="mt-2 text-red-600">{error.message}</div>
+      )}
       <CardElement
         id="card-element"
         className="border border-gray-400 p-2 rounded w-full h-15"

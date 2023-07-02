@@ -5,6 +5,7 @@ import OrderItemCard from "./OrderItemCard";
 function OrderCard({ order }) {
   console.log("total_price: ", order.total_price);
   const { deleteOrder, processPayment, errors } = useContext(CheckoutContext);
+  console.log("errors: ", errors);
 
   const handleRemoveOrder = () => {
     deleteOrder(order.id);
@@ -52,7 +53,7 @@ function OrderCard({ order }) {
         </div>
       </div>
       {errors && errors.length > 0 && (
-        <div className="mt-4 text-red-500">{errors[0]}</div>
+        <div className="mt-4 text-red-500">{errors}</div>
       )}
     </div>
   );

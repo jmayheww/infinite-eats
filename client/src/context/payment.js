@@ -10,6 +10,7 @@ export function PaymentProvider({ children }) {
   const elements = useElements();
   const [showCardInput, setShowCardInput] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const createPaymentMethod = (cardElement) => {
     if (!stripe || !elements) return Promise.reject("Stripe is not available");
@@ -36,25 +37,30 @@ export function PaymentProvider({ children }) {
       });
   };
 
-  const handleSavePaymentMethod = (paymentMethod) => {
+  const handleSavePaymentMethod = async (paymentMethod) => {
     setLoading(true);
-
-    return fetch("api/users/save_payment_method", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ pm_id: paymentMethod.id }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false);
-
-        setUser(data); // Update the user state
-      })
-      .catch((error) => {
-        setLoading(false);
+    setError(null);
+    try {
+      const response = await fetch("api/users/save_payment_method", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pm_id: paymentMethod.id }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const data = await response.json();
+      setLoading(false);
+      setUser(data);
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
   };
 
   return (
@@ -65,6 +71,8 @@ export function PaymentProvider({ children }) {
         createPaymentMethod,
         handleSavePaymentMethod,
         loading,
+        error,
+        setError,
       }}
     >
       {children}

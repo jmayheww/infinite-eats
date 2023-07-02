@@ -6,6 +6,7 @@ export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
+  console.log("errors: ", errors);
 
   const { setUser, setUserOrders, setUserFridgeItems } =
     useContext(UserContext);
@@ -112,7 +113,7 @@ export const CheckoutProvider = ({ children }) => {
       const updatedUser = await response.json();
       console.log("updatedUser: ", updatedUser);
       setErrors([]);
-      return updatedUser; // return the updated user
+      return updatedUser;
     } else {
       const data = await response.json();
       if (data.errors) {
@@ -152,7 +153,9 @@ export const CheckoutProvider = ({ children }) => {
     if (result.error) {
       // Show error to your customer (e.g., insufficient funds)
       console.log(result.error.message);
-      setErrors([result.error.message]);
+      setErrors(
+        "There was a problem processing your payment. Please confirm your payment method and try again."
+      );
     } else {
       if (result.paymentIntent.status === "succeeded") {
         console.log("Payment succeeded!");
