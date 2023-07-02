@@ -8,8 +8,7 @@ export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   console.log("errors: ", errors);
 
-  const { setUser, setUserOrders, setUserFridgeItems } =
-    useContext(UserContext);
+  const { setUserOrders, setUserFridgeItems } = useContext(UserContext);
   const stripe = useStripe();
 
   const updateOrderItem = async (orderItemId, quantity) => {

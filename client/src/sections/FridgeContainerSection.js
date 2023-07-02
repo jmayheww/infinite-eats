@@ -5,6 +5,13 @@ import FridgeItemCard from "../components/FridgeItemCard";
 function FridgeContainerSection() {
   const { userFridgeItems } = useContext(UserContext);
   const renderFridgeItems = () => {
+    if (!userFridgeItems || userFridgeItems.length === 0) {
+      return (
+        <div className="col-span-full text-center text-2xl font-bold text-secondary">
+          No items in your fridge
+        </div>
+      );
+    }
     return userFridgeItems?.map((item) => (
       <FridgeItemCard key={item.id} item={item} />
     ));

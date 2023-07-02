@@ -22,7 +22,7 @@ function FeaturedItemSection() {
             Best Sellers
           </h2>
           <p className="text-xl text-white mb-8">
-            Discover our most popular products
+            Featuring our top four best selling products
           </p>
         </div>
 
@@ -49,12 +49,6 @@ function FeaturedItemSection() {
                     <span className="text-sm font-semibold text-secondary">
                       Price: ${product.price}
                     </span>
-                    {/* <Link
-                      to={`/products`}
-                      className="text-sm text-white bg-secondary hover:bg-primary-dark transition-colors duration-300 py-1 px-4 rounded-md"
-                    >
-                      View Details
-                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -67,15 +61,6 @@ function FeaturedItemSection() {
             </p>
           </div>
         )}
-
-        <div className="flex justify-center mt-8">
-          <Link
-            to="/vendors"
-            className="py-3 px-6 bg-primary text-secondary rounded-md hover:bg-secondary hover:border border-primary hover:text-white transition-colors duration-300"
-          >
-            See More Best Sellers &rarr;
-          </Link>
-        </div>
       </div>
     </section>
   );
