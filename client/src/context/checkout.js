@@ -110,14 +110,16 @@ export const CheckoutProvider = ({ children }) => {
 
     if (response.ok) {
       const updatedUser = await response.json();
-
+      console.log("updatedUser: ", updatedUser);
       setErrors([]);
-      setUser(updatedUser);
+      return updatedUser; // return the updated user
     } else {
       const data = await response.json();
       if (data.errors) {
         setErrors(data.errors);
         console.log("errors: ", errors);
+        // Display an error notification to the user
+        window.alert("Error creating fridge items: " + data.errors.join(", "));
       }
     }
   };
@@ -155,8 +157,8 @@ export const CheckoutProvider = ({ children }) => {
       if (result.paymentIntent.status === "succeeded") {
         console.log("Payment succeeded!");
         await updateOrderStatus(order.id, "completed");
-        await createFridgeItems(order.order_items);
-        setUserFridgeItems(user?.fridge_items);
+        const updatedUser = await createFridgeItems(order.order_items);
+        setUserFridgeItems(updatedUser?.fridge_items);
         window.alert(
           "Payment succeeded! Your order status has been updated to 'completed' and your items have been added to the fridge."
         );

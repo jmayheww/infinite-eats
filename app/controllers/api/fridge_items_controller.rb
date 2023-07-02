@@ -8,13 +8,21 @@ class Api::FridgeItemsController < ApplicationController
   def create
     fridge_items = params[:fridge_items].map do |item_params|
       item_params[:user_id] = @current_user.id
-      FridgeItem.create!(fridge_item_params(item_params))
+      fridge_item = FridgeItem.find_or_create_with_quantity(item_params)
+      fridge_item
     end
 
     @current_user.fridge_items << fridge_items
     @current_user.save!
 
     render json: @current_user, status: :created
+  end
+
+  def update
+    fridge_item = FridgeItem.find(params[:id])
+    fridge_item.update!(fridge_item_params(params))
+
+    render json: fridge_item, status: :ok
   end
 
   private
