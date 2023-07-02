@@ -4,7 +4,7 @@ import LinkButton from "./LinkButton";
 import { FaShoppingCart } from "react-icons/fa";
 
 function NavBar() {
-  const { user } = useContext(UserContext);
+  const { user, isAdmin } = useContext(UserContext);
 
   return (
     <nav className="bg-accent fixed w-full z-50 shadow-md transition-all duration-300 ease-in-out">
@@ -29,6 +29,8 @@ function NavBar() {
                 <LinkButton to="/myaccount">My Account</LinkButton>
               </>
             )}
+
+            {isAdmin && <LinkButton to="/admin">Admin</LinkButton>}
 
             <span className="border-l-2 border-white h-5 mx-1 sm:mx-2 md:mx-4"></span>
 

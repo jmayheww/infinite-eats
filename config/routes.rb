@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     post '/create-payment-intent', to: 'payments#create_payment_intent'
 
     delete '/logout', to: 'sessions#destroy'
+
+    # Basic Admin Test Many To Many Route
+    get '/admin', to: 'admin#admin_index'
   end
 
   # Routing logic: fallback requests for React Router.

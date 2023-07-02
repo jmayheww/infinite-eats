@@ -19,10 +19,10 @@ const AsyncOrderCheckoutPage = React.lazy(() =>
   import("../pages/OrderCheckoutPage")
 );
 const AsyncFridgePage = React.lazy(() => import("../pages/ManageFridgePage"));
+const AsyncAdminPage = React.lazy(() => import("../pages/AdminPage"));
 
 function App() {
-  const { user, fetchCurrentUser } = useContext(UserContext);
-  console.log("user: ", user);
+  const { user, fetchCurrentUser, isAdmin } = useContext(UserContext);
   const { fetchVendors } = useContext(VendorContext);
 
   useEffect(() => {
@@ -61,6 +61,11 @@ function App() {
             path="/vendors/:vendorId"
             element={<AsyncViewVendorPage />}
           />
+
+          {user && isAdmin && (
+            <Route path="/admin" element={<AsyncAdminPage />} />
+          )}
+
           {user && (
             <>
               <Route

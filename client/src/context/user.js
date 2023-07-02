@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [userOrders, setUserOrders] = useState([]);
   const [userFridgeItems, setUserFridgeItems] = useState([]);
-  console.log("userFridgeItems: ", userFridgeItems);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [userAuthInput, setUserAuthInput] = useState(initialUserAuthInput);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -85,6 +85,11 @@ export const UserProvider = ({ children }) => {
         setUserOrders(user?.orders);
         setUserFridgeItems(user?.fridge_items);
         setUpdatedUser(user);
+
+        // test inverse users - vendors db relationship
+        user.email === "joshsmayhew@gmail.com"
+          ? setIsAdmin(true)
+          : setIsAdmin(false);
       });
     } else {
       setUser(null);
@@ -98,6 +103,12 @@ export const UserProvider = ({ children }) => {
         setUser(user);
         setUserOrders(user?.orders);
         setUserFridgeItems(user?.fridge_items);
+
+        // test inverse users - vendors db relationship
+        user.email === "joshsmayhew@gmail.com"
+          ? setIsAdmin(true)
+          : setIsAdmin(false);
+
         setUserAuthInput(initialUserAuthInput);
         navigate("/landing");
       });
@@ -178,6 +189,7 @@ export const UserProvider = ({ children }) => {
         setUserFridgeItems,
         setUserOrders,
         setUser,
+        isAdmin,
         fetchCurrentUser,
         loginUser,
         signupUser,
