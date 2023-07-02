@@ -7,7 +7,7 @@ export const OrderProvider = ({ children }) => {
   const { userOrders, setUserOrders } = useContext(UserContext);
   const [errors, setErrors] = useState([]);
 
-  // selected products bridges the gap between the vendor and order context.
+  // selectedProducts is a frontend representation of the user's order
   // it is a list of products that the user has selected to add to their order
   const [selectedProducts, setSelectedProducts] = useState([]);
 
@@ -74,9 +74,7 @@ export const OrderProvider = ({ children }) => {
           setErrors(data.errors);
         }
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (
