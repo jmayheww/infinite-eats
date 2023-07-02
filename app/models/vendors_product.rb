@@ -9,4 +9,9 @@ class VendorsProduct < ApplicationRecord
 
   validates_presence_of :price, :quantity
   validates :product, uniqueness: { scope: :vendor }
+
+  def increment_quantity(by_amount)
+    self.quantity += by_amount
+    save!
+  end
 end

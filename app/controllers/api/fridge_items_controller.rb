@@ -9,6 +9,11 @@ class Api::FridgeItemsController < ApplicationController
     fridge_items = params[:fridge_items].map do |item_params|
       item_params[:user_id] = @current_user.id
       fridge_item = FridgeItem.find_or_create_with_quantity(create_fridge_item_params(item_params))
+
+      # update total ordered quantity of linked vendors_product
+
+      fridge_item.vendors_product.increment_quantity(item_params[:quantity].to_i)
+
       fridge_item
     end
 

@@ -2,7 +2,7 @@ class FridgeItem < ApplicationRecord
   belongs_to :user
   belongs_to :vendors_product
 
-  validates_uniqueness_of :vendors_product_id
+  validates :vendors_product_id, uniqueness: { scope: :user_id }
   validates :quantity, presence: true, numericality: { greater_than: 0 }
 
   def self.find_or_create_with_quantity(params)

@@ -116,55 +116,63 @@ export const CheckoutProvider = ({ children }) => {
     } else {
       const data = await response.json();
       if (data.errors) {
-        setErrors(data.errors);
-        console.log("errors: ", errors);
-        // Display an error notification to the user
-        window.alert("Error creating fridge items: " + data.errors.join(", "));
+        throw Error(data.errors);
       }
     }
   };
 
   const processPayment = async (order, user) => {
-    // You may want to disable the button until the request finishes
-    // Convert order total price to the smallest currency unit (e.g., cents)
-    const paymentAmount = order.total_price * 100;
+    try {
+      // Convert order total price to the smallest currency unit (e.g., cents)
+      const paymentAmount = order.total_price * 100;
 
-    // Step 1: Initiate the payment process and create a PaymentIntent on the backend
-    const response = await fetch("/api/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: paymentAmount,
-        // Add any other necessary data
-      }),
-    });
+      // Step 1: Initiate the payment process and create a PaymentIntent on the backend
+      const response = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: paymentAmount,
+          // Add any other necessary data
+        }),
+      });
 
-    const data = await response.json();
-    console.log("data: ", data);
+      const data = await response.json();
 
-    // Step 2: Confirm the payment with the client secret
-    const result = await stripe.confirmCardPayment(data.clientSecret, {
-      payment_method: user.payment_method_id,
-    });
+      // Step 2: Confirm the payment with the client secret
+      const result = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: user.payment_method_id,
+      });
 
-    if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message);
+      if (result.error) {
+        throw new Error(result.error.message);
+      } else {
+        if (result.paymentIntent.status === "succeeded") {
+          console.log("Payment succeeded!");
+          await updateOrderStatus(order.id, "completed");
+
+          try {
+            const updatedUser = await createFridgeItems(order.order_items);
+            setUserFridgeItems(updatedUser?.fridge_items);
+          } catch (error) {
+            console.error(error);
+            setErrors(
+              "There was a problem adding your items to the fridge. Please try again."
+            );
+            throw error; // re-throw the error if you want to stop executing the rest of the code
+          }
+
+          window.alert(
+            "Payment succeeded! Your order status has been updated to 'completed' and your items have been added to the fridge."
+          );
+        }
+      }
+    } catch (error) {
+      console.error(error);
       setErrors(
         "There was a problem processing your payment. Please confirm your payment method and try again."
       );
-    } else {
-      if (result.paymentIntent.status === "succeeded") {
-        console.log("Payment succeeded!");
-        await updateOrderStatus(order.id, "completed");
-        const updatedUser = await createFridgeItems(order.order_items);
-        setUserFridgeItems(updatedUser?.fridge_items);
-        window.alert(
-          "Payment succeeded! Your order status has been updated to 'completed' and your items have been added to the fridge."
-        );
-      }
     }
   };
 
