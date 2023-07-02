@@ -1,15 +1,15 @@
 Rails.application.routes.draw do
   namespace :api do
     resources :users, only: %i[show create update destroy]
-    resources :products
-    resources :vendors
-    resources :fridge_items
-    resources :order_items
+    resources :vendors, only: %i[index show]
+    resources :fridge_items, only: %i[create update destroy]
+    resources :order_items, only: %i[update destroy]
     resources :orders do
       collection do
         post :create_or_update
       end
     end
+
     get '/me', to: 'users#show'
 
     post '/signup', to: 'users#create'
@@ -21,6 +21,6 @@ Rails.application.routes.draw do
   end
 
   # Routing logic: fallback requests for React Router.
-  get '/hello', to: 'application#hello_world'
+
   get '*path', to: 'fallback#index', constraints: ->(req) { !req.xhr? && req.format.html? }
 end

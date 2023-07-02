@@ -1,6 +1,5 @@
 class Api::SessionsController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :render_unauthorized_response
-  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+  skip_before_action :authenticate_user, only: [:create]
 
   def create
     user = User.find_by(email: params[:email])
@@ -22,9 +21,5 @@ class Api::SessionsController < ApplicationController
 
   def render_unauthorized_response
     render json: { error: 'Invalid email or password' }, status: :unauthorized
-  end
-
-  def render_unprocessable_entity_response(exception)
-    render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
   end
 end

@@ -2,8 +2,6 @@ require 'stripe'
 
 class Api::PaymentsController < ApplicationController
   before_action :validate_payment_params, only: [:create_payment_intent]
-  before_action :set_current_user, only: [:create_payment_intent]
-  before_action :authorize_user, only: [:create_payment_intent]
 
   Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
@@ -22,15 +20,6 @@ class Api::PaymentsController < ApplicationController
   end
 
   private
-
-  # Set the current user for the session.
-  def set_current_user
-    @current_user = User.find_by(id: session[:user_id])
-  end
-
-  def authorize_user
-    render json: { error: 'Not authorized' }, status: :unauthorized unless @current_user
-  end
 
   def validate_payment_params
     params[:amount] = params[:amount].to_i
