@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :vendors, only: %i[index show]
     resources :fridge_items, only: %i[create update destroy]
     resources :order_items, only: %i[update destroy]
-    resources :orders do
+    resources :orders, only: %i[update destroy] do
       collection do
         post :create_or_update
       end
