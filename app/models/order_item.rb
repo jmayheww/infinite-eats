@@ -2,6 +2,8 @@ class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :vendors_product
 
+  has_many :users, through: :order
+
   validates_presence_of :quantity, :price
   validates :quantity, numericality: { greater_than: 0 }
 

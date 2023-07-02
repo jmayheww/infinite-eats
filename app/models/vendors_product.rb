@@ -4,6 +4,7 @@ class VendorsProduct < ApplicationRecord
 
   has_many :order_items
   has_many :orders, through: :order_items
+  has_many :users, through: :order_items
 
   delegate :name, :category, :brand, :size, :description, :image_url, to: :product
 

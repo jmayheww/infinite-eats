@@ -1,48 +1,52 @@
 import React, { useEffect, useState } from "react";
 
 function AdminPage() {
-  const [allUserOrderItems, setAllUserOrderItems] = useState(null);
+  const [allVendorsProducts, setAllVendorsProducts] = useState([]);
 
   useEffect(() => {
     const fetchAdminData = async () => {
       const response = await fetch("/api/admin");
       const data = await response.json();
-      setAllUserOrderItems(data);
+      setAllVendorsProducts(data);
     };
     fetchAdminData();
   }, []);
 
   return (
-    <div className="bg-primary min-h-screen py-8">
-      <div className="max-w-2xl mx-auto px-4">
-        <h1 className="text-3xl font-semibold mb-4 text-secondary">Admin</h1>
-        <div>
-          {allUserOrderItems &&
-            allUserOrderItems.map((user) => (
-              <div key={user.id} className="bg-white rounded-md p-4 mb-4">
-                <h2 className="text-xl font-semibold mb-2 text-secondary">
-                  {user.first_name} {user.last_name}
-                </h2>
-                <h2 className="text-xl font-semibold mb-2 text-secondary">
-                  {user.email}
-                </h2>
-                <h2 className="text-xl font-semibold mb-2 text-secondary">
-                  Purchase List:
-                </h2>
-                <div>
-                  {user.order_items.map((orderItem) => (
-                    <div key={orderItem.id} className="ml-4">
-                      <h3 className="text-lg font-semibold mb-2">
-                        {orderItem.name}
-                      </h3>
-                      <p className="mb-1">Quantity: {orderItem.quantity}</p>
-                      <p className="mb-1">Price: ${orderItem.price}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-        </div>
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="text-4xl font-extrabold text-secondary mb-4">
+        Admin Page
+      </h1>
+      <div className="flex flex-col items-center justify-center">
+        <h2 className="text-2xl font-extrabold text-secondary mb-4">
+          All Purchased Products and Associated Users
+        </h2>
+
+        <ol className="list-decimal pl-8">
+          {allVendorsProducts.map((vendorsProduct) => (
+            <li
+              key={vendorsProduct.id}
+              className="flex flex-col items-start mb-8"
+            >
+              <h3 className="text-xl font-bold text-secondary mb-4">
+                {vendorsProduct.name}
+              </h3>
+              <ol className="list-decimal pl-8">
+                {vendorsProduct.users.map((user, index) => (
+                  <li
+                    key={`${vendorsProduct.id}-${user.id}-${index}`} // Generate a unique key using vendorsProduct.id, user.id, and index
+                    className="flex flex-col items-start mb-4"
+                  >
+                    <p className="text-secondary mb-1">
+                      Name: {user.first_name} {user.last_name}
+                    </p>
+                    <p className="text-secondary mb-1">Email: {user.email}</p>
+                  </li>
+                ))}
+              </ol>
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   );

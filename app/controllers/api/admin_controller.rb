@@ -2,9 +2,9 @@ class Api::AdminController < ApplicationController
   before_action :authorize_admin
 
   def admin_index
-    users = User.all
+    vendors_products = VendorsProduct.all
 
-    render json: users, each_serializer: AdminSerializer, status: :ok
+    render json: vendors_products, each_serializer: AdminSerializer, status: :ok
   end
 
   private
