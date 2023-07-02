@@ -13,6 +13,7 @@ import { SearchProvider } from "./context/search";
 import { OrderProvider } from "./context/order";
 import { PaymentProvider } from "./context/payment";
 import { CheckoutProvider } from "./context/checkout";
+import { FridgeProvider } from "./context/fridge";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
 
@@ -27,7 +28,9 @@ root.render(
               <Elements stripe={stripePromise}>
                 <PaymentProvider>
                   <CheckoutProvider>
-                    <App />
+                    <FridgeProvider>
+                      <App />
+                    </FridgeProvider>
                   </CheckoutProvider>
                 </PaymentProvider>
               </Elements>
