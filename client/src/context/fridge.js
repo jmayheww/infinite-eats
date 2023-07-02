@@ -8,6 +8,7 @@ export const FridgeProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
 
   const updateFridgeItem = async (fridgeItemId, quantity) => {
+    console.log("fridgeItemId: ", fridgeItemId);
     const response = await fetch(`/api/fridge_items/${fridgeItemId}`, {
       method: "PATCH",
       headers: {
