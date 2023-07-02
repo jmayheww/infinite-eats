@@ -3,7 +3,12 @@ import UserContext from "../context/user";
 import FridgeItemCard from "../components/FridgeItemCard";
 
 function FridgeContainerSection() {
-  const { userFridgeItems } = useContext(UserContext);
+  const { userFridgeItems, isLoading } = useContext(UserContext);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // replace this with your loading spinner or placeholder
+  }
+
   const renderFridgeItems = () => {
     if (!userFridgeItems || userFridgeItems.length === 0) {
       return (
@@ -12,7 +17,7 @@ function FridgeContainerSection() {
         </div>
       );
     }
-    return userFridgeItems?.map((item) => (
+    return userFridgeItems.map((item) => (
       <FridgeItemCard key={item.id} item={item} />
     ));
   };

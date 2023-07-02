@@ -1,9 +1,10 @@
 import React, { createContext, useState, useContext } from "react";
+import UserContext from "./user";
 
 export const FridgeContext = createContext();
 
 export const FridgeProvider = ({ children }) => {
-  const [fridgeItems, setFridgeItems] = useState([]);
+  const { setUserFridgeItems } = useContext(UserContext);
 
   const [errors, setErrors] = useState([]);
 
@@ -19,7 +20,7 @@ export const FridgeProvider = ({ children }) => {
 
     if (response.ok) {
       const updatedFridgeItems = await response.json();
-      setFridgeItems(updatedFridgeItems);
+      setUserFridgeItems(updatedFridgeItems);
       setErrors([]);
     } else {
       const data = await response.json();
@@ -36,8 +37,9 @@ export const FridgeProvider = ({ children }) => {
 
     if (response.ok) {
       const updatedFridgeItems = await response.json();
+      console.log("updatedFridgeItems: ", updatedFridgeItems);
 
-      setFridgeItems(updatedFridgeItems);
+      setUserFridgeItems(updatedFridgeItems);
 
       console.log("updatedFridgeItems: ", updatedFridgeItems);
 
@@ -53,8 +55,6 @@ export const FridgeProvider = ({ children }) => {
   return (
     <FridgeContext.Provider
       value={{
-        fridgeItems,
-        setFridgeItems,
         updateFridgeItem,
         deleteFridgeItem,
         errors,

@@ -37,16 +37,14 @@ function FridgeItemCard({ item }) {
     setIsEditing(false);
   };
 
-  const cardStyles = isOutOfStock
-    ? "rounded shadow-lg p-6 mb-4 bg-red-500 flex flex-col items-center overflow-auto"
-    : "rounded shadow-lg p-6 mb-4 bg-white flex flex-col items-center overflow-auto";
+  //   const cardStyles = isOutOfStock
+  //     ? "rounded shadow-lg p-6 mb-4 bg-red-500 flex flex-col items-center overflow-auto"
+  //     : "rounded shadow-lg p-6 mb-4 bg-white flex flex-col items-center overflow-auto";
 
   return (
     <div
       className={`transform transition-transform duration-500 hover:scale-105 rounded-lg shadow-lg p-6 mb-4 text-center ${
-        quantity === 0
-          ? "bg-accent text-white"
-          : "bg-tertiary text-secondaryDark"
+        isOutOfStock ? "bg-accent text-white" : "bg-tertiary text-secondaryDark"
       }`}
       style={{ minHeight: "18rem" }}
     >
