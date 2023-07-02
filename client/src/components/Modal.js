@@ -6,7 +6,7 @@ function Modal({ isOpen, title, message, onConfirm, onClose }) {
   }
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center">
+    <div className="fixed inset-0 flex items-center justify-center">
       <div className="bg-primary rounded p-5 shadow-lg max-w-3xl text-center">
         <h2 className="text-2xl font-extrabold mb-4 text-secondary">{title}</h2>
         <p className="text-secondary mb-4">{message}</p>

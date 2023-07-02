@@ -30,7 +30,7 @@ function NavBar() {
               </>
             )}
 
-            {isAdmin && <LinkButton to="/admin">Admin</LinkButton>}
+            {user && isAdmin && <LinkButton to="/admin">Admin</LinkButton>}
 
             <span className="border-l-2 border-white h-5 mx-1 sm:mx-2 md:mx-4"></span>
 

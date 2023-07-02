@@ -13,10 +13,8 @@ function UserProfileSection() {
     handleProfileEdit,
   } = useContext(UserContext);
 
-  console.log(user);
-
   return (
-    <div className="bg-white shadow sm:rounded-lg w-full max-w-md p-6 space-y-4">
+    <div className="bg-white shadow sm:rounded-lg w-full p-6 space-y-4">
       {errors && errors.length > 0 && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 mb-4 rounded">
           {errors.map((error, i) => (

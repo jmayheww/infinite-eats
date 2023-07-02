@@ -9,7 +9,6 @@ export const FridgeProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
 
   const updateFridgeItem = async (fridgeItemId, quantity) => {
-    console.log("fridgeItemId: ", fridgeItemId);
     const response = await fetch(`/api/fridge_items/${fridgeItemId}`, {
       method: "PATCH",
       headers: {
@@ -37,11 +36,8 @@ export const FridgeProvider = ({ children }) => {
 
     if (response.ok) {
       const updatedFridgeItems = await response.json();
-      console.log("updatedFridgeItems: ", updatedFridgeItems);
 
       setUserFridgeItems(updatedFridgeItems);
-
-      console.log("updatedFridgeItems: ", updatedFridgeItems);
 
       setErrors([]);
     } else {

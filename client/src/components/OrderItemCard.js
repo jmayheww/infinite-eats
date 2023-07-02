@@ -2,13 +2,11 @@ import React, { useContext, useState } from "react";
 import { CheckoutContext } from "../context/checkout";
 
 function OrderItemCard({ item }) {
-  console.log("item: ", item);
   const { updateOrderItem, deleteOrderItem, errors } =
     useContext(CheckoutContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [quantity, setQuantity] = useState(item.quantity);
-  console.log("quantity: ", quantity);
 
   const handleEditOrderItem = () => {
     setIsEditing(true);
@@ -25,13 +23,11 @@ function OrderItemCard({ item }) {
   };
 
   const handleOrderItemUpdate = () => {
-    console.log("updated order item:", item);
     updateOrderItem(item.id, quantity);
     setIsEditing(false);
   };
 
   const handleRemoveOrderItem = () => {
-    console.log("deleted order item:", item);
     deleteOrderItem(item.id);
     setIsEditing(false);
   };

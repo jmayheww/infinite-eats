@@ -19,7 +19,7 @@ function AdminPage() {
       </h1>
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-2xl font-extrabold text-secondary mb-4">
-          All Purchased Products and Associated Users
+          All Available Products from All Vendors and Their Users
         </h2>
 
         <ol className="list-decimal pl-8">

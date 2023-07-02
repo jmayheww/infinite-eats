@@ -6,7 +6,6 @@ export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
-  console.log("errors: ", errors);
 
   const { setUserOrders, setUserFridgeItems } = useContext(UserContext);
   const stripe = useStripe();
@@ -42,8 +41,6 @@ export const CheckoutProvider = ({ children }) => {
 
       setUserOrders(updatedUserOrders);
 
-      console.log("updatedUserOrders: ", updatedUserOrders);
-
       setErrors([]);
     } else {
       const data = await response.json();
@@ -60,7 +57,7 @@ export const CheckoutProvider = ({ children }) => {
 
     if (response.ok) {
       const updatedUserOrders = await response.json();
-      console.log("Order successfully deleted!");
+
       setUserOrders(updatedUserOrders);
     } else {
       const data = await response.json();
@@ -92,7 +89,6 @@ export const CheckoutProvider = ({ children }) => {
 
   const createFridgeItems = async (orderItems) => {
     const eligibleItems = orderItems?.map((item) => {
-      console.log("item: ", item.vendors_product_id);
       return {
         name: item.name,
         quantity: item.quantity,
@@ -110,7 +106,7 @@ export const CheckoutProvider = ({ children }) => {
 
     if (response.ok) {
       const updatedUser = await response.json();
-      console.log("updatedUser: ", updatedUser);
+
       setErrors([]);
       return updatedUser;
     } else {
@@ -149,14 +145,12 @@ export const CheckoutProvider = ({ children }) => {
         throw new Error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
-          console.log("Payment succeeded!");
           await updateOrderStatus(order.id, "completed");
 
           try {
             const updatedUser = await createFridgeItems(order.order_items);
             setUserFridgeItems(updatedUser?.fridge_items);
           } catch (error) {
-            console.error(error);
             setErrors(
               "There was a problem adding your items to the fridge. Please try again."
             );
@@ -169,7 +163,6 @@ export const CheckoutProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      console.error(error);
       setErrors(
         "There was a problem processing your payment. Please confirm your payment method and try again."
       );

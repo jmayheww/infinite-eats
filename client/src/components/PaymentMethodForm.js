@@ -31,8 +31,6 @@ function PaymentMethodForm() {
       setUser({ ...user, payment_method_id: paymentMethod.id });
       setShowCardInput(false);
     } catch (error) {
-      console.log("error: ", error.message);
-      console.log("error", error);
       setError(error);
     }
   };
@@ -41,7 +39,7 @@ function PaymentMethodForm() {
     <div className={`mt-4 ${showCardInput ? "" : "hidden"}`}>
       <label
         htmlFor="card-element"
-        className="block text-gray-700 font-bold mb-2"
+        className="block text-sm font-medium text-secondary mb-2"
       >
         Save Payment Method
       </label>
@@ -51,6 +49,20 @@ function PaymentMethodForm() {
       <CardElement
         id="card-element"
         className="border border-gray-400 p-2 rounded w-full h-15"
+        options={{
+          style: {
+            base: {
+              fontSize: "16px",
+              color: "#424770",
+              "::placeholder": {
+                color: "#aab7c4",
+              },
+            },
+            invalid: {
+              color: "#9e2146",
+            },
+          },
+        }}
       />
       <div className="flex justify-start mt-4">
         <button
@@ -58,13 +70,13 @@ function PaymentMethodForm() {
             e.preventDefault();
             setShowCardInput(false);
           }}
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-2"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark mr-2"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ml-2"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark ml-2"
         >
           Save
         </button>
@@ -78,7 +90,7 @@ function PaymentMethodForm() {
         e.preventDefault();
         setShowCardInput(true);
       }}
-      className="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      className="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark"
     >
       {loading
         ? "Loading..."
@@ -90,14 +102,16 @@ function PaymentMethodForm() {
 
   const formContent = user.payment_method_id ? (
     <div>
-      <h2 className="text-lg font-bold mb-2">My Payment Methods</h2>
-      <p>Card ending in ****</p>
+      <h2 className="text-lg font-bold mb-2 text-secondary">
+        My Payment Methods
+      </h2>
+      <p className="text-secondary">Card ending in ****</p>
       {addPaymentButton}
       {cardInputElement}
     </div>
   ) : (
     <div>
-      <h2 className="text-lg font-bold mb-2">
+      <h2 className="text-lg font-bold mb-2 text-primary">
         Add payment to Stripe to start stocking your fridge!
       </h2>
       {addPaymentButton}

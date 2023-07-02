@@ -10,7 +10,7 @@ const headers = {
 };
 export const VendorProvider = ({ children }) => {
   const [vendors, setVendors] = useState(null);
-  console.log("vendors: ", vendors);
+
   const [selectVendor, setSelectVendor] = useState(null);
   const [errors, setErrors] = useState([]);
 

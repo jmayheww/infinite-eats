@@ -3,16 +3,13 @@ import { CheckoutContext } from "../context/checkout";
 import OrderItemCard from "./OrderItemCard";
 
 function OrderCard({ order }) {
-  console.log("total_price: ", order.total_price);
   const { deleteOrder, processPayment, errors } = useContext(CheckoutContext);
-  console.log("errors: ", errors);
 
   const handleRemoveOrder = () => {
     deleteOrder(order.id);
   };
 
   const handleApproveOrder = () => {
-    console.log("approved order:", order);
     processPayment(order, order.user);
   };
 
