@@ -1,14 +1,12 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-import UserContext from "./user";
 
 export const PaymentContext = createContext();
 
 export function PaymentProvider({ children }) {
   const stripe = useStripe();
   const elements = useElements();
-  const { user, setUser } = useContext(UserContext);
-  console.log("user: ", user);
+
   const [showCardInput, setShowCardInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -27,20 +25,16 @@ export function PaymentProvider({ children }) {
         setLoading(false);
 
         if (result.error) {
-          console.error("Error creating payment method:", result.error);
           throw result.error;
         }
 
         if (!result.paymentMethod) {
-          console.error("No paymentMethod returned from Stripe");
           throw new Error("No paymentMethod returned from Stripe");
         }
 
-        console.log("Payment Method Created: ", result.paymentMethod);
         return result.paymentMethod;
       })
       .catch((error) => {
-        console.error("Error creating payment method:", error);
         setLoading(false);
         throw error;
       });
@@ -64,7 +58,6 @@ export function PaymentProvider({ children }) {
       }
 
       setLoading(false);
-      console.log("Payment Method Saved: ", paymentMethod);
     } catch (error) {
       setLoading(false);
       throw error;
