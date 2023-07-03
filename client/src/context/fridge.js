@@ -18,8 +18,12 @@ export const FridgeProvider = ({ children }) => {
     });
 
     if (response.ok) {
-      const updatedFridgeItems = await response.json();
-      setUserFridgeItems(updatedFridgeItems);
+      const updatedFridgeItem = await response.json();
+      setUserFridgeItems((prevFridgeItems) => {
+        return prevFridgeItems.map((item) =>
+          item.id === updatedFridgeItem.id ? updatedFridgeItem : item
+        );
+      });
       setErrors([]);
     } else {
       const data = await response.json();
@@ -35,9 +39,9 @@ export const FridgeProvider = ({ children }) => {
     });
 
     if (response.ok) {
-      const updatedFridgeItems = await response.json();
-
-      setUserFridgeItems(updatedFridgeItems);
+      setUserFridgeItems((prevFridgeItems) => {
+        return prevFridgeItems.filter((item) => item.id !== fridgeItemId);
+      });
 
       setErrors([]);
     } else {
