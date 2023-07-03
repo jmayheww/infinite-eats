@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import { CheckoutContext } from "../context/checkout";
 
 function OrderItemCard({ item }) {
-  const { updateOrderItem, deleteOrderItem, errors } =
-    useContext(CheckoutContext);
+  const { updateOrderItem, deleteOrderItem } = useContext(CheckoutContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [quantity, setQuantity] = useState(item.quantity);
@@ -51,9 +50,6 @@ function OrderItemCard({ item }) {
             onChange={handleQuantityChange}
             className="border border-gray-300 rounded w-16 text-center"
           />
-          {errors.length > 0 && (
-            <div className="text-red-500 text-sm">{errors.join(", ")}</div>
-          )}
           <button
             className="text-blue-500 hover:text-blue-700"
             onClick={handleOrderItemUpdate}

@@ -3,7 +3,7 @@ import { CheckoutContext } from "../context/checkout";
 import OrderItemCard from "./OrderItemCard";
 
 function OrderCard({ order }) {
-  const { deleteOrder, processPayment, errors } = useContext(CheckoutContext);
+  const { deleteOrder, processPayment } = useContext(CheckoutContext);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleRemoveOrder = () => {
@@ -61,9 +61,6 @@ function OrderCard({ order }) {
           Delete Order
         </button>
       </div>
-      {errors && errors.length > 0 && (
-        <div className="mt-4 text-red-500">{errors}</div>
-      )}
     </div>
   );
 }

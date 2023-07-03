@@ -7,8 +7,7 @@ export const CheckoutContext = createContext();
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
 
-  const { userOrders, setUserOrders, setUserFridgeItems } =
-    useContext(UserContext);
+  const { setUserOrders, setUserFridgeItems } = useContext(UserContext);
   const stripe = useStripe();
 
   const updateOrderItem = async (orderItemId, quantity) => {
@@ -21,6 +20,7 @@ export const CheckoutProvider = ({ children }) => {
     });
 
     if (response.ok) {
+      setErrors([]);
       const { order, order_item } = await response.json();
 
       setUserOrders((prevOrders) => {
@@ -105,6 +105,7 @@ export const CheckoutProvider = ({ children }) => {
     if (response.ok) {
       const updatedUserOrders = await response.json();
       setUserOrders(updatedUserOrders);
+      setErrors([]);
     } else {
       const data = await response.json();
       if (data.errors) {
@@ -144,6 +145,7 @@ export const CheckoutProvider = ({ children }) => {
   };
 
   const processPayment = async (order, user) => {
+    setErrors([]);
     try {
       const paymentAmount = order.total_price * 100;
 
@@ -175,9 +177,9 @@ export const CheckoutProvider = ({ children }) => {
             const updatedUser = await createFridgeItems(order.order_items);
             setUserFridgeItems(updatedUser?.fridge_items);
           } catch (error) {
-            setErrors(
-              "There was a problem adding your items to the fridge. Please try again."
-            );
+            setErrors([
+              "There was a problem adding your items to the fridge. Please try again.",
+            ]);
             throw error; // throw to stop the function from continuing
           }
 
@@ -187,9 +189,9 @@ export const CheckoutProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      setErrors(
-        "There was a problem processing your payment. Please confirm your payment method and try again."
-      );
+      setErrors([
+        "There was a problem processing your payment. Please confirm your payment method and try again.",
+      ]);
     }
   };
 
@@ -200,6 +202,7 @@ export const CheckoutProvider = ({ children }) => {
         deleteOrderItem,
         deleteOrder,
         errors,
+        setErrors,
         processPayment,
       }}
     >
