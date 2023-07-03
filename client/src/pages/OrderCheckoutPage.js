@@ -4,7 +4,7 @@ import OrdersSection from "../sections/OrdersSection";
 
 function OrderCheckoutPage() {
   return (
-    <div className="checkout-page bg-primary min-h-screen">
+    <div className="checkout-page min-h-screen pt-16 bg-primary">
       <OrdersSection />
     </div>
   );
