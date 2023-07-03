@@ -15,7 +15,7 @@ function PaymentMethodForm() {
     setError,
   } = useContext(PaymentContext);
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -29,7 +29,9 @@ function PaymentMethodForm() {
 
     try {
       const paymentMethod = await createPaymentMethod(cardElement);
+
       await handleSavePaymentMethod(paymentMethod);
+      setUser(user); // refresh user state post-payment method save for production apps
       setLoading(false);
       setShowCardInput(false);
       cardElement.clear();
