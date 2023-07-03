@@ -5,9 +5,9 @@ import UserContext from "./user";
 export const PaymentContext = createContext();
 
 export function PaymentProvider({ children }) {
-  const { setUser } = useContext(UserContext);
   const stripe = useStripe();
   const elements = useElements();
+  const { user, setUser } = useContext(UserContext);
   const [showCardInput, setShowCardInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -55,8 +55,9 @@ export function PaymentProvider({ children }) {
       }
 
       const data = await response.json();
+      console.log("data: ", data);
       setLoading(false);
-      setUser(data);
+      setUser({ ...user, payment_method_id: paymentMethod.id });
     } catch (error) {
       setLoading(false);
       throw error;

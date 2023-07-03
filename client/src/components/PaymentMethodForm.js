@@ -14,7 +14,7 @@ function PaymentMethodForm() {
     setError,
   } = useContext(PaymentContext);
 
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -28,8 +28,8 @@ function PaymentMethodForm() {
     try {
       const paymentMethod = await createPaymentMethod(cardElement);
       await handleSavePaymentMethod(paymentMethod);
-      setUser({ ...user, payment_method_id: paymentMethod.id });
       setShowCardInput(false);
+      cardElement.clear();
     } catch (error) {
       setError(error);
     }
