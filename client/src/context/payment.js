@@ -26,14 +26,22 @@ export function PaymentProvider({ children }) {
         setLoading(false);
 
         if (result.error) {
-          return Promise.reject(result.error);
+          console.error("Error creating payment method:", result.error);
+          throw result.error;
         }
+
+        if (!result.paymentMethod) {
+          console.error("No paymentMethod returned from Stripe");
+          throw new Error("No paymentMethod returned from Stripe");
+        }
+
+        console.log("Payment Method Created: ", result.paymentMethod);
         return result.paymentMethod;
       })
       .catch((error) => {
+        console.error("Error: ", error);
         setLoading(false);
-
-        return Promise.reject(error);
+        throw error;
       });
   };
 
