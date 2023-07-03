@@ -7,12 +7,14 @@ import VendorProductSection from "../sections/VendorProductSection";
 
 function ViewVendorPage() {
   const { handleReset } = useContext(SearchContext);
-  const { errors } = useContext(OrderContext);
+  const { errors, setErrors, setSelectedProducts } = useContext(OrderContext);
   const errorMessages = errors.map((error) => error.error);
 
   useEffect(() => {
     // reset search query on mount
     handleReset();
+    setSelectedProducts([]);
+    setErrors([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

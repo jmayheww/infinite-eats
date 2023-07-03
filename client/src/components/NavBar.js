@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import UserContext from "../context/user";
+import { CheckoutContext } from "../context/checkout";
 import LinkButton from "./LinkButton";
 import { FaShoppingCart } from "react-icons/fa";
 
 function NavBar() {
   const { user, isAdmin } = useContext(UserContext);
+  const { cartItemsCount } = useContext(CheckoutContext);
 
   return (
     <nav className="bg-accent fixed w-full z-50 shadow-md transition-all duration-300 ease-in-out">
@@ -47,9 +49,14 @@ function NavBar() {
             ) : (
               <LinkButton
                 to="/checkout"
-                additionalStyles="bg-secondary rounded-md hover:bg-tertiary hover:text"
+                additionalStyles="bg-secondary relative rounded-md hover:bg-tertiary hover:text"
               >
                 <FaShoppingCart />
+                {cartItemsCount > 0 && (
+                  <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs px-1 rounded-full">
+                    {cartItemsCount}
+                  </span>
+                )}
               </LinkButton>
             )}
           </div>

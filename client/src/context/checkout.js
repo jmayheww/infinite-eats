@@ -1,14 +1,27 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
 import UserContext from "./user";
 
 export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
-  const [errors, setErrors] = useState([]);
-
-  const { setUserOrders, setUserFridgeItems } = useContext(UserContext);
   const stripe = useStripe();
+  const [errors, setErrors] = useState([]);
+  const { userOrders, setUserOrders, setUserFridgeItems } =
+    useContext(UserContext);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+
+  useEffect(() => {
+    if (userOrders && userOrders.length > 0) {
+      let itemCount = 0;
+      userOrders.forEach((order) => {
+        itemCount += order.order_items.length;
+      });
+      setCartItemsCount(itemCount);
+    } else {
+      setCartItemsCount(0);
+    }
+  }, [userOrders]);
 
   const updateOrderItem = async (orderItemId, quantity) => {
     const response = await fetch(`/api/order_items/${orderItemId}`, {
@@ -204,6 +217,7 @@ export const CheckoutProvider = ({ children }) => {
         errors,
         setErrors,
         processPayment,
+        cartItemsCount,
       }}
     >
       {children}

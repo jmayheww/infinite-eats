@@ -43,12 +43,16 @@ function VendorProductSection() {
       {selectedProducts?.some((p) => p.selected) && (
         <div className="flex justify-center mb-4">
           <button
-            className="bg-secondary text-white py-2 px-4 rounded-lg text-sm hover:bg-accent hover:text"
+            className={`py-2 px-4 rounded-lg text-sm hover:bg-accent hover:text ${
+              existingCheckoutOrder
+                ? "bg-yellow-400 text-black"
+                : "bg-blue-500 text-white"
+            }`}
             type="button"
             onClick={handleCheckout}
           >
             {existingCheckoutOrder
-              ? "Update Existing or Add Selections to Checkout"
+              ? "Update Existing Cart Selections or Add New Selections to Checkout"
               : "Add Selections to Checkout"}
           </button>
         </div>
