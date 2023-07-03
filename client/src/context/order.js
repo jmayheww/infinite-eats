@@ -63,18 +63,37 @@ export const OrderProvider = ({ children }) => {
       });
 
       if (response.ok) {
-        const updatedOrders = await response.json();
+        const updatedOrder = await response.json();
+        console.log("updatedOrder: ", updatedOrder);
 
         setErrors([]);
         setSelectedProducts([]);
-        setUserOrders(updatedOrders);
+        setUserOrders((prevOrders) => {
+          const existingOrder = prevOrders.find(
+            (order) => order.id === updatedOrder.id
+          );
+
+          if (existingOrder) {
+            // Update existing order
+            return prevOrders.map((order) =>
+              order.id === updatedOrder.id
+                ? { ...order, order_items: updatedOrder.order_items }
+                : order
+            );
+          } else {
+            // Add new order
+            return [...prevOrders, updatedOrder];
+          }
+        });
       } else {
         const data = await response.json();
         if (data.errors) {
           setErrors(data.errors);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (

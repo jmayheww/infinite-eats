@@ -7,7 +7,8 @@ export const CheckoutContext = createContext();
 export const CheckoutProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
 
-  const { setUserOrders, setUserFridgeItems } = useContext(UserContext);
+  const { userOrders, setUserOrders, setUserFridgeItems } =
+    useContext(UserContext);
   const stripe = useStripe();
 
   const updateOrderItem = async (orderItemId, quantity) => {
@@ -20,8 +21,36 @@ export const CheckoutProvider = ({ children }) => {
     });
 
     if (response.ok) {
-      const updatedUserOrders = await response.json();
-      setUserOrders(updatedUserOrders);
+      const { order, order_item } = await response.json();
+      console.log("order: ", order);
+      console.log("order_item: ", order_item);
+
+      setUserOrders((prevOrders) => {
+        const updatedOrders = prevOrders.map((prevOrder) => {
+          if (prevOrder.id === order.id) {
+            const updatedOrderItems = prevOrder.order_items.map(
+              (prevOrderItem) => {
+                if (prevOrderItem.id === order_item.id) {
+                  return order_item;
+                } else {
+                  return prevOrderItem;
+                }
+              }
+            );
+            return {
+              ...prevOrder,
+              order_items: updatedOrderItems,
+              total_price: order.total_price,
+            };
+          } else {
+            return prevOrder;
+          }
+        });
+
+        console.log("updatedOrders: ", updatedOrders);
+        return updatedOrders;
+      });
+
       setErrors([]);
     } else {
       const data = await response.json();
@@ -30,6 +59,8 @@ export const CheckoutProvider = ({ children }) => {
       }
     }
   };
+
+  console.log("userOrders: ", userOrders);
 
   const deleteOrderItem = async (orderItemId) => {
     const response = await fetch(`/api/order_items/${orderItemId}`, {

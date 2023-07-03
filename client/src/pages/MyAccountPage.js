@@ -35,26 +35,24 @@ function MyAccountPage() {
   };
 
   return (
-    <div className="pt-20 px-8 bg-primary min-h-screen flex flex-col justify-center items-center">
-      <div className="max-w-2xl mx-auto w-full">
-        <h1 className="text-3xl font-bold mb-6 text-center text-secondary">
+    <div className="bg-primary min-h-screen pt-20 px-8 flex flex-col justify-center items-center">
+      <div className="w-full max-w-2xl bg-white shadow-lg rounded-xl mx-auto p-8 space-y-10">
+        <h1 className="text-3xl font-bold text-center text-gray-800">
           {user?.first_name ? `Welcome back, ${user.first_name}!` : "Welcome!"}
         </h1>
-        <div className="space-y-16">
-          <UserProfileSection />
-          <FridgeSection />
-          <PaymentMethodForm />
-        </div>
+        <UserProfileSection />
+        <FridgeSection />
+        <PaymentMethodForm />
         <div className="flex justify-between w-full mt-10">
           <button
             onClick={handleLogout}
-            className="py-2 px-4 bg-secondary text-white rounded-md hover:bg-accent hover:opacity-80 transition-all duration-300 w-full mr-2"
+            className="w-full mr-2 py-2 px-4 bg-accent text-white rounded-md hover:bg-secondary transition-all duration-300"
           >
             Log Out
           </button>
           <button
             onClick={handleDelete}
-            className="py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 hover:opacity-80 transition-all duration-300 ease-in-out w-full"
+            className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-700 transition-all duration-300"
           >
             Delete Account
           </button>

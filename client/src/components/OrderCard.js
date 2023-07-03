@@ -13,13 +13,27 @@ function OrderCard({ order }) {
     processPayment(order, order.user);
   };
 
-  const totalPrice = parseFloat(order.total_price);
+  const totalPrice = parseFloat(order.total_price).toFixed(2);
 
   return (
-    <div className="border border-gray-300 rounded-lg p-6 m-6 shadow-lg max-w-sm bg-white">
-      <p className="text-gray-800 font-semibold text-lg">{order.vendor.name}</p>
-      <p className="text-gray-600 text-sm">Status: {order.status}</p>
-      <ul className="mt-4 space-y-4">
+    <div className="border border-gray-300 rounded-lg p-8 shadow-lg bg-white space-y-8 max-w-2xl mx-auto">
+      <div className="flex justify-between items-center">
+        <div>
+          <p className="text-secondary font-semibold text-xl">
+            {order.vendor.name}
+          </p>
+          <p className="text-secondary text-sm">Status: {order.status}</p>
+        </div>
+        {totalPrice > 0 && (
+          <button
+            className="bg-accent text-white py-2 px-4 rounded hover:bg-secondary transition-colors duration-200"
+            onClick={handleApproveOrder}
+          >
+            Approve
+          </button>
+        )}
+      </div>
+      <ul className="space-y-4">
         {order.order_items && order.order_items.length ? (
           order.order_items.map((item) => (
             <OrderItemCard key={item.id} item={item} />
@@ -28,26 +42,18 @@ function OrderCard({ order }) {
           <p>No items in this checkout order yet.</p>
         )}
       </ul>
-      <div className="mt-6">
-        <p className="text-gray-800 font-semibold">
-          Total Price: ${order.total_price}
+      <div>
+        <p className="text-secondary font-semibold text-xl">
+          Total Price: ${totalPrice}
         </p>
-        <div className="flex justify-end mt-4">
-          <button
-            className="text-red-500 hover:text-red-700 mr-4"
-            onClick={handleRemoveOrder}
-          >
-            Delete Order
-          </button>
-          {totalPrice > 0 && (
-            <button
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200"
-              onClick={handleApproveOrder}
-            >
-              Approve
-            </button>
-          )}
-        </div>
+      </div>
+      <div className="flex justify-between items-center mt-4">
+        <button
+          className="text-red-500 hover:text-red-700"
+          onClick={handleRemoveOrder}
+        >
+          Delete Order
+        </button>
       </div>
       {errors && errors.length > 0 && (
         <div className="mt-4 text-red-500">{errors}</div>

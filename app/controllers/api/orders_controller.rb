@@ -3,9 +3,9 @@ class Api::OrdersController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_batch_unprocessable_error_response
 
   def create_or_update
-    Order.create_or_update(order_params, @current_user)
-    user_orders = @current_user.orders
-    render json: user_orders, status: :ok
+    user_order = Order.create_or_update(order_params, @current_user)
+
+    render json: user_order, status: :ok
   end
 
   def update

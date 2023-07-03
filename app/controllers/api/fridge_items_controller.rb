@@ -19,7 +19,7 @@ class Api::FridgeItemsController < ApplicationController
     fridge_item = FridgeItem.find(params[:id])
     fridge_item.update!(update_fridge_item_params)
 
-    updated_fridge = @current_user.fridge_items
+    updated_fridge = @current_user.fridge_items.order(:id) # Sort items based on ID
 
     render json: updated_fridge, status: :ok
   end
@@ -28,7 +28,7 @@ class Api::FridgeItemsController < ApplicationController
     fridge_item = FridgeItem.find(params[:id])
     fridge_item.destroy
 
-    updated_fridge_items = @current_user.fridge_items
+    updated_fridge_items = @current_user.fridge_items.order(:id) # Sort items based on ID
 
     render json: updated_fridge_items, status: :ok
   end

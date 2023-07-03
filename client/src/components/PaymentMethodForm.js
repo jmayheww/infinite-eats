@@ -70,13 +70,13 @@ function PaymentMethodForm() {
             e.preventDefault();
             setShowCardInput(false);
           }}
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark mr-2"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark mr-2"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark ml-2"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark ml-2"
         >
           Save
         </button>
@@ -90,7 +90,7 @@ function PaymentMethodForm() {
         e.preventDefault();
         setShowCardInput(true);
       }}
-      className="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark"
+      className="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark"
     >
       {loading
         ? "Loading..."
@@ -120,7 +120,7 @@ function PaymentMethodForm() {
   );
 
   return (
-    <div className="bg-white shadow sm:rounded-lg max-w-md p-8 m-4 w-full">
+    <div className="bg-primary shadow-lg rounded-md p-6">
       <form onSubmit={handleSubmit}>{formContent}</form>
     </div>
   );

@@ -40,6 +40,7 @@ class Order < ApplicationRecord
 
     order.update_total_price
     order.save!
+    order
   end
 
   def update_with_order_items(order_items_attributes)
