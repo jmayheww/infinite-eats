@@ -18,6 +18,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const [user, setUser] = useState({});
+  console.log("user: ", user);
   const [userOrders, setUserOrders] = useState([]);
   const [userFridgeItems, setUserFridgeItems] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
