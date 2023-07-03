@@ -64,7 +64,6 @@ export const OrderProvider = ({ children }) => {
 
       if (response.ok) {
         const updatedOrder = await response.json();
-        console.log("updatedOrder: ", updatedOrder);
 
         setErrors([]);
         setSelectedProducts([]);
@@ -74,14 +73,14 @@ export const OrderProvider = ({ children }) => {
           );
 
           if (existingOrder) {
-            // Update existing order
+            // Update existing order in state
             return prevOrders.map((order) =>
               order.id === updatedOrder.id
                 ? { ...order, order_items: updatedOrder.order_items }
                 : order
             );
           } else {
-            // Add new order
+            // Add new order to state
             return [...prevOrders, updatedOrder];
           }
         });
