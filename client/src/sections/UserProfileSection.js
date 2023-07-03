@@ -71,21 +71,22 @@ function UserProfileSection() {
         <div className="flex flex-col items-center text-center">
           <img
             className="w-24 h-24 rounded-full object-cover mb-4"
-            src={user.user_image || "https://via.placeholder.com/150"}
+            src={user?.user_image || "https://via.placeholder.com/150"}
             alt="User profile"
           />
           <h2 className="text-2xl font-bold text-secondary">
-            {user.first_name} {user.last_name}
+            {user?.first_name || ""} {user?.last_name || ""}
           </h2>
-          <p className="text-secondary">{user.email}</p>
+          <p className="text-secondary">{user?.email}</p>
           <div className="mt-4 text-left w-full">
             <p className="font-semibold">
-              <span className="mr-2">Address:</span>{" "}
-              {`${user.street_address}, ${user.city}, ${user.state}, ${user.postal_code}`}
+              <span className="mr-2">Address:</span> <br />
+              {user?.street_address} <br />
+              {user?.city || ""} {user?.state || ""} {user?.postal_code || ""}
             </p>
             <p className="font-semibold">
               <span className="mr-2">Phone Number:</span>
-              {user.phone_number}
+              {user?.phone_number || ""}
             </p>
           </div>
           <button
