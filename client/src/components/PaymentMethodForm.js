@@ -10,6 +10,7 @@ function PaymentMethodForm() {
     createPaymentMethod,
     handleSavePaymentMethod,
     loading,
+    setLoading,
     error,
     setError,
   } = useContext(PaymentContext);
@@ -20,6 +21,7 @@ function PaymentMethodForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     if (!showCardInput || !stripe || !elements) return;
 
@@ -28,6 +30,7 @@ function PaymentMethodForm() {
     try {
       const paymentMethod = await createPaymentMethod(cardElement);
       await handleSavePaymentMethod(paymentMethod);
+      setLoading(false);
       setShowCardInput(false);
       cardElement.clear();
     } catch (error) {
@@ -66,6 +69,7 @@ function PaymentMethodForm() {
       />
       <div className="flex justify-start mt-4">
         <button
+          disabled={loading}
           onClick={(e) => {
             e.preventDefault();
             setShowCardInput(false);
@@ -75,10 +79,11 @@ function PaymentMethodForm() {
           Cancel
         </button>
         <button
+          disabled={loading}
           type="submit"
           className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark ml-2"
         >
-          Save
+          {loading ? "Saving..." : "Save Payment Method"}
         </button>
       </div>
     </div>
@@ -86,6 +91,7 @@ function PaymentMethodForm() {
 
   const addPaymentButton = !showCardInput && (
     <button
+      disabled={loading}
       onClick={(e) => {
         e.preventDefault();
         setShowCardInput(true);
@@ -94,34 +100,32 @@ function PaymentMethodForm() {
     >
       {loading
         ? "Loading..."
-        : user.payment_method_id
+        : user && user.payment_method_id
         ? "Replace Payment Method"
         : "Add Payment"}
     </button>
   );
 
-  const formContent = user.payment_method_id ? (
-    <div>
-      <h2 className="text-lg font-bold mb-2 text-secondary">
-        My Payment Methods
-      </h2>
-      <p className="text-secondary">Card ending in ****</p>
-      {addPaymentButton}
-      {cardInputElement}
-    </div>
-  ) : (
-    <div>
-      <h2 className="text-lg font-bold mb-2 text-primary">
-        Add payment to Stripe to start stocking your fridge!
-      </h2>
-      {addPaymentButton}
-      {cardInputElement}
-    </div>
-  );
+  const formContent = () => {
+    return (
+      <div>
+        <h2 className="text-lg font-bold mb-2 text-secondary">
+          {user && user.payment_method_id
+            ? "My Payment Methods"
+            : "Add your payment method with Stripe and start stocking your fridge!"}
+        </h2>
+        <p className="text-secondary">
+          {user && user.payment_method_id ? "Card ending in ****" : ""}
+        </p>
+        {addPaymentButton}
+        {cardInputElement}
+      </div>
+    );
+  };
 
   return (
     <div className="bg-primary shadow-lg rounded-md p-6">
-      <form onSubmit={handleSubmit}>{formContent}</form>
+      <form onSubmit={handleSubmit}>{formContent()}</form>
     </div>
   );
 }

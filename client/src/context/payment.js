@@ -54,8 +54,6 @@ export function PaymentProvider({ children }) {
         throw new Error(errorData.message);
       }
 
-      const data = await response.json();
-      console.log("data: ", data);
       setLoading(false);
       setUser({ ...user, payment_method_id: paymentMethod.id });
     } catch (error) {
@@ -72,6 +70,7 @@ export function PaymentProvider({ children }) {
         createPaymentMethod,
         handleSavePaymentMethod,
         loading,
+        setLoading,
         error,
         setError,
       }}

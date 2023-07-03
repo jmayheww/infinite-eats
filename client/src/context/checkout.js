@@ -22,8 +22,6 @@ export const CheckoutProvider = ({ children }) => {
 
     if (response.ok) {
       const { order, order_item } = await response.json();
-      console.log("order: ", order);
-      console.log("order_item: ", order_item);
 
       setUserOrders((prevOrders) => {
         const updatedOrders = prevOrders.map((prevOrder) => {
@@ -47,7 +45,6 @@ export const CheckoutProvider = ({ children }) => {
           }
         });
 
-        console.log("updatedOrders: ", updatedOrders);
         return updatedOrders;
       });
 
@@ -59,8 +56,6 @@ export const CheckoutProvider = ({ children }) => {
       }
     }
   };
-
-  console.log("userOrders: ", userOrders);
 
   const deleteOrderItem = async (orderItemId) => {
     const response = await fetch(`/api/order_items/${orderItemId}`, {
