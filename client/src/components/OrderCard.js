@@ -18,8 +18,6 @@ function OrderCard({ order }) {
     });
   };
 
-  console.log(order.user);
-
   const totalPrice = parseFloat(order.total_price).toFixed(2);
 
   return (
