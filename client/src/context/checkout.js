@@ -7,21 +7,24 @@ export const CheckoutContext = createContext();
 export const CheckoutProvider = ({ children }) => {
   const stripe = useStripe();
   const [errors, setErrors] = useState([]);
-  const { userOrders, setUserOrders, setUserFridgeItems } =
+  const { user, userOrders, setUserOrders, setUserFridgeItems } =
     useContext(UserContext);
   const [cartItemsCount, setCartItemsCount] = useState(0);
 
   useEffect(() => {
     if (userOrders && userOrders.length > 0) {
       let itemCount = 0;
-      userOrders.forEach((order) => {
+      const pendingOrders = userOrders.filter(
+        (order) => order.status === "pending"
+      );
+      pendingOrders.forEach((order) => {
         itemCount += order.order_items.length;
       });
       setCartItemsCount(itemCount);
     } else {
       setCartItemsCount(0);
     }
-  }, [userOrders]);
+  }, [userOrders, user]);
 
   const updateOrderItem = async (orderItemId, quantity) => {
     const response = await fetch(`/api/order_items/${orderItemId}`, {

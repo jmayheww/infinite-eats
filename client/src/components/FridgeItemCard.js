@@ -24,7 +24,11 @@ function FridgeItemCard({ item }) {
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value);
-    setQuantity(newQuantity);
+    if (isNaN(newQuantity) || newQuantity < 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(newQuantity);
+    }
   };
 
   const handleFridgeItemUpdate = () => {
