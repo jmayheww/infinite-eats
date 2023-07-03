@@ -8,14 +8,15 @@ export function PaymentProvider({ children }) {
   const stripe = useStripe();
   const elements = useElements();
   const { user, setUser } = useContext(UserContext);
+  console.log("user: ", user);
   const [showCardInput, setShowCardInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    console.log("user.payment_method_id: ", user.payment_method_id);
-    setUser(user); // refresh user state post-payment method save for production apps
-  }, [user?.payment_method_id, user, setUser]);
+  // useEffect(() => {
+  //   console.log("user.payment_method_id: ", user.payment_method_id);
+  //   setUser(user); // refresh user state post-payment method save for production apps
+  // }, [ user, setUser]);
 
   const createPaymentMethod = (cardElement) => {
     if (!stripe || !elements) return Promise.reject("Stripe is not available");
@@ -68,7 +69,7 @@ export function PaymentProvider({ children }) {
       }
 
       setLoading(false);
-      setUser({ ...user, payment_method_id: paymentMethod.id });
+      console.log("Payment Method Saved: ", paymentMethod);
     } catch (error) {
       setLoading(false);
       throw error;

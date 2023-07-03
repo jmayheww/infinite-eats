@@ -31,7 +31,8 @@ function PaymentMethodForm() {
       const paymentMethod = await createPaymentMethod(cardElement);
 
       await handleSavePaymentMethod(paymentMethod);
-      setUser(user); // refresh user state post-payment method save for production apps
+      console.log("paymentMethod: ", paymentMethod);
+      setUser({ ...user, payment_method_id: paymentMethod.id });
       setLoading(false);
       setShowCardInput(false);
       cardElement.clear();
