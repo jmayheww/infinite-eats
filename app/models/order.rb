@@ -43,16 +43,16 @@ class Order < ApplicationRecord
     order
   end
 
-  def update_with_order_items(order_items_attributes)
-    existing_order_item_ids = order_items.pluck(:id)
+  # def update_with_order_items(order_items_attributes)
+  #   existing_order_item_ids = order_items.pluck(:id)
 
-    new_order_items = order_items_attributes.reject { |item| existing_order_item_ids.include?(item[:id]) }
+  #   new_order_items = order_items_attributes.reject { |item| existing_order_item_ids.include?(item[:id]) }
 
-    new_order_items.each do |item_params|
-      order_items.create!(item_params)
-    end
+  #   new_order_items.each do |item_params|
+  #     order_items.create!(item_params)
+  #   end
 
-    update_total_price
-    save!
-  end
+  #   update_total_price
+  #   save!
+  # end
 end

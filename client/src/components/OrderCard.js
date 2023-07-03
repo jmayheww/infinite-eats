@@ -1,16 +1,21 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { CheckoutContext } from "../context/checkout";
 import OrderItemCard from "./OrderItemCard";
 
 function OrderCard({ order }) {
   const { deleteOrder, processPayment, errors } = useContext(CheckoutContext);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleRemoveOrder = () => {
     deleteOrder(order.id);
   };
 
   const handleApproveOrder = () => {
-    processPayment(order, order.user);
+    setIsProcessing(true);
+
+    processPayment(order, order.user).finally(() => {
+      setIsProcessing(false);
+    });
   };
 
   const totalPrice = parseFloat(order.total_price).toFixed(2);
@@ -28,8 +33,9 @@ function OrderCard({ order }) {
           <button
             className="bg-accent text-white py-2 px-4 rounded hover:bg-secondary transition-colors duration-200"
             onClick={handleApproveOrder}
+            disabled={isProcessing}
           >
-            Approve
+            {isProcessing ? "Processing..." : "Approve Order"}
           </button>
         )}
       </div>

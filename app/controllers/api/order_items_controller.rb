@@ -18,8 +18,6 @@ class Api::OrderItemsController < ApplicationController
     order = Order.find(order_item.order_id)
     order_item.destroy
 
-    order.order_items.delete(order_item)
-
     order.update_total_price
     order.save
 

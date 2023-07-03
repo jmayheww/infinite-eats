@@ -27,7 +27,6 @@ class Api::FridgeItemsController < ApplicationController
   def destroy
     fridge_item = FridgeItem.find(params[:id])
     fridge_item.destroy
-
     head :no_content
   end
 
