@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import UserContext from "./user";
 
@@ -11,6 +11,11 @@ export function PaymentProvider({ children }) {
   const [showCardInput, setShowCardInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    console.log("user.payment_method_id: ", user.payment_method_id);
+    setUser(user); // refresh user state post-payment method save for production apps
+  }, [user.payment_method_id, user, setUser]);
 
   const createPaymentMethod = (cardElement) => {
     if (!stripe || !elements) return Promise.reject("Stripe is not available");
