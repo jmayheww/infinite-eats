@@ -32,7 +32,7 @@ function OrdersSection() {
               className="bg-red-600 text-white rounded-lg shadow-md text-center mx-auto mb-4 max-w-xl p-4"
               role="alert"
             >
-              {errors}
+              {errors[0]}
             </div>
           )}
           <div className="max-w-3xl mx-auto">

@@ -18,7 +18,11 @@ function OrderItemCard({ item }) {
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value);
-    setQuantity(newQuantity);
+    if (isNaN(newQuantity) || newQuantity < 1) {
+      setQuantity(1);
+    } else {
+      setQuantity(newQuantity);
+    }
   };
 
   const handleOrderItemUpdate = () => {
