@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import UserProfileSection from "../sections/UserProfileSection";
 import UserContext from "../context/user";
 import ModalContext from "../context/modal";
@@ -7,9 +7,18 @@ import Modal from "../components/Modal";
 import PaymentMethodForm from "../components/PaymentMethodForm";
 
 function MyAccountPage() {
-  const { user, logoutUser, deleteUser } = useContext(UserContext);
+  const { user, logoutUser, deleteUser, resetErrors, setEditMode } =
+    useContext(UserContext);
   const { modalOpen, modalAction, setModalAction, openModal, closeModal } =
     useContext(ModalContext);
+
+  useEffect(() => {
+    resetErrors();
+    setEditMode(false);
+    closeModal();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogout = () => {
     setModalAction("logout");

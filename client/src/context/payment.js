@@ -39,7 +39,7 @@ export function PaymentProvider({ children }) {
         return result.paymentMethod;
       })
       .catch((error) => {
-        console.error("Error: ", error);
+        console.error("Error creating payment method:", error);
         setLoading(false);
         throw error;
       });
