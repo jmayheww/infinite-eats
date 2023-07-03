@@ -21,20 +21,33 @@ function OrdersSection() {
       (order) => order.status === "pending"
     );
 
+    const renderErrors = () => {
+      if (Array.isArray(errors) && errors.length > 0) {
+        return (
+          <div className="bg-red-500 text-white px-4 py-2 rounded-lg mt-4">
+            {errors.map((error, index) => (
+              <p key={index}>{error}</p>
+            ))}
+          </div>
+        );
+      } else if (typeof errors === "string") {
+        return (
+          <div className="bg-red-500 text-white px-4 py-2 rounded-lg mt-4">
+            <p>{errors}</p>
+          </div>
+        );
+      }
+
+      return null;
+    };
+
     if (pendingOrders.length > 0) {
       return (
         <div className="orders-section container mx-auto px-4 md:px-0 py-12 md:py-24">
           <h2 className="text-3xl font-bold text-center text-secondary mb-8">
             Pending Orders
           </h2>
-          {errors && errors.length > 0 && (
-            <div
-              className="bg-red-600 text-white rounded-lg shadow-md text-center mx-auto mb-4 max-w-xl p-4"
-              role="alert"
-            >
-              {errors[0]}
-            </div>
-          )}
+          <div className="flex justify-center">{renderErrors()}</div>
           <div className="max-w-3xl mx-auto">
             {pendingOrders?.map((order, index) => (
               <div
