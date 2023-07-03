@@ -177,9 +177,9 @@ export const CheckoutProvider = ({ children }) => {
             const updatedUser = await createFridgeItems(order.order_items);
             setUserFridgeItems(updatedUser?.fridge_items);
           } catch (error) {
-            setErrors([
-              "There was a problem adding your items to the fridge. Please try again.",
-            ]);
+            setErrors(
+              "There was a problem adding your items to the fridge. Please try again."
+            );
             throw error; // throw to stop the function from continuing
           }
 
@@ -189,9 +189,9 @@ export const CheckoutProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      setErrors([
-        "There was a problem processing your payment. Please confirm your payment method and try again.",
-      ]);
+      setErrors(
+        "There was a problem processing your payment. Please confirm your payment method and try again."
+      );
     }
   };
 
