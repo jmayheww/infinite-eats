@@ -13,11 +13,6 @@ export function PaymentProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   console.log("user.payment_method_id: ", user.payment_method_id);
-  //   setUser(user); // refresh user state post-payment method save for production apps
-  // }, [ user, setUser]);
-
   const createPaymentMethod = (cardElement) => {
     if (!stripe || !elements) return Promise.reject("Stripe is not available");
 
