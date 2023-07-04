@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import UserContext from "./user";
 

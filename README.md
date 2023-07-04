@@ -1,24 +1,139 @@
-# README
+# Welcome to Infinite Eats
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Your one-stop platform for a seamless grocery shopping experience, complete with comprehensive fridge management tools, top-notch vendors, and a secure payment system powered by Stripe.
 
-Things you may want to cover:
+> Use Infinite Eats to revolutionize your household or business' food and inventory management and ordering process. Access a wide variety of products from reputable vendors, manage your fridge inventory with real-time updates, customize and automate orders, and secure your payments with Stripe. All this and more, in one convenient platform. Uncomplicate your life with Infinite Eats and never worry about an empty fridge again.
 
-* Ruby version
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* System dependencies
+- [Github Repository](#github-repository)
+- [Project Philosophy](#project-philosophy)
+- [General User Experience](#general-user-experience)
+- [Features](#features)
+- [Installation and Set-up Guide](#installation-and-set-up-guide)
+- [How to Use](#how-to-use)
+- [Resources and Documentation](#resources-and-documentation)
+- [Technologies Used](#technologies-used)
+  - [Languages and Frameworks](#languages-and-frameworks)
+  - [Main Package Installations](#main-package-installations)
+- [Deployment](#deployment)
+- [Author](#author)
 
-* Configuration
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-* Database creation
+## Github Repository
 
-* Database initialization
+- [Infinite Eats Repository](https://github.com/jmayheww/infinite-eats)
 
-* How to run the test suite
+## Project Philosophy
 
-* Services (job queues, cache servers, search engines, etc.)
+Infinite Eats aims to revolutionize grocery shopping by combining ease of shopping, innovative fridge management tools, and a robust vendor ecosystem. Users can purchase groceries from reputable vendors, manage their fridge inventory, and enjoy a secure checkout experience.
 
-* Deployment instructions
+## General User Experience
 
-* ...
+Infinite Eats provides users with the ability to browse through a range of vendors and their products. Users can order their preferred products, update their fridge inventory in real-time, and set up automated or custom orders. A secure checkout process is provided via Stripe, ensuring a safe and seamless shopping experience.
+
+## Features
+
+- Browse and search a wide variety of products from top-notch vendors
+- View and purchase best-selling products
+- Manage your fridge inventory with real-time updates
+- Customize or automate your orders based on your needs
+- Secure checkout process powered by Stripe
+
+## Installation and Set-up Guide
+
+1. Fork and clone the repository:
+
+   ```
+   git clone https://github.com/jmayheww/infinite-eats
+   ```
+
+2. Navigate to the project directory and install the necessary gems:
+
+   ```
+   cd infinite-eats
+   bundle install
+   ```
+
+3. Navigate to the client directory and install the necessary npm packages:
+
+   ```
+   cd client
+   npm install
+   ```
+
+4. In project root, set up the database and seed data:
+
+   ```
+   rails db:create
+   rails db:migrate
+   rails db:seed
+   ```
+
+5. In a new terminal window, start the Rails server:
+
+   ```
+   rails s
+   ```
+
+6. In another terminal window, start the React app:
+
+   ```
+   cd client
+   npm start --prefix client
+   ```
+
+7. Visit `http://localhost:4000` in your browser to use the app.
+
+## How to Use
+
+_TODO: Include a walkthrough video or detailed instructions here._
+
+## Resources and Documentation
+
+- [Rails documentation](https://guides.rubyonrails.org/)
+- [React.js documentation](https://reactjs.org/docs/getting-started.html)
+- [React-Router documentation](https://reactrouter.com/)
+- [Stripe documentation](https://stripe.com/docs/api)
+- [Render documentation](https://render.com/docs)
+
+## Technologies Used
+
+### Languages and Frameworks
+
+- Ruby
+- Ruby on Rails
+- JavaScript
+- React
+- CSS
+
+### Main Package Installations
+
+- @stripe/react-stripe-js
+- @stripe/stripe-js
+- active_model_serializers
+- bcrypt
+- bootsnap
+- faker
+- pg
+- puma
+- create-react-app
+- react-router-dom
+- react-scripts
+- stripe
+- tzinfo-data
+
+## Deployment
+
+This application is deployed with [Render](https://render.com). Render is a unified platform to build and run all your apps and websites with free SSL, a global CDN, private networks and auto deploys from Git.
+
+If you want to deploy your own version of this application to Render, follow their [documentation](https://render.com/docs).
+
+## Author
+
+👤 **Joshua Mayhew**
+
+- Github: [@jmayheww](https://github.com/jmayheww)
+- LinkedIn: [@joshua-mayhew](https://www.linkedin.com/in/joshua-mayhew-28883a89/)
