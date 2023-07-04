@@ -6,7 +6,6 @@ import OrderCard from "../components/OrderCard";
 function OrdersSection() {
   const { userOrders } = useContext(OrderContext);
   const { errors } = useContext(CheckoutContext);
-  console.log("errors: ", errors);
 
   if (!userOrders || userOrders.length === 0) {
     return (
