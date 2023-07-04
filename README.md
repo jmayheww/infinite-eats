@@ -28,18 +28,20 @@
 
 ## Project Philosophy
 
-Infinite Eats aims to revolutionize grocery shopping by combining ease of shopping, innovative fridge management tools, and a robust vendor ecosystem. Users can purchase groceries from reputable vendors, manage their fridge inventory, and enjoy a secure checkout experience.
+At Infinite Eats, we understand the challenges of managing stock and inventory, whether it's for a private individual household or within the fast-paced food service industry. That's why we've developed a platform that aims to streamline and ease the burden of tracking "fridge" inventory. With access to real-time fridge inventory tracking and a robust ordering system, Infinite Eats empowers users to take control of their inventory management like never before.
+
+Our goal is to provide a seamless and efficient solution that allows users to effortlessly track their inventory, ensuring that they never run out of essential items. With our future updates, we're working towards enabling users to customize and automate the restocking and vendor ordering process based on individualized parameters.
 
 ## General User Experience
 
-Infinite Eats provides users with the ability to browse through a range of vendors and their products. Users can order their preferred products, update their fridge inventory in real-time, and set up automated or custom orders. A secure checkout process is provided via Stripe, ensuring a safe and seamless shopping experience.
+Infinite Eats provides users with the ability to browse through a range of vendors and their products. Users can order their preferred products, update their fridge inventory in real-time, and set up automated or custom orders for restocking their "fridges". A secure checkout process is provided via Stripe, ensuring a safe and reliable shopping experience.
 
 ## Features
 
 - Browse and search a wide variety of products from top-notch vendors
 - View and purchase best-selling products
 - Manage your fridge inventory with real-time updates
-- Customize or automate your orders based on your needs
+- Customize or automate restocking and vendor orders based on your individualized needs
 - Secure checkout process powered by Stripe
 
 ## Installation and Set-up Guide
