@@ -24,6 +24,11 @@ function VendorProductCard({ product }) {
   const displayControls = user && isSelected;
 
   const [orderQuantity, setOrderQuantity] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageError = () => {
+    setImageLoaded(true);
+  };
 
   useEffect(() => {
     if (userOrders) {
@@ -90,9 +95,27 @@ function VendorProductCard({ product }) {
         <div className="aspect-w-3 aspect-h-2 flex-grow flex justify-center items-center">
           <img
             className="object-contain w-auto h-auto max-w-full max-h-32"
-            src={product.image_url}
-            alt={product.name}
+            src={
+              imageLoaded
+                ? product.image_url
+                : "https://png.pngtree.com/element_our/png_detail/20181015/fridge-icon-design-vector-png_123657.jpg"
+            }
+            alt={product.name ? product.name : "stock fridge icon"}
+            title={product.name ? product.name : "stock fridge icon"}
+            onError={handleImageError}
           />
+          {!imageLoaded && (
+            <div className="text-xs text-gray-500 mt-2">
+              <a
+                href="https://pngtree.com/freepng/fridge-icon-design-vector_3659638.html?sol=downref&id=bef"
+                title="fridge icons"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Fridge icons PNG Designed By Syed Hassan from Pngtree.com
+              </a>
+            </div>
+          )}
         </div>
       </div>
       <div className="p-4">

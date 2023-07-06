@@ -71,7 +71,7 @@ ActiveRecord::Base.transaction do
       category: product['category'],
       brand: product['brand'],
       description: product['description'],
-      image_url: "",
+      image_url: nil,
       name: product['product_name'],
       quantity: Faker::Number.between(from: 1, to: 100),
       price: Faker::Commerce.price(range: 1..100.0),

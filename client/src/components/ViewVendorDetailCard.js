@@ -20,7 +20,7 @@ function ViewVendorDetailCard() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8">
         <div className="flex justify-center md:justify-start">
           <div className="bg-white rounded-full p-1 mb-4 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 flex items-center justify-center">
-            <a href={selectedVendor?.website}>
+            <a href={selectedVendor?.website} target="_blank" rel="noreferrer">
               <img
                 src={selectedVendor?.logo_image_url}
                 alt={selectedVendor?.name}
