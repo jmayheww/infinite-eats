@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { OrderContext } from "../context/order";
+import VendorContext from "../context/vendor";
 import UserContext from "../context/user";
 import Checkbox from "./Checkbox";
 import OrderControls from "./OrderControls";
@@ -16,6 +17,7 @@ function VendorProductCard({ product }) {
   } = useContext(OrderContext);
 
   const { user } = useContext(UserContext);
+  const { handleImageError, imageLoaded } = useContext(VendorContext);
   const { vendorId } = useParams();
 
   const isSelected = selectedProducts?.some(
@@ -24,11 +26,6 @@ function VendorProductCard({ product }) {
   const displayControls = user && isSelected;
 
   const [orderQuantity, setOrderQuantity] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  const handleImageError = () => {
-    setImageLoaded(true);
-  };
 
   useEffect(() => {
     if (userOrders) {

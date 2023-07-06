@@ -12,6 +12,7 @@ export const VendorProvider = ({ children }) => {
   const [vendors, setVendors] = useState(null);
 
   const [selectVendor, setSelectVendor] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const fetchVendors = () => {
@@ -34,6 +35,10 @@ export const VendorProvider = ({ children }) => {
     });
   };
 
+  const handleImageError = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <VendorContext.Provider
       value={{
@@ -44,6 +49,8 @@ export const VendorProvider = ({ children }) => {
         fetchVendors,
         errors,
         setErrors,
+        imageLoaded,
+        handleImageError,
       }}
     >
       {children}
