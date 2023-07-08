@@ -93,7 +93,7 @@ To simplify the restocking process, users can set up automated or custom orders 
 
 ## How to Use
 
-_TODO: Include a walkthrough video or detailed instructions here._
+- [Project Walkthrough](https://youtu.be/6VGJQVgU16w)
 
 ## Resources and Documentation
 
