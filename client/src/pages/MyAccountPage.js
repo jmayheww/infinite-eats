@@ -44,24 +44,24 @@ function MyAccountPage() {
   };
 
   return (
-    <div className="bg-primary min-h-screen pt-20 px-8 flex flex-col justify-center items-center">
-      <div className="w-full max-w-2xl bg-white shadow-lg rounded-xl mx-auto p-8 space-y-10">
-        <h1 className="text-3xl font-bold text-center text-gray-800">
+    <div className="bg-primary min-h-screen pt-20 px-4 md:px-8 flex flex-col justify-center items-center">
+      <div className="w-full max-w-2xl bg-white shadow-lg rounded-xl mx-auto p-4 md:p-8 space-y-6 md:space-y-10">
+        <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-800">
           {user?.first_name ? `Welcome back, ${user.first_name}!` : "Welcome!"}
         </h1>
         <UserProfileSection />
         <FridgeSection />
         <PaymentMethodForm />
-        <div className="flex justify-between w-full mt-10">
+        <div className="flex flex-col md:flex-row justify-between w-full mt-6 md:mt-10 space-y-4 md:space-y-0">
           <button
             onClick={handleLogout}
-            className="w-full mr-2 py-2 px-4 bg-accent text-white rounded-md hover:bg-secondary transition-all duration-300"
+            className="w-full md:w-auto md:mr-2 py-3 px-4 bg-accent text-white rounded-md hover:bg-secondary transition-all duration-300"
           >
             Log Out
           </button>
           <button
             onClick={handleDelete}
-            className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-700 transition-all duration-300"
+            className="w-full md:w-auto py-3 px-4 bg-red-500 text-white rounded-md hover:bg-red-700 transition-all duration-300"
           >
             Delete Account
           </button>

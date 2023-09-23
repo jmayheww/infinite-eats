@@ -7,6 +7,8 @@ function OrderItemCard({ item }) {
   const [isEditing, setIsEditing] = useState(false);
   const [quantity, setQuantity] = useState(item.quantity);
 
+  const isValidQuantity = quantity > 0;
+
   const handleEditOrderItem = () => {
     setIsEditing(true);
   };
@@ -18,16 +20,14 @@ function OrderItemCard({ item }) {
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value);
-    if (isNaN(newQuantity) || newQuantity < 1) {
-      setQuantity(1);
-    } else {
-      setQuantity(newQuantity);
-    }
+    setQuantity(isNaN(newQuantity) ? 0 : newQuantity);
   };
 
   const handleOrderItemUpdate = () => {
-    updateOrderItem(item.id, quantity);
-    setIsEditing(false);
+    if (isValidQuantity) {
+      updateOrderItem(item.id, quantity);
+      setIsEditing(false);
+    }
   };
 
   const handleRemoveOrderItem = () => {
@@ -36,49 +36,65 @@ function OrderItemCard({ item }) {
   };
 
   return (
-    <li className="flex justify-between items-center border-t border-gray-200 pt-4">
-      <div>
+    <li className="flex flex-col md:flex-row justify-between items-start md:items-center border-t border-gray-200 pt-4 pb-4 md:pb-0">
+      <div className="mb-4 md:mb-0">
         <p className="text-gray-900 font-semibold">{item.name}</p>
-        <p className="text-gray-700 text-sm">Unit Price: ${item.price}</p>
+        <p className="text-gray-700 text-sm md:text-base">
+          Unit Price: ${item.price}
+        </p>
       </div>
       {isEditing ? (
-        <div className="flex items-center space-x-2">
-          <label htmlFor={`item-quantity-${item.id}`} className="text-gray-600">
+        <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-2 w-full md:w-auto">
+          <label
+            htmlFor={`item-quantity-${item.id}`}
+            className="text-gray-600 self-start"
+          >
             Quantity:
           </label>
           <input
             id={`item-quantity-${item.id}`}
             type="number"
-            min="1"
             value={quantity}
             onChange={handleQuantityChange}
-            className="border border-gray-300 rounded w-16 text-center"
+            className="border border-gray-300 rounded w-16 text-center mb-2 md:mb-0"
           />
-          <button
-            className="text-blue-500 hover:text-blue-700"
-            onClick={handleOrderItemUpdate}
-          >
-            Update
-          </button>
-          <button
-            onClick={handleCancelEdit}
-            className="text-red-500 hover:text-red-700"
-          >
-            Cancel
-          </button>
+          {!isValidQuantity && (
+            <span className="text-red-500 text-sm">
+              Quantity must be greater than 0
+            </span>
+          )}
+          <div className="flex space-x-2">
+            <button
+              disabled={!isValidQuantity}
+              className={`text-blue-500 ${
+                isValidQuantity ? "hover:text-blue-700" : "opacity-50"
+              } px-2 py-1 md:px-3 md:py-2`}
+              onClick={handleOrderItemUpdate}
+            >
+              Update
+            </button>
+            <button
+              onClick={handleCancelEdit}
+              className="text-red-500 hover:text-red-700 px-2 py-1 md:px-3 md:py-2"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex items-center space-x-2">
-          <p className="text-gray-700 text-sm">Quantity: {quantity}</p>
+          <p className="text-gray-700 text-sm md:text-base">
+            Quantity: {quantity}
+          </p>
           <button
             onClick={handleEditOrderItem}
-            className="text-blue-500 hover:text-blue-700"
+            className="text-blue-500 hover:text-blue-700 px-2 py-1 md:px-3 md:py-2"
           >
             Edit
           </button>
           <button
             onClick={handleRemoveOrderItem}
-            className="text-red-500 hover:text-red-700"
+            className="text-red-500 hover:text-red-700 px-2 py-1 md:px-3 md:py-2"
           >
             Remove
           </button>

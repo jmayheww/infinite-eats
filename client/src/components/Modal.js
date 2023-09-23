@@ -13,13 +13,13 @@ function Modal({ isOpen, title, message, onConfirm, onClose }) {
         <div className="flex justify-center space-x-2">
           <button
             onClick={onClose}
-            className="py-2 px-6 text-white bg-accent border border-secondary shadow-md hover:border-accent hover:opacity-80 transition-all duration-300"
+            className="py-2 px-6 text-white bg-accent rounded-md border border-secondary shadow-md hover:border-accent hover:opacity-80 transition-all duration-300"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="py-2 px-6 text-white bg-secondary border border-accent shadow-md hover:border-secondary hover:opacity-80 transition-all duration-300"
+            className="py-2 px-6 text-white bg-secondary rounded-md border border-accent shadow-md hover:border-secondary hover:opacity-80 transition-all duration-300"
           >
             Confirm
           </button>
