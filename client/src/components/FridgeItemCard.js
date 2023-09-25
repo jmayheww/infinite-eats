@@ -73,6 +73,11 @@ function FridgeItemCard({ item }) {
           >
             Fridge icons PNG Designed By Syed Hassan from Pngtree.com
           </a>
+          {isOutOfStock && (
+            <div className="text-red-900 text-sm mt-4">
+              This item is out of stock! Order more to restock.
+            </div>
+          )}
         </div>
       )}
       {isEditing ? (
@@ -89,7 +94,7 @@ function FridgeItemCard({ item }) {
             className="border border-gray-300 rounded w-16 text-center ml-2"
           />
           {errors.length > 0 && (
-            <div className="text-red-500 text-sm">{errors.join(", ")}</div>
+            <div className="text-red-900 text-sm">{errors.join(", ")}</div>
           )}
           <button
             className="text-white bg-secondary hover:bg-secondaryDark p-1 px-4 rounded ml-2"
@@ -99,7 +104,7 @@ function FridgeItemCard({ item }) {
           </button>
           <button
             onClick={handleCancelEdit}
-            className="text-red-500 hover:text-red-700 ml-2"
+            className="text-red-700 hover:text-red-700 ml-2"
           >
             Cancel
           </button>
