@@ -44,14 +44,16 @@ function NavBar() {
                 <LinkButton to="/signup">Sign Up</LinkButton>
               </>
             ) : (
-              <LinkButton to="/checkout" className="md:hidden">
-                <FaShoppingCart />
-                {cartItemsCount > 0 && (
-                  <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs px-1 rounded-full">
-                    {cartItemsCount}
-                  </span>
-                )}
-              </LinkButton>
+              <div className="relative inline-block hover:scale-105 transition-transform duration-200">
+                <LinkButton to="/checkout">
+                  <FaShoppingCart className="text-white mr-2" />
+                  {cartItemsCount > 0 && (
+                    <span className="absolute top-5 left-5 transform translate-x-[-50%] -translate-y-[50%] bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+                      {cartItemsCount}
+                    </span>
+                  )}
+                </LinkButton>
+              </div>
             )}
           </div>
 
