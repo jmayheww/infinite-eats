@@ -13,7 +13,6 @@ function NavBar() {
   return (
     <nav className="bg-accent fixed w-full z-50 shadow-md transition-all duration-300 ease-in-out">
       <div className="flex items-center justify-between py-2">
-        {/* Logo */}
         <div className="py-2 pl-2 text-center sm:text-left">
           <LinkButton
             to="/home"
