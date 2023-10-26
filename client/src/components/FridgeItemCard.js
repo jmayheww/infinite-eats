@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { FridgeContext } from "../context/fridge";
 
 function FridgeItemCard({ item }) {
-  console.log("item: ", item);
   const { updateFridgeItem, deleteFridgeItem, errors } =
     useContext(FridgeContext);
 
