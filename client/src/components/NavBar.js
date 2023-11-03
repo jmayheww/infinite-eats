@@ -19,7 +19,7 @@ function NavBar() {
             to="/home"
             additionalStyles="font-lato text-2xl sm:text-3xl text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
           >
-            {isMobile ? "IE" : "Infinite Eats"}
+            {isMobile ? "iEats" : "Infinite Eats"}
           </LinkButton>
         </div>
 
