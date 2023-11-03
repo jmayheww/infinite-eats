@@ -9,6 +9,7 @@ function NavBar() {
   const { user, isAdmin } = useContext(UserContext);
   const { cartItemsCount } = useContext(CheckoutContext);
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const isMobile = window.innerWidth < 768;
 
   return (
     <nav className="bg-accent fixed w-full z-50 shadow-md transition-all duration-300 ease-in-out">
@@ -18,7 +19,7 @@ function NavBar() {
             to="/home"
             additionalStyles="font-lato text-2xl sm:text-3xl text-white hover:text-secondary hover:scale-105 transition-all duration-300 ease-in-out"
           >
-            Infinite Eats
+            {isMobile ? "IE" : "Infinite Eats"}
           </LinkButton>
         </div>
 
